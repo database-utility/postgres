@@ -159,7 +159,7 @@ CREATE DATABASE <replaceable>name</replaceable>;
    execute from the shell to create new databases,
    <command>createdb</command>.<indexterm><primary>createdb</primary></indexterm>
 
-<synopsis>
+<synopsis language="shell">
 createdb <replaceable class="parameter">dbname</replaceable>
 </synopsis>
 
@@ -363,7 +363,7 @@ DROP DATABASE <replaceable>name</replaceable>;
   <para>
    For convenience, there is also a shell program to drop
    databases, <xref linkend="app-dropdb"/>:<indexterm><primary>dropdb</primary></indexterm>
-<synopsis>
+<synopsis language="shell">
 dropdb <replaceable class="parameter">dbname</replaceable>
 </synopsis>
    (Unlike <command>createdb</command>, it is not the default action to drop

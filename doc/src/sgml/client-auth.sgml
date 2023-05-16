@@ -630,7 +630,7 @@ hostnogssenc  <replaceable>database</replaceable>  <replaceable>user</replaceabl
        <ulink url="https://tools.ietf.org/html/rfc2253">RFC 2253</ulink>
        format. To see the <literal>DN</literal> of a client certificate
        in this format, do
-<programlisting>
+<programlisting language="shell">
 openssl x509 -in myclient.crt -noout --subject -nameopt RFC2253 | sed "s/^subject=//"
 </programlisting>
         Care needs to be taken when using this option, especially when using
@@ -1315,7 +1315,7 @@ omicron         bryanh                  guest1
     Kerberos documentation for details. The following example shows
     doing this using the <application>kadmin</application> tool of
     MIT-compatible Kerberos 5 implementations:
-<screen>
+<screen language="shell">
 <prompt>kadmin% </prompt><userinput>addprinc -randkey postgres/server.my.domain.org</userinput>
 <prompt>kadmin% </prompt><userinput>ktadd -k krb5.keytab postgres/server.my.domain.org</userinput>
 </screen>
@@ -2194,7 +2194,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
    </para>
 
    <para>
-<programlisting>
+<programlisting language="postgres-shell">
 FATAL:  no pg_hba.conf entry for host "123.123.123.123", user "andym", database "testdb"
 </programlisting>
     This is what you are most likely to get if you succeed in contacting
@@ -2205,7 +2205,7 @@ FATAL:  no pg_hba.conf entry for host "123.123.123.123", user "andym", database 
    </para>
 
    <para>
-<programlisting>
+<programlisting language="postgres-shell">
 FATAL:  password authentication failed for user "andym"
 </programlisting>
     Messages like this indicate that you contacted the server, and it is
@@ -2217,14 +2217,14 @@ FATAL:  password authentication failed for user "andym"
    </para>
 
    <para>
-<programlisting>
+<programlisting language="postgres-shell">
 FATAL:  user "andym" does not exist
 </programlisting>
     The indicated database user name was not found.
    </para>
 
    <para>
-<programlisting>
+<programlisting language="postgres-shell">
 FATAL:  database "testdb" does not exist
 </programlisting>
     The database you are trying to connect to does not exist. Note that

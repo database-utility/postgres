@@ -138,7 +138,7 @@
      which is normally kept in the data directory.  A default copy is
      installed when the database cluster directory is initialized.
      An example of what this file might look like is:
-<programlisting>
+<programlisting language="ini">
 # This is a comment
 log_connections = yes
 log_destination = 'syslog'
@@ -304,11 +304,11 @@ shared_buffers = 128MB
        Using <command>UPDATE</command> on this view, specifically
        updating the <structname>setting</structname> column, is the equivalent
        of issuing <command>SET</command> commands.  For example, the equivalent of
-<programlisting>
+<programlisting language="postgres">
 SET configuration_parameter TO DEFAULT;
 </programlisting>
        is:
-<programlisting>
+<programlisting language="postgres">
 UPDATE pg_settings SET setting = reset_val WHERE name = 'configuration_parameter';
 </programlisting>
       </para>
@@ -334,7 +334,7 @@ UPDATE pg_settings SET setting = reset_val WHERE name = 'configuration_parameter
        During server startup, parameter settings can be
        passed to the <command>postgres</command> command via the
        <option>-c</option> command-line parameter.  For example,
-<programlisting>
+<programlisting language="shell">
 postgres -c log_connections=yes -c log_destination='syslog'
 </programlisting>
        Settings provided in this way override those set via
@@ -354,7 +354,7 @@ postgres -c log_connections=yes -c log_destination='syslog'
       similar to that used when launching the <command>postgres</command>
       command; specifically, the <option>-c</option> flag must be specified.
       For example,
-<programlisting>
+<programlisting language="shell">
 env PGOPTIONS="-c geqo=off -c statement_timeout=5min" psql
 </programlisting>
      </para>
@@ -5858,7 +5858,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         constraints, and omits scanning tables for which the conditions
         contradict the constraints.  For example:
 
-<programlisting>
+<programlisting language="postgres">>
 CREATE TABLE parent(key integer, ...);
 CREATE TABLE child1000(check (key between 1000 and 1999)) INHERITS(parent);
 CREATE TABLE child2000(check (key between 2000 and 2999)) INHERITS(parent);
@@ -7562,7 +7562,7 @@ log_line_prefix = '%m [%p] %q%u@%d/%a '
         and query id.
         Here is a sample table definition for storing CSV-format log output:
 
-<programlisting>
+<programlisting language="postgres">>
 CREATE TABLE postgres_log
 (
   log_time timestamp(3) with time zone,

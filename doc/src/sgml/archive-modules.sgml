@@ -51,7 +51,7 @@
    struct that needs to be filled with the callback function pointers for
    individual actions.
 
-<programlisting>
+<programlisting language="c">
 typedef struct ArchiveModuleCallbacks
 {
     ArchiveCheckConfiguredCB check_configured_cb;
@@ -82,7 +82,7 @@ typedef void (*ArchiveModuleInit) (struct ArchiveModuleCallbacks *cb);
     <function>check_configured_cb</function> is defined, the server always
     assumes the module is configured.
 
-<programlisting>
+<programlisting language="c">
 typedef bool (*ArchiveCheckConfiguredCB) (void);
 </programlisting>
 
@@ -90,7 +90,7 @@ typedef bool (*ArchiveCheckConfiguredCB) (void);
     archiving the file by calling the <function>archive_file_cb</function>
     callback.  If <literal>false</literal> is returned, archiving will not
     proceed, and the archiver will emit the following message to the server log:
-<screen>
+<screen language="postgres-shell">
 WARNING:  archive_mode enabled, yet archiving is not configured
 </screen>
     In the latter case, the server will periodically call this function, and
@@ -104,7 +104,7 @@ WARNING:  archive_mode enabled, yet archiving is not configured
     The <function>archive_file_cb</function> callback is called to archive a
     single WAL file.
 
-<programlisting>
+<programlisting language="c">
 typedef bool (*ArchiveFileCB) (const char *file, const char *path);
 </programlisting>
 
@@ -127,7 +127,7 @@ typedef bool (*ArchiveFileCB) (const char *file, const char *path);
     <function>shutdown_cb</function> is defined, no special action is taken in
     these situations.
 
-<programlisting>
+<programlisting language="c">
 typedef void (*ArchiveShutdownCB) (void);
 </programlisting>
    </para>

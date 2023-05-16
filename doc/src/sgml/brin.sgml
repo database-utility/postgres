@@ -841,7 +841,7 @@ LOG:  request for BRIN range summarization for index "brin_wi_idx" page 128 was 
       Returns internal information about the indexed columns' summary data.
       The return value must point to a palloc'd <structname>BrinOpcInfo</structname>,
       which has this definition:
-<programlisting>
+<programlisting language="c">
 typedef struct BrinOpcInfo
 {
     /* Number of columns stored in an index column of this opclass */

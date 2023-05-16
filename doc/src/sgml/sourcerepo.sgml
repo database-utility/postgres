@@ -51,7 +51,7 @@
     <para>
      To begin using the Git repository, make a clone of the official mirror:
 
-<programlisting>
+<programlisting language="shell">
 git clone https://git.postgresql.org/git/postgresql.git
 </programlisting>
 
@@ -65,7 +65,7 @@ git clone https://git.postgresql.org/git/postgresql.git
      The Git mirror can also be reached via the Git protocol. Just change the URL
      prefix to <literal>git</literal>, as in:
 
-<programlisting>
+<programlisting language="shell">
 git clone git://git.postgresql.org/git/postgresql.git
 </programlisting>
 
@@ -77,7 +77,7 @@ git clone git://git.postgresql.org/git/postgresql.git
      Whenever you want to get the latest updates in the system, <command>cd</command>
      into the repository, and run:
 
-<programlisting>
+<programlisting language="shell">
 git fetch
 </programlisting>
     </para>

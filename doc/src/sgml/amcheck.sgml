@@ -68,7 +68,7 @@
      <para>
       <function>bt_index_check</function> tests that its target, a
       B-Tree index, respects a variety of invariants.  Example usage:
-<screen>
+<screen language="postgres-shell">
 test=# SELECT bt_index_check(index =&gt; c.oid, heapallindexed =&gt; i.indisunique),
                c.relname,
                c.relpages
@@ -192,7 +192,7 @@ ORDER BY c.relpages DESC LIMIT 10;
     may also find this information helpful, since it provides
     additional context should verification actually detect an
     inconsistency.  Running:
-<programlisting>
+<programlisting language="postgres">
 SET client_min_messages = DEBUG1;
 </programlisting>
     in an interactive <application>psql</application> session before

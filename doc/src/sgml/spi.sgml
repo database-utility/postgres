@@ -70,11 +70,11 @@
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_connect(void)
 </synopsis>
 
- <synopsis>
+ <synopsis language="c">
 int SPI_connect_ext(int <parameter>options</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -155,7 +155,7 @@ int SPI_connect_ext(int <parameter>options</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_finish(void)
 </synopsis>
  </refsynopsisdiv>
@@ -214,7 +214,7 @@ int SPI_finish(void)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execute(const char * <parameter>command</parameter>, bool <parameter>read_only</parameter>, long <parameter>count</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -239,17 +239,17 @@ int SPI_execute(const char * <parameter>command</parameter>, bool <parameter>rea
    is greater than zero, then no more than <parameter>count</parameter> rows
    will be retrieved; execution stops when the count is reached, much like
    adding a <literal>LIMIT</literal> clause to the query. For example,
-<programlisting>
+<programlisting language="c">
 SPI_execute("SELECT * FROM foo", true, 5);
 </programlisting>
    will retrieve at most 5 rows from the table.  Note that such a limit
    is only effective when the command actually returns rows.  For example,
-<programlisting>
+<programlisting language="c">
 SPI_execute("INSERT INTO foo SELECT * FROM bar", false, 5);
 </programlisting>
    inserts all rows from <structname>bar</structname>, ignoring the
    <parameter>count</parameter> parameter.  However, with
-<programlisting>
+<programlisting language="c">
 SPI_execute("INSERT INTO foo SELECT * FROM bar RETURNING *", false, 5);
 </programlisting>
    at most 5 rows would be inserted, since execution would stop after the
@@ -316,7 +316,7 @@ SPI_execute("INSERT INTO foo SELECT * FROM bar RETURNING *", false, 5);
   <para>
    The structure <structname>SPITupleTable</structname> is defined
    thus:
-<programlisting>
+<programlisting language="c">
 typedef struct SPITupleTable
 {
     /* Public members */
@@ -579,7 +579,7 @@ typedef struct SPITupleTable
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_exec(const char * <parameter>command</parameter>, long <parameter>count</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -645,7 +645,7 @@ int SPI_exec(const char * <parameter>command</parameter>, long <parameter>count<
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execute_extended(const char *<parameter>command</parameter>,
                          const SPIExecuteOptions * <parameter>options</parameter>)
 </synopsis>
@@ -822,7 +822,7 @@ int SPI_execute_extended(const char *<parameter>command</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execute_with_args(const char *<parameter>command</parameter>,
                           int <parameter>nargs</parameter>, Oid *<parameter>argtypes</parameter>,
                           Datum *<parameter>values</parameter>, const char *<parameter>nulls</parameter>,
@@ -975,7 +975,7 @@ int SPI_execute_with_args(const char *<parameter>command</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 SPIPlanPtr SPI_prepare(const char * <parameter>command</parameter>, int <parameter>nargs</parameter>, Oid * <parameter>argtypes</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -1137,7 +1137,7 @@ SPIPlanPtr SPI_prepare(const char * <parameter>command</parameter>, int <paramet
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 SPIPlanPtr SPI_prepare_cursor(const char * <parameter>command</parameter>, int <parameter>nargs</parameter>,
                               Oid * <parameter>argtypes</parameter>, int <parameter>cursorOptions</parameter>)
 </synopsis>
@@ -1244,7 +1244,7 @@ SPIPlanPtr SPI_prepare_cursor(const char * <parameter>command</parameter>, int <
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 SPIPlanPtr SPI_prepare_extended(const char * <parameter>command</parameter>,
                                 const SPIPrepareOptions * <parameter>options</parameter>)
 </synopsis>
@@ -1360,7 +1360,7 @@ SPIPlanPtr SPI_prepare_extended(const char * <parameter>command</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 SPIPlanPtr SPI_prepare_params(const char * <parameter>command</parameter>,
                               ParserSetupHook <parameter>parserSetup</parameter>,
                               void * <parameter>parserSetupArg</parameter>,
@@ -1454,7 +1454,7 @@ SPIPlanPtr SPI_prepare_params(const char * <parameter>command</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_getargcount(SPIPlanPtr <parameter>plan</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -1511,7 +1511,7 @@ int SPI_getargcount(SPIPlanPtr <parameter>plan</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Oid SPI_getargtypeid(SPIPlanPtr <parameter>plan</parameter>, int <parameter>argIndex</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -1582,7 +1582,7 @@ Oid SPI_getargtypeid(SPIPlanPtr <parameter>plan</parameter>, int <parameter>argI
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 bool SPI_is_cursor_plan(SPIPlanPtr <parameter>plan</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -1649,7 +1649,7 @@ bool SPI_is_cursor_plan(SPIPlanPtr <parameter>plan</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execute_plan(SPIPlanPtr <parameter>plan</parameter>, Datum * <parameter>values</parameter>, const char * <parameter>nulls</parameter>,
                      bool <parameter>read_only</parameter>, long <parameter>count</parameter>)
 </synopsis>
@@ -1785,7 +1785,7 @@ int SPI_execute_plan(SPIPlanPtr <parameter>plan</parameter>, Datum * <parameter>
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execute_plan_extended(SPIPlanPtr <parameter>plan</parameter>,
                               const SPIExecuteOptions * <parameter>options</parameter>)
 </synopsis>
@@ -1962,7 +1962,7 @@ int SPI_execute_plan_extended(SPIPlanPtr <parameter>plan</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execute_plan_with_paramlist(SPIPlanPtr <parameter>plan</parameter>,
                                     ParamListInfo <parameter>params</parameter>,
                                     bool <parameter>read_only</parameter>,
@@ -2062,7 +2062,7 @@ int SPI_execute_plan_with_paramlist(SPIPlanPtr <parameter>plan</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_execp(SPIPlanPtr <parameter>plan</parameter>, Datum * <parameter>values</parameter>, const char * <parameter>nulls</parameter>, long <parameter>count</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -2166,7 +2166,7 @@ int SPI_execp(SPIPlanPtr <parameter>plan</parameter>, Datum * <parameter>values<
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Portal SPI_cursor_open(const char * <parameter>name</parameter>, SPIPlanPtr <parameter>plan</parameter>,
                        Datum * <parameter>values</parameter>, const char * <parameter>nulls</parameter>,
                        bool <parameter>read_only</parameter>)
@@ -2290,7 +2290,7 @@ Portal SPI_cursor_open(const char * <parameter>name</parameter>, SPIPlanPtr <par
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Portal SPI_cursor_open_with_args(const char *<parameter>name</parameter>,
                                  const char *<parameter>command</parameter>,
                                  int <parameter>nargs</parameter>, Oid *<parameter>argtypes</parameter>,
@@ -2449,7 +2449,7 @@ Portal SPI_cursor_open_with_args(const char *<parameter>name</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Portal SPI_cursor_open_with_paramlist(const char *<parameter>name</parameter>,
                                       SPIPlanPtr <parameter>plan</parameter>,
                                       ParamListInfo <parameter>params</parameter>,
@@ -2545,7 +2545,7 @@ Portal SPI_cursor_open_with_paramlist(const char *<parameter>name</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Portal SPI_cursor_parse_open(const char *<parameter>name</parameter>,
                              const char *<parameter>command</parameter>,
                              const SPIParseOpenOptions * <parameter>options</parameter>)
@@ -2680,7 +2680,7 @@ Portal SPI_cursor_parse_open(const char *<parameter>name</parameter>,
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Portal SPI_cursor_find(const char * <parameter>name</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -2736,7 +2736,7 @@ Portal SPI_cursor_find(const char * <parameter>name</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_cursor_fetch(Portal <parameter>portal</parameter>, bool <parameter>forward</parameter>, long <parameter>count</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -2821,7 +2821,7 @@ void SPI_cursor_fetch(Portal <parameter>portal</parameter>, bool <parameter>forw
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_cursor_move(Portal <parameter>portal</parameter>, bool <parameter>forward</parameter>, long <parameter>count</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -2896,7 +2896,7 @@ void SPI_cursor_move(Portal <parameter>portal</parameter>, bool <parameter>forwa
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_scroll_cursor_fetch(Portal <parameter>portal</parameter>, FetchDirection <parameter>direction</parameter>,
                              long <parameter>count</parameter>)
 </synopsis>
@@ -2995,7 +2995,7 @@ void SPI_scroll_cursor_fetch(Portal <parameter>portal</parameter>, FetchDirectio
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_scroll_cursor_move(Portal <parameter>portal</parameter>, FetchDirection <parameter>direction</parameter>,
                             long <parameter>count</parameter>)
 </synopsis>
@@ -3096,7 +3096,7 @@ void SPI_scroll_cursor_move(Portal <parameter>portal</parameter>, FetchDirection
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_cursor_close(Portal <parameter>portal</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3148,7 +3148,7 @@ void SPI_cursor_close(Portal <parameter>portal</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_keepplan(SPIPlanPtr <parameter>plan</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3217,7 +3217,7 @@ int SPI_keepplan(SPIPlanPtr <parameter>plan</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 SPIPlanPtr SPI_saveplan(SPIPlanPtr <parameter>plan</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3317,7 +3317,7 @@ SPIPlanPtr SPI_saveplan(SPIPlanPtr <parameter>plan</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_register_relation(EphemeralNamedRelation <parameter>enr</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3424,7 +3424,7 @@ int SPI_register_relation(EphemeralNamedRelation <parameter>enr</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_unregister_relation(const char * <parameter>name</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3534,7 +3534,7 @@ int SPI_unregister_relation(const char * <parameter>name</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_register_trigger_data(TriggerData *<parameter>tdata</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3657,7 +3657,7 @@ int SPI_register_trigger_data(TriggerData *<parameter>tdata</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 char * SPI_fname(TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnumber</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3724,7 +3724,7 @@ char * SPI_fname(TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnum
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_fnumber(TupleDesc <parameter>rowdesc</parameter>, const char * <parameter>colname</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3798,7 +3798,7 @@ int SPI_fnumber(TupleDesc <parameter>rowdesc</parameter>, const char * <paramete
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 char * SPI_getvalue(HeapTuple <parameter>row</parameter>, TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnumber</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -3882,7 +3882,7 @@ char * SPI_getvalue(HeapTuple <parameter>row</parameter>, TupleDesc <parameter>r
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Datum SPI_getbinval(HeapTuple <parameter>row</parameter>, TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnumber</parameter>,
                     bool * <parameter>isnull</parameter>)
 </synopsis>
@@ -3977,7 +3977,7 @@ Datum SPI_getbinval(HeapTuple <parameter>row</parameter>, TupleDesc <parameter>r
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 char * SPI_gettype(TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnumber</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4043,7 +4043,7 @@ char * SPI_gettype(TupleDesc <parameter>rowdesc</parameter>, int <parameter>coln
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 Oid SPI_gettypeid(TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnumber</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4109,7 +4109,7 @@ Oid SPI_gettypeid(TupleDesc <parameter>rowdesc</parameter>, int <parameter>colnu
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 char * SPI_getrelname(Relation <parameter>rel</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4162,7 +4162,7 @@ char * SPI_getrelname(Relation <parameter>rel</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 char * SPI_getnspname(Relation <parameter>rel</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4217,7 +4217,7 @@ char * SPI_getnspname(Relation <parameter>rel</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 const char * SPI_result_code_string(int <parameter>code</parameter>);
 </synopsis>
  </refsynopsisdiv>
@@ -4331,7 +4331,7 @@ const char * SPI_result_code_string(int <parameter>code</parameter>);
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void * SPI_palloc(Size <parameter>size</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4390,7 +4390,7 @@ void * SPI_palloc(Size <parameter>size</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void * SPI_repalloc(void * <parameter>pointer</parameter>, Size <parameter>size</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4460,7 +4460,7 @@ void * SPI_repalloc(void * <parameter>pointer</parameter>, Size <parameter>size<
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_pfree(void * <parameter>pointer</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4513,7 +4513,7 @@ void SPI_pfree(void * <parameter>pointer</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 HeapTuple SPI_copytuple(HeapTuple <parameter>row</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4576,7 +4576,7 @@ HeapTuple SPI_copytuple(HeapTuple <parameter>row</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 HeapTupleHeader SPI_returntuple(HeapTuple <parameter>row</parameter>, TupleDesc <parameter>rowdesc</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4656,7 +4656,7 @@ HeapTupleHeader SPI_returntuple(HeapTuple <parameter>row</parameter>, TupleDesc 
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 HeapTuple SPI_modifytuple(Relation <parameter>rel</parameter>, HeapTuple <parameter>row</parameter>, int <parameter>ncols</parameter>,
                           int * <parameter>colnum</parameter>, Datum * <parameter>values</parameter>, const char * <parameter>nulls</parameter>)
 </synopsis>
@@ -4820,7 +4820,7 @@ HeapTuple SPI_modifytuple(Relation <parameter>rel</parameter>, HeapTuple <parame
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_freetuple(HeapTuple <parameter>row</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4873,7 +4873,7 @@ void SPI_freetuple(HeapTuple <parameter>row</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_freetuptable(SPITupleTable * <parameter>tuptable</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -4939,7 +4939,7 @@ void SPI_freetuptable(SPITupleTable * <parameter>tuptable</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 int SPI_freeplan(SPIPlanPtr <parameter>plan</parameter>)
 </synopsis>
  </refsynopsisdiv>
@@ -5024,11 +5024,11 @@ int SPI_freeplan(SPIPlanPtr <parameter>plan</parameter>)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_commit(void)
 </synopsis>
 
-<synopsis>
+<synopsis language="c">
 void SPI_commit_and_chain(void)
 </synopsis>
  </refsynopsisdiv>
@@ -5079,11 +5079,11 @@ void SPI_commit_and_chain(void)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_rollback(void)
 </synopsis>
 
-<synopsis>
+<synopsis language="c">
 void SPI_rollback_and_chain(void)
 </synopsis>
  </refsynopsisdiv>
@@ -5128,7 +5128,7 @@ void SPI_rollback_and_chain(void)
  </refnamediv>
 
  <refsynopsisdiv>
-<synopsis>
+<synopsis language="c">
 void SPI_start_transaction(void)
 </synopsis>
  </refsynopsisdiv>
@@ -5223,7 +5223,7 @@ INSERT INTO a SELECT * FROM a;
    <xref linkend="contrib-spi"/> module.
   </para>
 
-<programlisting>
+<programlisting language="c">
 #include "postgres.h"
 
 #include "executor/spi.h"
@@ -5285,7 +5285,7 @@ execq(PG_FUNCTION_ARGS)
    This is how you declare the function after having compiled it into
    a shared library (details are in <xref linkend="dfunc"/>.):
 
-<programlisting>
+<programlisting language="postgres">
 CREATE FUNCTION execq(text, integer) RETURNS int8
     AS '<replaceable>filename</replaceable>'
     LANGUAGE C STRICT;

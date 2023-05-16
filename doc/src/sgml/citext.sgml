@@ -38,7 +38,7 @@
    in <productname>PostgreSQL</productname> has been to use the <function>lower</function>
    function when comparing values, for example
 
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM tab WHERE lower(col) = LOWER(?);
 </programlisting>
   </para>
@@ -90,7 +90,7 @@ SELECT * FROM tab WHERE lower(col) = LOWER(?);
   <para>
    Here's a simple example of usage:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE users (
     nick CITEXT PRIMARY KEY,
     pass TEXT   NOT NULL

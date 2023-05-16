@@ -168,7 +168,7 @@
 
    <para>
     To install the required packages, use:
-<programlisting>
+<programlisting language="shell">
 yum install docbook-dtds docbook-style-xsl fop libxslt
 </programlisting>
    </para>
@@ -179,7 +179,7 @@ yum install docbook-dtds docbook-style-xsl fop libxslt
 
    <para>
     To install the required packages with <command>pkg</command>, use:
-<programlisting>
+<programlisting language="shell">
 pkg install docbook-xml docbook-xsl fop libxslt
 </programlisting>
    </para>
@@ -198,7 +198,7 @@ pkg install docbook-xml docbook-xsl fop libxslt
     There is a full set of packages of the documentation tools
     available for <productname>Debian GNU/Linux</productname>.
     To install, simply use:
-<programlisting>
+<programlisting language="shell">
 apt-get install docbook-xml docbook-xsl fop libxml2-utils xsltproc
 </programlisting>
    </para>
@@ -215,11 +215,11 @@ apt-get install docbook-xml docbook-xsl fop libxml2-utils xsltproc
 
    <para>
     If you use MacPorts, the following will get you set up:
-<programlisting>
+<programlisting language="shell">
 sudo port install docbook-xml-4.5 docbook-xsl fop
 </programlisting>
     If you use Homebrew, use this:
-<programlisting>
+<programlisting language="shell">
 brew install docbook docbook-xsl fop
 </programlisting>
    </para>
@@ -353,7 +353,7 @@ checking for dbtoepub... dbtoepub
     memory-related error message.  This can usually be fixed by configuring
     Java heap settings in the configuration
     file <filename>~/.foprc</filename>, for example:
-<programlisting>
+<programlisting language="shell">
 # FOP binary distribution
 FOP_OPTS='-Xmx1500m'
 # Debian

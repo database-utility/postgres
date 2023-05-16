@@ -140,7 +140,7 @@
     <para>
      <indexterm><primary>lo_create</primary></indexterm>
      The function
-<synopsis>
+<synopsis language="c">
 Oid lo_create(PGconn *conn, Oid lobjId);
 </synopsis>
      creates a new large object.  The OID to be assigned can be
@@ -163,7 +163,7 @@ inv_oid = lo_create(conn, desired_oid);
     <para>
      <indexterm><primary>lo_creat</primary></indexterm>
      The older function
-<synopsis>
+<synopsis language="c">
 Oid lo_creat(PGconn *conn, int mode);
 </synopsis>
      also creates a new large object, always assigning an unused OID.
@@ -201,7 +201,7 @@ inv_oid = lo_creat(conn, INV_READ|INV_WRITE);
     <para>
      <indexterm><primary>lo_import</primary></indexterm>
      To import an operating system file as a large object, call
-<synopsis>
+<synopsis language="c">
 Oid lo_import(PGconn *conn, const char *filename);
 </synopsis>
      <replaceable class="parameter">filename</replaceable>
@@ -217,7 +217,7 @@ Oid lo_import(PGconn *conn, const char *filename);
     <para>
      <indexterm><primary>lo_import_with_oid</primary></indexterm>
      The function
-<synopsis>
+<synopsis language="c">
 Oid lo_import_with_oid(PGconn *conn, const char *filename, Oid lobjId);
 </synopsis>
      also imports a new large object.  The OID to be assigned can be
@@ -244,7 +244,7 @@ Oid lo_import_with_oid(PGconn *conn, const char *filename, Oid lobjId);
      <indexterm><primary>lo_export</primary></indexterm>
      To export a large object
      into an operating system file, call
-<synopsis>
+<synopsis language="c">
 int lo_export(PGconn *conn, Oid lobjId, const char *filename);
 </synopsis>
      The <parameter>lobjId</parameter> argument specifies the OID of the large
@@ -261,7 +261,7 @@ int lo_export(PGconn *conn, Oid lobjId, const char *filename);
     <para>
      <indexterm><primary>lo_open</primary></indexterm>
      To open an existing large object for reading or writing, call
-<synopsis>
+<synopsis language="c">
 int lo_open(PGconn *conn, Oid lobjId, int mode);
 </synopsis>
      The <parameter>lobjId</parameter> argument specifies the OID of the large
@@ -324,7 +324,7 @@ inv_fd = lo_open(conn, inv_oid, INV_READ|INV_WRITE);
 <para>
      <indexterm><primary>lo_write</primary></indexterm>
      The function
-<synopsis>
+<synopsis language="c">
 int lo_write(PGconn *conn, int fd, const char *buf, size_t len);
 </synopsis>
      writes <parameter>len</parameter> bytes from <parameter>buf</parameter>
@@ -350,7 +350,7 @@ int lo_write(PGconn *conn, int fd, const char *buf, size_t len);
 <para>
      <indexterm><primary>lo_read</primary></indexterm>
      The function
-<synopsis>
+<synopsis language="c">
 int lo_read(PGconn *conn, int fd, char *buf, size_t len);
 </synopsis>
      reads up to <parameter>len</parameter> bytes from large object descriptor
@@ -378,7 +378,7 @@ int lo_read(PGconn *conn, int fd, char *buf, size_t len);
      <indexterm><primary>lo_lseek</primary></indexterm>
      To change the current read or write location associated with a
      large object descriptor, call
-<synopsis>
+<synopsis language="c">
 int lo_lseek(PGconn *conn, int fd, int offset, int whence);
 </synopsis>
      This function moves the
@@ -395,7 +395,7 @@ int lo_lseek(PGconn *conn, int fd, int offset, int whence);
      <indexterm><primary>lo_lseek64</primary></indexterm>
      When dealing with large objects that might exceed 2GB in size,
      instead use
-<synopsis>
+<synopsis language="c">
 pg_int64 lo_lseek64(PGconn *conn, int fd, pg_int64 offset, int whence);
 </synopsis>
      This function has the same behavior
@@ -421,7 +421,7 @@ pg_int64 lo_lseek64(PGconn *conn, int fd, pg_int64 offset, int whence);
      <indexterm><primary>lo_tell</primary></indexterm>
      To obtain the current read or write location of a large object descriptor,
      call
-<synopsis>
+<synopsis language="c">
 int lo_tell(PGconn *conn, int fd);
 </synopsis>
      If there is an error, the return value is -1.
@@ -431,7 +431,7 @@ int lo_tell(PGconn *conn, int fd);
      <indexterm><primary>lo_tell64</primary></indexterm>
      When dealing with large objects that might exceed 2GB in size,
      instead use
-<synopsis>
+<synopsis language="c">
 pg_int64 lo_tell64(PGconn *conn, int fd);
 </synopsis>
      This function has the same behavior
@@ -454,7 +454,7 @@ pg_int64 lo_tell64(PGconn *conn, int fd);
 <para>
      <indexterm><primary>lo_truncate</primary></indexterm>
      To truncate a large object to a given length, call
-<synopsis>
+<synopsis language="c">
 int lo_truncate(PGconn *conn, int fd, size_t len);
 </synopsis>
      This function truncates the large object
@@ -482,7 +482,7 @@ int lo_truncate(PGconn *conn, int fd, size_t len);
      <indexterm><primary>lo_truncate64</primary></indexterm>
      When dealing with large objects that might exceed 2GB in size,
      instead use
-<synopsis>
+<synopsis language="c">
 int lo_truncate64(PGconn *conn, int fd, pg_int64 len);
 </synopsis>
      This function has the same
@@ -509,7 +509,7 @@ int lo_truncate64(PGconn *conn, int fd, pg_int64 len);
 <para>
      <indexterm><primary>lo_close</primary></indexterm>
      A large object descriptor can be closed by calling
-<synopsis>
+<synopsis language="c">
 int lo_close(PGconn *conn, int fd);
 </synopsis>
      where <parameter>fd</parameter> is a
@@ -530,7 +530,7 @@ int lo_close(PGconn *conn, int fd);
     <para>
      <indexterm><primary>lo_unlink</primary></indexterm>
      To remove a large object from the database, call
-<synopsis>
+<synopsis language="c">
 int lo_unlink(PGconn *conn, Oid lobjId);
 </synopsis>
      The <parameter>lobjId</parameter> argument specifies the OID of the

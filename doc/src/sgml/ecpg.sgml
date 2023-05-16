@@ -6052,7 +6052,7 @@ ECPG = ecpg
 
   <example id="ecpg-lo-example">
    <title>ECPG Program Accessing Large Objects</title>
-<programlisting><![CDATA[
+<programlisting language="c"><![CDATA[
 #include <stdio.h>
 #include <stdlib.h>
 #include <libpq-fe.h>

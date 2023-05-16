@@ -98,7 +98,7 @@
       <para>
        Makes a new connection to the database server.
 
-<synopsis>
+<synopsis language="c">
 PGconn *PQconnectdbParams(const char * const *keywords,
                           const char * const *values,
                           int expand_dbname);
@@ -181,7 +181,7 @@ PGconn *PQconnectdbParams(const char * const *keywords,
       <para>
        Makes a new connection to the database server.
 
-<synopsis>
+<synopsis language="c">
 PGconn *PQconnectdb(const char *conninfo);
 </synopsis>
       </para>
@@ -207,7 +207,7 @@ PGconn *PQconnectdb(const char *conninfo);
      <listitem>
       <para>
        Makes a new connection to the database server.
-<synopsis>
+<synopsis language="c">
 PGconn *PQsetdbLogin(const char *pghost,
                      const char *pgport,
                      const char *pgoptions,
@@ -245,7 +245,7 @@ PGconn *PQsetdbLogin(const char *pghost,
      <listitem>
       <para>
    Makes a new connection to the database server.
-<synopsis>
+<synopsis language="c">
 PGconn *PQsetdb(char *pghost,
                 char *pgport,
                 char *pgoptions,
@@ -271,7 +271,7 @@ PGconn *PQsetdb(char *pghost,
        <indexterm><primary>nonblocking connection</primary></indexterm>
        Make a connection to the database server in a nonblocking manner.
 
-<synopsis>
+<synopsis language="c">
 PGconn *PQconnectStartParams(const char * const *keywords,
                              const char * const *values,
                              int expand_dbname);
@@ -504,7 +504,7 @@ switch(PQstatus(conn))
      <listitem>
       <para>
        Returns the default connection options.
-<synopsis>
+<synopsis language="c">
 PQconninfoOption *PQconndefaults(void);
 
 typedef struct
@@ -551,7 +551,7 @@ typedef struct
      <listitem>
       <para>
        Returns the connection options used by a live connection.
-<synopsis>
+<synopsis language="c">
 PQconninfoOption *PQconninfo(PGconn *conn);
 </synopsis>
       </para>
@@ -576,7 +576,7 @@ PQconninfoOption *PQconninfo(PGconn *conn);
       <para>
        Returns parsed connection options from the provided connection string.
 
-<synopsis>
+<synopsis language="c">
 PQconninfoOption *PQconninfoParse(const char *conninfo, char **errmsg);
 </synopsis>
       </para>
@@ -623,7 +623,7 @@ PQconninfoOption *PQconninfoParse(const char *conninfo, char **errmsg);
       <para>
        Closes  the  connection to the server.  Also frees
        memory used by the <structname>PGconn</structname> object.
-<synopsis>
+<synopsis language="c">
 void PQfinish(PGconn *conn);
 </synopsis>
       </para>
@@ -643,7 +643,7 @@ void PQfinish(PGconn *conn);
      <listitem>
       <para>
        Resets the communication channel to the server.
-<synopsis>
+<synopsis language="c">
 void PQreset(PGconn *conn);
 </synopsis>
       </para>
@@ -665,7 +665,7 @@ void PQreset(PGconn *conn);
       <para>
        Reset the communication channel to the server, in a nonblocking manner.
 
-<synopsis>
+<synopsis language="c">
 int PQresetStart(PGconn *conn);
 
 PostgresPollingStatusType PQresetPoll(PGconn *conn);
@@ -703,7 +703,7 @@ PostgresPollingStatusType PQresetPoll(PGconn *conn);
        values to obtain the server status; however, if incorrect values
        are provided, the server will log a failed connection attempt.
 
-<synopsis>
+<synopsis language="c">
 PGPing PQpingParams(const char * const *keywords,
                     const char * const *values,
                     int expand_dbname);
@@ -772,7 +772,7 @@ PGPing PQpingParams(const char * const *keywords,
        values to obtain the server status; however, if incorrect values
        are provided, the server will log a failed connection attempt.
 
-<synopsis>
+<synopsis language="c">
 PGPing PQping(const char *conninfo);
 </synopsis>
       </para>
@@ -793,7 +793,7 @@ PGPing PQping(const char *conninfo);
        handling of encrypted client certificate key files</link> using
        <xref linkend="libpq-connect-sslpassword"/> or interactive prompting.
 
-<synopsis>
+<synopsis language="c">
 void PQsetSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook);
 </synopsis>
 
@@ -846,7 +846,7 @@ int callback_fn(char *buf, int size, PGconn *conn);
        client certificate key password hook, or <literal>NULL</literal>
        if none has been set.
 
-<synopsis>
+<synopsis language="c">
 PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL(void);
 </synopsis>
       </para>
@@ -895,7 +895,7 @@ PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL(void);
 
    <para>
     Example:
-<programlisting>
+<programlisting language="ini">
 host=localhost port=5432 dbname=mydb connect_timeout=10
 </programlisting>
    </para>
@@ -911,7 +911,7 @@ host=localhost port=5432 dbname=mydb connect_timeout=10
 
    <para>
    The general form for a connection <acronym>URI</acronym> is:
-<synopsis>
+<synopsis language="url">
 postgresql://<optional><replaceable>userspec</replaceable>@</optional><optional><replaceable>hostspec</replaceable></optional><optional>/<replaceable>dbname</replaceable></optional><optional>?<replaceable>paramspec</replaceable></optional>
 
 <phrase>where <replaceable>userspec</replaceable> is:</phrase>
@@ -946,7 +946,7 @@ postgresql://host1:123,host2:456/somedb?target_session_attrs=any&amp;application
     Values that would normally appear in the hierarchical part of
     the <acronym>URI</acronym> can alternatively be given as named
     parameters.  For example:
-<programlisting>
+<programlisting language="url">
 postgresql:///mydb?host=localhost&amp;port=5433
 </programlisting>
     All named parameters must match key words listed in
@@ -971,7 +971,7 @@ postgresql://user@localhost:5433/mydb?options=-c%20synchronous_commit%3Doff
    <para>
     The host part may be either a host name or an IP address.  To specify an
     IPv6 address, enclose it in square brackets:
-<synopsis>
+<synopsis language="url">
 postgresql://[2001:db8::1234]/database
 </synopsis>
    </para>
@@ -2006,7 +2006,7 @@ postgresql://%2Fvar%2Flib%2Fpostgresql/dbname
      <listitem>
       <para>
        Returns the database name of the connection.
-<synopsis>
+<synopsis language="c">
 char *PQdb(const PGconn *conn);
 </synopsis>
       </para>
@@ -2019,7 +2019,7 @@ char *PQdb(const PGconn *conn);
      <listitem>
       <para>
        Returns the user name of the connection.
-<synopsis>
+<synopsis language="c">
 char *PQuser(const PGconn *conn);
 </synopsis>
       </para>
@@ -2032,7 +2032,7 @@ char *PQuser(const PGconn *conn);
      <listitem>
       <para>
        Returns the password of the connection.
-<synopsis>
+<synopsis language="c">
 char *PQpass(const PGconn *conn);
 </synopsis>
       </para>
@@ -2060,7 +2060,7 @@ char *PQpass(const PGconn *conn);
        connection is via Unix socket.  (The path case can be distinguished
        because it will always be an absolute path, beginning
        with <literal>/</literal>.)
-<synopsis>
+<synopsis language="c">
 char *PQhost(const PGconn *conn);
 </synopsis>
       </para>
@@ -2101,7 +2101,7 @@ char *PQhost(const PGconn *conn);
        This can be the address that a host name resolved to,
        or an IP address provided through the <literal>hostaddr</literal>
        parameter.
-<synopsis>
+<synopsis language="c">
 char *PQhostaddr(const PGconn *conn);
 </synopsis>
       </para>
@@ -2123,7 +2123,7 @@ char *PQhostaddr(const PGconn *conn);
       <para>
        Returns the port of the active connection.
 
-<synopsis>
+<synopsis language="c">
 char *PQport(const PGconn *conn);
 </synopsis>
       </para>
@@ -2160,7 +2160,7 @@ char *PQport(const PGconn *conn);
        <symbol>NULL</symbol> if the <parameter>conn</parameter> argument is
        <symbol>NULL</symbol>.
 
-<synopsis>
+<synopsis language="c">
 char *PQtty(const PGconn *conn);
 </synopsis>
       </para>
@@ -2173,7 +2173,7 @@ char *PQtty(const PGconn *conn);
      <listitem>
       <para>
        Returns the command-line options passed in the connection request.
-<synopsis>
+<synopsis language="c">
 char *PQoptions(const PGconn *conn);
 </synopsis>
       </para>
@@ -2193,7 +2193,7 @@ char *PQoptions(const PGconn *conn);
      <listitem>
       <para>
        Returns the status of the connection.
-<synopsis>
+<synopsis language="c">
 ConnStatusType PQstatus(const PGconn *conn);
 </synopsis>
       </para>
@@ -2228,7 +2228,7 @@ ConnStatusType PQstatus(const PGconn *conn);
       <para>
        Returns the current in-transaction status of the server.
 
-<synopsis>
+<synopsis language="c">
 PGTransactionStatusType PQtransactionStatus(const PGconn *conn);
 </synopsis>
 
@@ -2250,7 +2250,7 @@ PGTransactionStatusType PQtransactionStatus(const PGconn *conn);
       <para>
        Looks up a current parameter setting of the server.
 
-<synopsis>
+<synopsis language="c">
 const char *PQparameterStatus(const PGconn *conn, const char *paramName);
 </synopsis>
 
@@ -2315,7 +2315,7 @@ const char *PQparameterStatus(const PGconn *conn, const char *paramName);
      <listitem>
       <para>
        Interrogates the frontend/backend protocol being used.
-<synopsis>
+<synopsis language="c">
 int PQprotocolVersion(const PGconn *conn);
 </synopsis>
        Applications might wish to use this function to determine whether certain
@@ -2335,7 +2335,7 @@ int PQprotocolVersion(const PGconn *conn);
      <listitem>
       <para>
        Returns an integer representing the server version.
-<synopsis>
+<synopsis language="c">
 int PQserverVersion(const PGconn *conn);
 </synopsis>
       </para>
@@ -2376,7 +2376,7 @@ int PQserverVersion(const PGconn *conn);
        <indexterm><primary>error message</primary></indexterm> Returns the error message
        most recently generated by an operation on the connection.
 
-<synopsis>
+<synopsis language="c">
 char *PQerrorMessage(const PGconn *conn);
 </synopsis>
 
@@ -2407,7 +2407,7 @@ char *PQerrorMessage(const PGconn *conn);
        currently open.  (This will not change during normal operation,
        but could change during connection setup or reset.)
 
-<synopsis>
+<synopsis language="c">
 int PQsocket(const PGconn *conn);
 </synopsis>
 
@@ -2426,7 +2426,7 @@ int PQsocket(const PGconn *conn);
        </indexterm>
        of the backend process handling this connection.
 
-<synopsis>
+<synopsis language="c">
 int PQbackendPID(const PGconn *conn);
 </synopsis>
       </para>
@@ -2450,7 +2450,7 @@ int PQbackendPID(const PGconn *conn);
        required a password, but none was available.
        Returns false (0) if not.
 
-<synopsis>
+<synopsis language="c">
 int PQconnectionNeedsPassword(const PGconn *conn);
 </synopsis>
       </para>
@@ -2469,7 +2469,7 @@ int PQconnectionNeedsPassword(const PGconn *conn);
        Returns true (1) if the connection authentication method
        used a password. Returns false (0) if not.
 
-<synopsis>
+<synopsis language="c">
 int PQconnectionUsedPassword(const PGconn *conn);
 </synopsis>
       </para>
@@ -2494,7 +2494,7 @@ int PQconnectionUsedPassword(const PGconn *conn);
       <para>
         Returns true (1) if the connection uses SSL, false (0) if not.
 
-<synopsis>
+<synopsis language="c">
 int PQsslInUse(const PGconn *conn);
 </synopsis>
       </para>
@@ -2508,7 +2508,7 @@ int PQsslInUse(const PGconn *conn);
       <para>
         Returns SSL-related information about the connection.
 
-<synopsis>
+<synopsis language="c">
 const char *PQsslAttribute(const PGconn *conn, const char *attribute_name);
 </synopsis>
       </para>
@@ -2593,7 +2593,7 @@ const char *PQsslAttribute(const PGconn *conn, const char *attribute_name);
       <para>
        Returns an array of SSL attribute names available.
        The array is terminated by a NULL pointer.
-<synopsis>
+<synopsis language="c">
 const char * const * PQsslAttributeNames(const PGconn *conn);
 </synopsis>
       </para>
@@ -2608,7 +2608,7 @@ const char * const * PQsslAttributeNames(const PGconn *conn);
        the connection.  Returns NULL if the connection is not encrypted
        or the requested type of object is not available from the connection's
        SSL implementation.
-<synopsis>
+<synopsis language="c">
 void *PQsslStruct(const PGconn *conn, const char *struct_name);
 </synopsis>
       </para>
@@ -2619,7 +2619,7 @@ void *PQsslStruct(const PGconn *conn, const char *struct_name);
        and it returns a pointer to
        <productname>OpenSSL</productname>'s <literal>SSL</literal> struct.
        To use this function, code along the following lines could be used:
-<programlisting><![CDATA[
+<programlisting language="c"><![CDATA[
 #include <libpq-fe.h>
 #include <openssl/ssl.h>
 
@@ -2653,7 +2653,7 @@ void *PQsslStruct(const PGconn *conn, const char *struct_name);
        Returns the SSL structure used in the connection, or NULL
        if SSL is not in use.
 
-<synopsis>
+<synopsis language="c">
 void *PQgetssl(const PGconn *conn);
 </synopsis>
       </para>
@@ -2696,7 +2696,7 @@ void *PQgetssl(const PGconn *conn);
        <para>
         Submits a command to the server and waits for the result.
 
-<synopsis>
+<synopsis language="c">
 PGresult *PQexec(PGconn *conn, const char *command);
 </synopsis>
        </para>
@@ -2741,7 +2741,7 @@ PGresult *PQexec(PGconn *conn, const char *command);
         with the ability to pass parameters separately from the SQL
         command text.
 
-<synopsis>
+<synopsis language="c">
 PGresult *PQexecParams(PGconn *conn,
                        const char *command,
                        int nParams,
@@ -2920,7 +2920,7 @@ SELECT * FROM mytable WHERE x = $1::bigint;
        <para>
         Submits a request to create a prepared statement with the
         given parameters, and waits for completion.
-<synopsis>
+<synopsis language="c">
 PGresult *PQprepare(PGconn *conn,
                     const char *stmtName,
                     const char *query,
@@ -2989,7 +2989,7 @@ PGresult *PQprepare(PGconn *conn,
        <para>
         Sends a request to execute a prepared statement with given
         parameters, and waits for the result.
-<synopsis>
+<synopsis language="c">
 PGresult *PQexecPrepared(PGconn *conn,
                          const char *stmtName,
                          int nParams,
@@ -3026,7 +3026,7 @@ PGresult *PQexecPrepared(PGconn *conn,
        <para>
         Submits a request to obtain information about the specified
         prepared statement, and waits for completion.
-<synopsis>
+<synopsis language="c">
 PGresult *PQdescribePrepared(PGconn *conn, const char *stmtName);
 </synopsis>
        </para>
@@ -3059,7 +3059,7 @@ PGresult *PQdescribePrepared(PGconn *conn, const char *stmtName);
        <para>
         Submits a request to obtain information about the specified
         portal, and waits for completion.
-<synopsis>
+<synopsis language="c">
 PGresult *PQdescribePortal(PGconn *conn, const char *portalName);
 </synopsis>
        </para>
@@ -3104,7 +3104,7 @@ PGresult *PQdescribePortal(PGconn *conn, const char *portalName);
       <listitem>
        <para>
         Returns the result status of the command.
-<synopsis>
+<synopsis language="c">
 ExecStatusType PQresultStatus(const PGresult *res);
 </synopsis>
        </para>
@@ -3269,7 +3269,7 @@ ExecStatusType PQresultStatus(const PGresult *res);
         <xref linkend="libpq-PQresultStatus"/> into a string constant describing the
         status code. The caller should not free the result.
 
-<synopsis>
+<synopsis language="c">
 char *PQresStatus(ExecStatusType status);
 </synopsis>
        </para>
@@ -3283,7 +3283,7 @@ char *PQresStatus(ExecStatusType status);
        <para>
         Returns the error message associated with the command, or an empty string
         if there was no error.
-<synopsis>
+<synopsis language="c">
 char *PQresultErrorMessage(const PGresult *res);
 </synopsis>
         If there was an error, the returned string will include a trailing
@@ -3316,7 +3316,7 @@ char *PQresultErrorMessage(const PGresult *res);
        <para>
         Returns a reformatted version of the error message associated with
         a <structname>PGresult</structname> object.
-<synopsis>
+<synopsis language="c">
 char *PQresultVerboseErrorMessage(const PGresult *res,
                                   PGVerbosity verbosity,
                                   PGContextVisibility show_context);
@@ -3351,7 +3351,7 @@ char *PQresultVerboseErrorMessage(const PGresult *res,
       <listitem>
        <para>
         Returns an individual field of an error report.
-<synopsis>
+<synopsis language="c">
 char *PQresultErrorField(const PGresult *res, int fieldcode);
 </synopsis>
         <parameter>fieldcode</parameter> is an error field identifier; see the symbols
@@ -3622,7 +3622,7 @@ char *PQresultErrorField(const PGresult *res, int fieldcode);
         freed via <xref linkend="libpq-PQclear"/> when it  is  no  longer
         needed.
 
-<synopsis>
+<synopsis language="c">
 void PQclear(PGresult *res);
 </synopsis>
        </para>
@@ -3666,7 +3666,7 @@ void PQclear(PGresult *res);
        than <literal>INT_MAX</literal> rows, so an <type>int</type> result is
        sufficient.)
 
-<synopsis>
+<synopsis language="c">
 int PQntuples(const PGresult *res);
 </synopsis>
 
@@ -3682,7 +3682,7 @@ int PQntuples(const PGresult *res);
        Returns the number of columns (fields) in each row of the query
        result.
 
-<synopsis>
+<synopsis language="c">
 int PQnfields(const PGresult *res);
 </synopsis>
       </para>
@@ -3699,7 +3699,7 @@ int PQnfields(const PGresult *res);
        directly. It will be freed when the associated
        <structname>PGresult</structname> handle is passed to
        <xref linkend="libpq-PQclear"/>.
-<synopsis>
+<synopsis language="c">
 char *PQfname(const PGresult *res,
               int column_number);
 </synopsis>
@@ -3717,7 +3717,7 @@ char *PQfname(const PGresult *res,
      <listitem>
       <para>
        Returns the column number associated with the given column name.
-<synopsis>
+<synopsis language="c">
 int PQfnumber(const PGresult *res,
               const char *column_name);
 </synopsis>
@@ -3754,7 +3754,7 @@ PQfnumber(res, "\"BAR\"")    <lineannotation>1</lineannotation>
       <para>
        Returns the OID of the table from which the given column was
        fetched.  Column numbers start at 0.
-<synopsis>
+<synopsis language="c">
 Oid PQftable(const PGresult *res,
              int column_number);
 </synopsis>
@@ -3784,7 +3784,7 @@ Oid PQftable(const PGresult *res,
        Returns the column number (within its table) of the column making
        up the specified query result column.  Query-result column numbers
        start at 0, but table columns have nonzero numbers.
-<synopsis>
+<synopsis language="c">
 int PQftablecol(const PGresult *res,
                 int column_number);
 </synopsis>
@@ -3804,7 +3804,7 @@ int PQftablecol(const PGresult *res,
       <para>
        Returns the format code indicating the format of the given
        column.  Column numbers start at 0.
-<synopsis>
+<synopsis language="c">
 int PQfformat(const PGresult *res,
               int column_number);
 </synopsis>
@@ -3826,7 +3826,7 @@ int PQfformat(const PGresult *res,
        Returns the data type associated with the given  column number.
        The  integer  returned is the internal OID number of the type.
        Column numbers start at 0.
-<synopsis>
+<synopsis language="c">
 Oid PQftype(const PGresult *res,
             int column_number);
 </synopsis>
@@ -3850,7 +3850,7 @@ Oid PQftype(const PGresult *res,
       <para>
        Returns  the type modifier of the column associated with the
        given column number.  Column numbers start at 0.
-<synopsis>
+<synopsis language="c">
 int PQfmod(const PGresult *res,
            int column_number);
 </synopsis>
@@ -3873,7 +3873,7 @@ int PQfmod(const PGresult *res,
       <para>
        Returns  the  size  in bytes of the column associated with the
        given column number.  Column numbers start at 0.
-<synopsis>
+<synopsis language="c">
 int PQfsize(const PGresult *res,
             int column_number);
 </synopsis>
@@ -3896,7 +3896,7 @@ int PQfsize(const PGresult *res,
       <para>
        Returns 1 if the <structname>PGresult</structname> contains binary data
        and 0 if it contains text data.
-<synopsis>
+<synopsis language="c">
 int PQbinaryTuples(const PGresult *res);
 </synopsis>
       </para>
@@ -3922,7 +3922,7 @@ int PQbinaryTuples(const PGresult *res);
        at 0.  The caller should not free the result directly.  It will
        be freed when the associated <structname>PGresult</structname> handle is
        passed to <xref linkend="libpq-PQclear"/>.
-<synopsis>
+<synopsis language="c">
 char *PQgetvalue(const PGresult *res,
                  int row_number,
                  int column_number);
@@ -3966,7 +3966,7 @@ char *PQgetvalue(const PGresult *res,
       <para>
        Tests a field for a null value.  Row and column numbers start
        at 0.
-<synopsis>
+<synopsis language="c">
 int PQgetisnull(const PGresult *res,
                 int row_number,
                 int column_number);
@@ -3989,7 +3989,7 @@ int PQgetisnull(const PGresult *res,
       <para>
        Returns the actual length of a field value in bytes.  Row and
        column numbers start at 0.
-<synopsis>
+<synopsis language="c">
 int PQgetlength(const PGresult *res,
                 int row_number,
                 int column_number);
@@ -4014,7 +4014,7 @@ int PQgetlength(const PGresult *res,
      <listitem>
       <para>
        Returns the number of parameters of a prepared statement.
-<synopsis>
+<synopsis language="c">
 int PQnparams(const PGresult *res);
 </synopsis>
       </para>
@@ -4034,7 +4034,7 @@ int PQnparams(const PGresult *res);
       <para>
        Returns the data type of the indicated statement parameter.
        Parameter numbers start at 0.
-<synopsis>
+<synopsis language="c">
 Oid PQparamtype(const PGresult *res, int param_number);
 </synopsis>
       </para>
@@ -4054,7 +4054,7 @@ Oid PQparamtype(const PGresult *res, int param_number);
       <para>
        Prints out all the rows and,  optionally,  the column names  to
        the specified output stream.
-<synopsis>
+<synopsis language="c">
 void PQprint(FILE *fout,      /* output stream */
              const PGresult *res,
              const PQprintOpt *po);
@@ -4100,7 +4100,7 @@ typedef struct
       <para>
        Returns the command status tag from the SQL command that generated
        the <structname>PGresult</structname>.
-<synopsis>
+<synopsis language="c">
 char *PQcmdStatus(PGresult *res);
 </synopsis>
       </para>
@@ -4121,7 +4121,7 @@ char *PQcmdStatus(PGresult *res);
      <listitem>
       <para>
        Returns the number of rows affected by the SQL command.
-<synopsis>
+<synopsis language="c">
 char *PQcmdTuples(PGresult *res);
 </synopsis>
       </para>
@@ -4159,7 +4159,7 @@ char *PQcmdTuples(PGresult *res);
        returns <literal>InvalidOid</literal>. This function will also
        return <literal>InvalidOid</literal> if the table affected by the
        <command>INSERT</command> statement does not contain OIDs.
-<synopsis>
+<synopsis language="c">
 Oid PQoidValue(const PGresult *res);
 </synopsis>
       </para>
@@ -4175,7 +4175,7 @@ Oid PQoidValue(const PGresult *res);
        <xref linkend="libpq-PQoidValue"/> and is not thread-safe.
        It returns a string with the OID of the inserted row, while
        <xref linkend="libpq-PQoidValue"/> returns the OID value.
-<synopsis>
+<synopsis language="c">
 char *PQoidStatus(const PGresult *res);
 </synopsis>
       </para>
@@ -4200,7 +4200,7 @@ char *PQoidStatus(const PGresult *res);
 
      <listitem>
      <para>
-<synopsis>
+<synopsis language="c">
 char *PQescapeLiteral(PGconn *conn, const char *str, size_t length);
 </synopsis>
      </para>
@@ -4259,7 +4259,7 @@ char *PQescapeLiteral(PGconn *conn, const char *str, size_t length);
 
      <listitem>
      <para>
-<synopsis>
+<synopsis language="c">
 char *PQescapeIdentifier(PGconn *conn, const char *str, size_t length);
 </synopsis>
      </para>
@@ -4309,7 +4309,7 @@ char *PQescapeIdentifier(PGconn *conn, const char *str, size_t length);
 
      <listitem>
      <para>
-<synopsis>
+<synopsis language="c">
 size_t PQescapeStringConn(PGconn *conn,
                           char *to, const char *from, size_t length,
                           int *error);
@@ -4361,7 +4361,7 @@ size_t PQescapeStringConn(PGconn *conn,
      <para>
        <xref linkend="libpq-PQescapeString"/> is an older, deprecated version of
        <xref linkend="libpq-PQescapeStringConn"/>.
-<synopsis>
+<synopsis language="c">
 size_t PQescapeString (char *to, const char *from, size_t length);
 </synopsis>
      </para>
@@ -4395,7 +4395,7 @@ size_t PQescapeString (char *to, const char *from, size_t length);
        Escapes binary data for use within an SQL command with the type
        <type>bytea</type>.  As with <xref linkend="libpq-PQescapeStringConn"/>,
        this is only used when inserting data directly into an SQL command string.
-<synopsis>
+<synopsis language="c">
 unsigned char *PQescapeByteaConn(PGconn *conn,
                                  const unsigned char *from,
                                  size_t from_length,
@@ -4450,7 +4450,7 @@ unsigned char *PQescapeByteaConn(PGconn *conn,
       <para>
        <xref linkend="libpq-PQescapeBytea"/> is an older, deprecated version of
        <xref linkend="libpq-PQescapeByteaConn"/>.
-<synopsis>
+<synopsis language="c">
 unsigned char *PQescapeBytea(const unsigned char *from,
                              size_t from_length,
                              size_t *to_length);
@@ -4481,7 +4481,7 @@ unsigned char *PQescapeBytea(const unsigned char *from,
        is needed when retrieving <type>bytea</type> data in text format,
        but not when retrieving it in binary format.
 
-<synopsis>
+<synopsis language="c">
 unsigned char *PQunescapeBytea(const unsigned char *from, size_t *to_length);
 </synopsis>
       </para>
@@ -4593,7 +4593,7 @@ unsigned char *PQunescapeBytea(const unsigned char *from, size_t *to_length);
        1 is returned if the command was successfully dispatched and 0 if
        not (in which case, use <xref linkend="libpq-PQerrorMessage"/> to get more
        information about the failure).
-<synopsis>
+<synopsis language="c">
 int PQsendQuery(PGconn *conn, const char *command);
 </synopsis>
 
@@ -4617,7 +4617,7 @@ int PQsendQuery(PGconn *conn, const char *command);
       <para>
        Submits a command and separate parameters to the server without
        waiting for the result(s).
-<synopsis>
+<synopsis language="c">
 int PQsendQueryParams(PGconn *conn,
                       const char *command,
                       int nParams,
@@ -4645,7 +4645,7 @@ int PQsendQueryParams(PGconn *conn,
       <para>
        Sends a request to create a prepared statement with the given
        parameters, without waiting for completion.
-<synopsis>
+<synopsis language="c">
 int PQsendPrepare(PGconn *conn,
                   const char *stmtName,
                   const char *query,
@@ -4670,7 +4670,7 @@ int PQsendPrepare(PGconn *conn,
       <para>
        Sends a request to execute a prepared statement with given
        parameters, without waiting for the result(s).
-<synopsis>
+<synopsis language="c">
 int PQsendQueryPrepared(PGconn *conn,
                         const char *stmtName,
                         int nParams,
@@ -4696,7 +4696,7 @@ int PQsendQueryPrepared(PGconn *conn,
       <para>
        Submits a request to obtain information about the specified
        prepared statement, without waiting for completion.
-<synopsis>
+<synopsis language="c">
 int PQsendDescribePrepared(PGconn *conn, const char *stmtName);
 </synopsis>
 
@@ -4716,7 +4716,7 @@ int PQsendDescribePrepared(PGconn *conn, const char *stmtName);
       <para>
        Submits a request to obtain information about the specified
        portal, without waiting for completion.
-<synopsis>
+<synopsis language="c">
 int PQsendDescribePortal(PGconn *conn, const char *portalName);
 </synopsis>
 
@@ -4745,7 +4745,7 @@ int PQsendDescribePortal(PGconn *conn, const char *portalName);
        call, and returns it.
        A null pointer is returned when the command is complete and there
        will be no more results.
-<synopsis>
+<synopsis language="c">
 PGresult *PQgetResult(PGconn *conn);
 </synopsis>
       </para>
@@ -4823,7 +4823,7 @@ PGresult *PQgetResult(PGconn *conn);
      <listitem>
       <para>
        If input is available from the server, consume it.
-<synopsis>
+<synopsis language="c">
 int PQconsumeInput(PGconn *conn);
 </synopsis>
       </para>
@@ -4861,7 +4861,7 @@ int PQconsumeInput(PGconn *conn);
        <xref linkend="libpq-PQgetResult"/> would block waiting for input.
        A 0 return indicates that <xref linkend="libpq-PQgetResult"/> can be
        called with assurance of not blocking.
-<synopsis>
+<synopsis language="c">
 int PQisBusy(PGconn *conn);
 </synopsis>
       </para>
@@ -4922,7 +4922,7 @@ int PQisBusy(PGconn *conn);
      <listitem>
       <para>
        Sets the nonblocking status of the connection.
-<synopsis>
+<synopsis language="c">
 int PQsetnonblocking(PGconn *conn, int arg);
 </synopsis>
       </para>
@@ -4954,7 +4954,7 @@ int PQsetnonblocking(PGconn *conn, int arg);
      <listitem>
       <para>
        Returns the blocking status of the database connection.
-<synopsis>
+<synopsis language="c">
 int PQisnonblocking(const PGconn *conn);
 </synopsis>
       </para>
@@ -4976,7 +4976,7 @@ int PQisnonblocking(const PGconn *conn);
        for some reason, or 1 if it was unable to send all the data in
        the send queue yet (this case can only occur if the connection
        is nonblocking).
-<synopsis>
+<synopsis language="c">
 int PQflush(PGconn *conn);
 </synopsis>
       </para>
@@ -5300,7 +5300,7 @@ int PQflush(PGconn *conn);
       <para>
       Returns the current pipeline mode status of the
       <application>libpq</application> connection.
-<synopsis>
+<synopsis language="c">
 PGpipelineStatus PQpipelineStatus(const PGconn *conn);
 </synopsis>
       </para>
@@ -5360,7 +5360,7 @@ PGpipelineStatus PQpipelineStatus(const PGconn *conn);
       Causes a connection to enter pipeline mode if it is currently idle or
       already in pipeline mode.
 
-<synopsis>
+<synopsis language="c">
 int PQenterPipelineMode(PGconn *conn);
 </synopsis>
 
@@ -5384,7 +5384,7 @@ int PQenterPipelineMode(PGconn *conn);
       <para>
        Causes a connection to exit pipeline mode if it is currently in pipeline mode
        with an empty queue and no pending results.
-<synopsis>
+<synopsis language="c">
 int PQexitPipelineMode(PGconn *conn);
 </synopsis>
       </para>
@@ -5410,7 +5410,7 @@ int PQexitPipelineMode(PGconn *conn);
        the delimiter of an implicit transaction and an error recovery
        point; see <xref linkend="libpq-pipeline-errors"/>.
 
-<synopsis>
+<synopsis language="c">
 int PQpipelineSync(PGconn *conn);
 </synopsis>
       </para>
@@ -5429,7 +5429,7 @@ int PQpipelineSync(PGconn *conn);
       <listitem>
        <para>
         Sends a request for the server to flush its output buffer.
-<synopsis>
+<synopsis language="c">
 int PQsendFlushRequest(PGconn *conn);
 </synopsis>
        </para>
@@ -5564,7 +5564,7 @@ UPDATE mytable SET x = x + 1 WHERE id = 42;
       <para>
        Select single-row mode for the currently-executing query.
 
-<synopsis>
+<synopsis language="c">
 int PQsetSingleRowMode(PGconn *conn);
 </synopsis>
       </para>
@@ -5623,7 +5623,7 @@ int PQsetSingleRowMode(PGconn *conn);
       <para>
        Creates a data structure containing the information needed to cancel
        a command issued through a particular database connection.
-<synopsis>
+<synopsis language="c">
 PGcancel *PQgetCancel(PGconn *conn);
 </synopsis>
       </para>
@@ -5647,7 +5647,7 @@ PGcancel *PQgetCancel(PGconn *conn);
      <listitem>
       <para>
        Frees a data structure created by <xref linkend="libpq-PQgetCancel"/>.
-<synopsis>
+<synopsis language="c">
 void PQfreeCancel(PGcancel *cancel);
 </synopsis>
       </para>
@@ -5665,7 +5665,7 @@ void PQfreeCancel(PGcancel *cancel);
      <listitem>
       <para>
        Requests that the server abandon processing of the current command.
-<synopsis>
+<synopsis language="c">
 int PQcancel(PGcancel *cancel, char *errbuf, int errbufsize);
 </synopsis>
       </para>
@@ -5707,7 +5707,7 @@ int PQcancel(PGcancel *cancel, char *errbuf, int errbufsize);
       <para>
        <xref linkend="libpq-PQrequestCancel"/> is a deprecated variant of
        <xref linkend="libpq-PQcancel"/>.
-<synopsis>
+<synopsis language="c">
 int PQrequestCancel(PGconn *conn);
 </synopsis>
       </para>
@@ -5755,7 +5755,7 @@ int PQrequestCancel(PGconn *conn);
   <para>
    The function <function id="libpq-PQfn">PQfn</function><indexterm><primary>PQfn</primary></indexterm>
    requests execution of a server function via the fast-path interface:
-<synopsis>
+<synopsis language="c">
 PGresult *PQfn(PGconn *conn,
                int fnid,
                int *result_buf,
@@ -5876,7 +5876,7 @@ typedef struct
    notification is returned from <function>PQnotifies</function>, it is considered
    handled and will be removed from the list of notifications.
 
-<synopsis>
+<synopsis language="c">
 PGnotify *PQnotifies(PGconn *conn);
 
 typedef struct pgNotify
@@ -6051,7 +6051,7 @@ typedef struct pgNotify
      <listitem>
       <para>
        Sends data to the server during <literal>COPY_IN</literal> state.
-<synopsis>
+<synopsis language="c">
 int PQputCopyData(PGconn *conn,
                   const char *buffer,
                   int nbytes);
@@ -6085,7 +6085,7 @@ int PQputCopyData(PGconn *conn,
      <listitem>
       <para>
        Sends end-of-data indication to the server during <literal>COPY_IN</literal> state.
-<synopsis>
+<synopsis language="c">
 int PQputCopyEnd(PGconn *conn,
                  const char *errormsg);
 </synopsis>
@@ -6144,7 +6144,7 @@ int PQputCopyEnd(PGconn *conn,
      <listitem>
       <para>
        Receives data from the server during <literal>COPY_OUT</literal> state.
-<synopsis>
+<synopsis language="c">
 int PQgetCopyData(PGconn *conn,
                   char **buffer,
                   int async);
@@ -6217,7 +6217,7 @@ int PQgetCopyData(PGconn *conn,
       <para>
        Reads  a  newline-terminated  line  of  characters (transmitted
        by the server) into a buffer string of size <parameter>length</parameter>.
-<synopsis>
+<synopsis language="c">
 int PQgetline(PGconn *conn,
               char *buffer,
               int length);
@@ -6251,7 +6251,7 @@ int PQgetline(PGconn *conn,
       <para>
        Reads a row of <command>COPY</command> data (transmitted  by the
        server) into a buffer without blocking.
-<synopsis>
+<synopsis language="c">
 int PQgetlineAsync(PGconn *conn,
                    char *buffer,
                    int bufsize);
@@ -6305,7 +6305,7 @@ int PQgetlineAsync(PGconn *conn,
       <para>
        Sends  a  null-terminated  string  to  the server.  Returns 0 if
        OK and <symbol>EOF</symbol> if unable to send the string.
-<synopsis>
+<synopsis language="c">
 int PQputline(PGconn *conn,
               const char *string);
 </synopsis>
@@ -6341,7 +6341,7 @@ int PQputline(PGconn *conn,
       <para>
        Sends  a  non-null-terminated  string  to  the server.  Returns
        0 if OK and <symbol>EOF</symbol> if unable to send the string.
-<synopsis>
+<synopsis language="c">
 int PQputnbytes(PGconn *conn,
                 const char *buffer,
                 int nbytes);
@@ -6362,7 +6362,7 @@ int PQputnbytes(PGconn *conn,
      <listitem>
       <para>
        Synchronizes with the server.
-<synopsis>
+<synopsis language="c">
 int PQendcopy(PGconn *conn);
 </synopsis>
        This function waits until the  server  has  finished  the copying.
@@ -6422,7 +6422,7 @@ int PQendcopy(PGconn *conn);
     <listitem>
      <para>
       Returns the client encoding.
-<synopsis>
+<synopsis language="c">
 int PQclientEncoding(const PGconn *<replaceable>conn</replaceable>);
 </synopsis>
 
@@ -6431,7 +6431,7 @@ int PQclientEncoding(const PGconn *<replaceable>conn</replaceable>);
       To convert an encoding ID to an encoding name, you
       can use:
 
-<synopsis>
+<synopsis language="c">
 char *pg_encoding_to_char(int <replaceable>encoding_id</replaceable>);
 </synopsis>
      </para>
@@ -6444,7 +6444,7 @@ char *pg_encoding_to_char(int <replaceable>encoding_id</replaceable>);
     <listitem>
      <para>
       Sets the client encoding.
-<synopsis>
+<synopsis language="c">
 int PQsetClientEncoding(PGconn *<replaceable>conn</replaceable>, const char *<replaceable>encoding</replaceable>);
 </synopsis>
 
@@ -6464,7 +6464,7 @@ int PQsetClientEncoding(PGconn *<replaceable>conn</replaceable>, const char *<re
      <para>
       Determines the verbosity of messages returned by
       <xref linkend="libpq-PQerrorMessage"/> and <xref linkend="libpq-PQresultErrorMessage"/>.
-<synopsis>
+<synopsis language="c">
 typedef enum
 {
     PQERRORS_TERSE,
@@ -6507,7 +6507,7 @@ PGVerbosity PQsetErrorVerbosity(PGconn *conn, PGVerbosity verbosity);
       Determines the handling of <literal>CONTEXT</literal> fields in messages
       returned by <xref linkend="libpq-PQerrorMessage"/>
       and <xref linkend="libpq-PQresultErrorMessage"/>.
-<synopsis>
+<synopsis language="c">
 typedef enum
 {
     PQSHOW_CONTEXT_NEVER,
@@ -6549,7 +6549,7 @@ PGContextVisibility PQsetErrorContextVisibility(PGconn *conn, PGContextVisibilit
      <para>
       Enables tracing of the client/server communication to a debugging file
       stream.
-<synopsis>
+<synopsis language="c">
 void PQtrace(PGconn *conn, FILE *stream);
 </synopsis>
      </para>
@@ -6588,7 +6588,7 @@ void PQtrace(PGconn *conn, FILE *stream);
     <listitem>
      <para>
       Controls the tracing behavior of client/server communication.
-<synopsis>
+<synopsis language="c">
 void PQsetTraceFlags(PGconn *conn, int flags);
 </synopsis>
      </para>
@@ -6613,7 +6613,7 @@ void PQsetTraceFlags(PGconn *conn, int flags);
     <listitem>
      <para>
       Disables tracing started by <xref linkend="libpq-PQtrace"/>.
-<synopsis>
+<synopsis language="c">
 void PQuntrace(PGconn *conn);
 </synopsis>
      </para>
@@ -6637,7 +6637,7 @@ void PQuntrace(PGconn *conn);
     <listitem>
      <para>
       Frees memory allocated by <application>libpq</application>.
-<synopsis>
+<synopsis language="c">
 void PQfreemem(void *ptr);
 </synopsis>
      </para>
@@ -6666,7 +6666,7 @@ void PQfreemem(void *ptr);
      <para>
       Frees the data structures allocated by
       <xref linkend="libpq-PQconndefaults"/> or <xref linkend="libpq-PQconninfoParse"/>.
-<synopsis>
+<synopsis language="c">
 void PQconninfoFree(PQconninfoOption *connOptions);
 </synopsis>
      </para>
@@ -6684,7 +6684,7 @@ void PQconninfoFree(PQconninfoOption *connOptions);
     <listitem>
      <para>
       Prepares the encrypted form of a <productname>PostgreSQL</productname> password.
-<synopsis>
+<synopsis language="c">
 char *PQencryptPasswordConn(PGconn *conn, const char *passwd, const char *user, const char *algorithm);
 </synopsis>
       This function is intended to be used by client applications that
@@ -6733,7 +6733,7 @@ char *PQencryptPasswordConn(PGconn *conn, const char *passwd, const char *user, 
     <listitem>
      <para>
       Prepares the md5-encrypted form of a <productname>PostgreSQL</productname> password.
-<synopsis>
+<synopsis language="c">
 char *PQencryptPassword(const char *passwd, const char *user);
 </synopsis>
       <xref linkend="libpq-PQencryptPassword"/> is an older, deprecated version of
@@ -6751,7 +6751,7 @@ char *PQencryptPassword(const char *passwd, const char *user);
     <listitem>
      <para>
       Constructs an empty <structname>PGresult</structname> object with the given status.
-<synopsis>
+<synopsis language="c">
 PGresult *PQmakeEmptyPGresult(PGconn *conn, ExecStatusType status);
 </synopsis>
      </para>
@@ -6786,7 +6786,7 @@ PGresult *PQmakeEmptyPGresult(PGconn *conn, ExecStatusType status);
       <structname>PGresult</structname> object.  Returns non-zero for success,
       zero if any event procedure fails.
 
-<synopsis>
+<synopsis language="c">
 int PQfireResultCreateEvents(PGconn *conn, PGresult *res);
 </synopsis>
      </para>
@@ -6822,7 +6822,7 @@ int PQfireResultCreateEvents(PGconn *conn, PGresult *res);
       <xref linkend="libpq-PQclear"/> must be called when the copy is no longer
       needed.  If the function fails, <symbol>NULL</symbol> is returned.
 
-<synopsis>
+<synopsis language="c">
 PGresult *PQcopyResult(const PGresult *src, int flags);
 </synopsis>
      </para>
@@ -6853,7 +6853,7 @@ PGresult *PQcopyResult(const PGresult *src, int flags);
     <listitem>
      <para>
       Sets the attributes of a <structname>PGresult</structname> object.
-<synopsis>
+<synopsis language="c">
 int PQsetResultAttrs(PGresult *res, int numAttributes, PGresAttDesc *attDescs);
 </synopsis>
      </para>
@@ -6876,7 +6876,7 @@ int PQsetResultAttrs(PGresult *res, int numAttributes, PGresAttDesc *attDescs);
     <listitem>
      <para>
       Sets a tuple field value of a <structname>PGresult</structname> object.
-<synopsis>
+<synopsis language="c">
 int PQsetvalue(PGresult *res, int tup_num, int field_num, char *value, int len);
 </synopsis>
      </para>
@@ -6905,7 +6905,7 @@ int PQsetvalue(PGresult *res, int tup_num, int field_num, char *value, int len);
     <listitem>
      <para>
       Allocate subsidiary storage for a <structname>PGresult</structname> object.
-<synopsis>
+<synopsis language="c">
 void *PQresultAlloc(PGresult *res, size_t nBytes);
 </synopsis>
      </para>
@@ -6927,7 +6927,7 @@ void *PQresultAlloc(PGresult *res, size_t nBytes);
      <para>
       Retrieves the number of bytes allocated for
       a <structname>PGresult</structname> object.
-<synopsis>
+<synopsis language="c">
 size_t PQresultMemorySize(const PGresult *res);
 </synopsis>
      </para>
@@ -6948,7 +6948,7 @@ size_t PQresultMemorySize(const PGresult *res);
     <listitem>
      <para>
       Return the version of <productname>libpq</productname> that is being used.
-<synopsis>
+<synopsis language="c">
 int PQlibVersion(void);
 </synopsis>
      </para>
@@ -7037,7 +7037,7 @@ int PQlibVersion(void);
    <indexterm><primary>PQsetNoticeProcessor</primary></indexterm> sets or
    examines the current notice processor.
 
-<synopsis>
+<synopsis language="c">
 typedef void (*PQnoticeReceiver) (void *arg, const PGresult *res);
 
 PQnoticeReceiver
@@ -7168,7 +7168,7 @@ defaultNoticeProcessor(void *arg, const char *message)
        register event will be fired per event handler per connection.  If the
        event procedure fails (returns zero), the registration is cancelled.
 
-<synopsis>
+<synopsis language="c">
 typedef struct
 {
     PGconn *conn;
@@ -7200,7 +7200,7 @@ typedef struct
        With earlier versions, however, it's important to return success
        (nonzero) or the connection will be aborted.
 
-<synopsis>
+<synopsis language="c">
 typedef struct
 {
     PGconn *conn;
@@ -7230,7 +7230,7 @@ typedef struct
        ability to manage this memory.  Failure to clean up will lead
        to memory leaks.
 
-<synopsis>
+<synopsis language="c">
 typedef struct
 {
     PGconn *conn;
@@ -7258,7 +7258,7 @@ typedef struct
        <xref linkend="libpq-PQgetResult"/>.  This event will only be fired after
        the result has been created successfully.
 
-<synopsis>
+<synopsis language="c">
 typedef struct
 {
     PGconn *conn;
@@ -7292,7 +7292,7 @@ typedef struct
        or <literal>PGEVT_RESULTCOPY</literal> event for the source result
        will receive <literal>PGEVT_RESULTCOPY</literal> events.
 
-<synopsis>
+<synopsis language="c">
 typedef struct
 {
     const PGresult *src;
@@ -7326,7 +7326,7 @@ typedef struct
        ability to manage this memory.  Failure to clean up will lead
        to memory leaks.
 
-<synopsis>
+<synopsis language="c">
 typedef struct
 {
     PGresult *result;
@@ -7360,7 +7360,7 @@ typedef struct
        event procedure, that is, the user callback function that receives
        events from libpq.  The signature of an event procedure must be
 
-<synopsis>
+<synopsis language="c">
 int eventproc(PGEventId evtId, void *evtInfo, void *passThrough)
 </synopsis>
 
@@ -7408,7 +7408,7 @@ int eventproc(PGEventId evtId, void *evtInfo, void *passThrough)
       <para>
        Registers an event callback procedure with libpq.
 
-<synopsis>
+<synopsis language="c">
 int PQregisterEventProc(PGconn *conn, PGEventProc proc,
                         const char *name, void *passThrough);
 </synopsis>
@@ -7446,7 +7446,7 @@ int PQregisterEventProc(PGconn *conn, PGEventProc proc,
        only possible if <parameter>proc</parameter> has not been properly
        registered in <parameter>conn</parameter>.)
 
-<synopsis>
+<synopsis language="c">
 int PQsetInstanceData(PGconn *conn, PGEventProc proc, void *data);
 </synopsis>
       </para>
@@ -7462,7 +7462,7 @@ int PQsetInstanceData(PGconn *conn, PGEventProc proc, void *data);
        associated with procedure <parameter>proc</parameter>,
        or <symbol>NULL</symbol> if there is none.
 
-<synopsis>
+<synopsis language="c">
 void *PQinstanceData(const PGconn *conn, PGEventProc proc);
 </synopsis>
       </para>
@@ -7479,7 +7479,7 @@ void *PQinstanceData(const PGconn *conn, PGEventProc proc);
        possible if <parameter>proc</parameter> has not been properly registered
        in the result.)
 
-<synopsis>
+<synopsis language="c">
 int PQresultSetInstanceData(PGresult *res, PGEventProc proc, void *data);
 </synopsis>
       </para>
@@ -7501,7 +7501,7 @@ int PQresultSetInstanceData(PGresult *res, PGEventProc proc, void *data);
        Returns the result's <literal>instanceData</literal> associated with <parameter>proc</parameter>, or <symbol>NULL</symbol>
        if there is none.
 
-<synopsis>
+<synopsis language="c">
 void *PQresultInstanceData(const PGresult *res, PGEventProc proc);
 </synopsis>
       </para>
@@ -8101,7 +8101,7 @@ myEventProc(PGEventId evtId, void *evtInfo, void *passThrough)
 
   <para>
    This file should contain lines of the following format:
-<synopsis>
+<synopsis language="pgpass">
 <replaceable>hostname</replaceable>:<replaceable>port</replaceable>:<replaceable>database</replaceable>:<replaceable>username</replaceable>:<replaceable>password</replaceable>
 </synopsis>
    (You can add a reminder comment to the file by copying the line above and
@@ -8237,7 +8237,7 @@ user=admin
    connection options.  The URL must conform to
    <ulink url="https://tools.ietf.org/html/rfc1959">RFC 1959</ulink>
    and be of the form
-<synopsis>
+<synopsis language="url">
 ldap://[<replaceable>hostname</replaceable>[:<replaceable>port</replaceable>]]/<replaceable>search_base</replaceable>?<replaceable>attribute</replaceable>?<replaceable>search_scope</replaceable>?<replaceable>filter</replaceable>
 </synopsis>
    where <replaceable>hostname</replaceable> defaults to
@@ -8740,7 +8740,7 @@ ldap://ldap.acme.com/cn=dbserver,cn=hosts?pgconnectinfo?base?(objectclass=*)
      <listitem>
       <para>
        Allows applications to select which security libraries to initialize.
-<synopsis>
+<synopsis language="c">
 void PQinitOpenSSL(int do_ssl, int do_crypto);
 </synopsis>
       </para>
@@ -8769,7 +8769,7 @@ void PQinitOpenSSL(int do_ssl, int do_crypto);
      <term><function>PQinitSSL</function><indexterm><primary>PQinitSSL</primary></indexterm></term><listitem>
       <para>
        Allows applications to select which security libraries to initialize.
-<synopsis>
+<synopsis language="c">
 void PQinitSSL(int do_ssl);
 </synopsis>
       </para>
@@ -8824,7 +8824,7 @@ void PQinitSSL(int do_ssl);
      <para>
       Returns the thread safety status of the
       <application>libpq</application> library.
-<synopsis>
+<synopsis language="c">
 int PQisthreadsafe();
 </synopsis>
      </para>

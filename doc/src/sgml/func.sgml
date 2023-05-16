@@ -32,7 +32,7 @@
    which says that the function <function>repeat</function> takes one text and
    one integer argument and returns a result of type text.  The right arrow
    is also used to indicate the result of an example, thus:
-<programlisting>
+<programlisting language="postgres">
 repeat('Pg', 4) <returnvalue>PgPgPgPg</returnvalue>
 </programlisting>
   </para>
@@ -5783,7 +5783,7 @@ regexp_count('ABCABCAXYaxy', 'A.', 1, 'i')  <lineannotation>4</lineannotation>
 
     <para>
      Some examples:
-<programlisting>
+<programlisting language="postgres">
 regexp_instr('number of your street, town zip, FR', '[^,]+', 1, 2)
                                    <lineannotation>23</lineannotation>
 regexp_instr('ABCDEFGHI', '(c..)(...)', 1, 1, 0, 'i', 2)
@@ -5810,7 +5810,7 @@ regexp_instr('ABCDEFGHI', '(c..)(...)', 1, 1, 0, 'i', 2)
 
     <para>
      Some examples:
-<programlisting>
+<programlisting language="postgres">
 regexp_like('Hello World', 'world')       <lineannotation>false</lineannotation>
 regexp_like('Hello World', 'world', 'i')  <lineannotation>true</lineannotation>
 </programlisting>
@@ -5840,7 +5840,7 @@ regexp_like('Hello World', 'world', 'i')  <lineannotation>true</lineannotation>
 
    <para>
     Some examples:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT regexp_match('foobarbequebaz', 'bar.*que');
  regexp_match
 --------------
@@ -5864,7 +5864,7 @@ SELECT regexp_match('foobarbequebaz', '(bar)(beque)');
       in <productname>PostgreSQL</productname> version 15 and up.  When
       working in older versions, you can extract the first element
       of <function>regexp_match()</function>'s result, for example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT (regexp_match('foobarbequebaz', 'bar.*que'))[1];
  regexp_match
 --------------
@@ -5894,7 +5894,7 @@ SELECT (regexp_match('foobarbequebaz', 'bar.*que'))[1];
 
    <para>
     Some examples:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT regexp_matches('foo', 'not there');
  regexp_matches
 ----------------
@@ -5918,7 +5918,7 @@ SELECT regexp_matches('foobarbequebazilbarfbonk', '(b[^b]+)(b[^b]+)', 'g');
      in <productname>PostgreSQL</productname> version 10 and up.  When working in older
      versions, a common trick is to place a <function>regexp_matches()</function>
      call in a sub-select, for example:
-<programlisting>
+<programlisting language="postgres">
 SELECT col1, (SELECT regexp_matches(col2, '(bar)(beque)')) FROM tab;
 </programlisting>
      This produces a text array if there's a match, or <literal>NULL</literal> if
@@ -5975,7 +5975,7 @@ SELECT col1, (SELECT regexp_matches(col2, '(bar)(beque)')) FROM tab;
 
    <para>
     Some examples:
-<programlisting>
+<programlisting language="postgres">
 regexp_replace('foobarbaz', 'b..', 'X')
                                    <lineannotation>fooXbaz</lineannotation>
 regexp_replace('foobarbaz', 'b..', 'X', 'g')
@@ -6016,7 +6016,7 @@ regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 3, 'i')
 
    <para>
     Some examples:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT foo FROM regexp_split_to_table('the quick brown fox jumps over the lazy dog', '\s+') AS foo;
   foo
 -------
@@ -6102,7 +6102,7 @@ SELECT foo FROM regexp_split_to_table('the quick brown fox', '\s*') AS foo;
 
     <para>
      Some examples:
-<programlisting>
+<programlisting language="postgres">
 regexp_substr('number of your street, town zip, FR', '[^,]+', 1, 2)
                                    <lineannotation> town zip</lineannotation>
 regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
@@ -10688,7 +10688,7 @@ now()
     <literal>now</literal> to specify the current date and time (again,
     interpreted as the transaction start time).  Thus,
     the following three all return the same result:
-<programlisting>
+<programlisting language="postgres">
 SELECT CURRENT_TIMESTAMP;
 SELECT now();
 SELECT TIMESTAMP 'now';  -- but see tip below
@@ -10748,7 +10748,7 @@ pg_sleep_until ( <type>timestamp with time zone</type> )
     a specific wake-up time is desired.
     For example:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT pg_sleep(1.5);
 SELECT pg_sleep_for('5 minutes');
 SELECT pg_sleep_until('tomorrow 03:00');
@@ -10788,7 +10788,7 @@ SELECT pg_sleep_until('tomorrow 03:00');
    These are listed in <xref linkend="functions-enum-table"/>. The examples
    assume an enum type created as:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple');
 </programlisting>
 
@@ -13614,7 +13614,7 @@ CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple
        <para>
         <literal>select * from unnest('cat:3 fat:2,4 rat:5A'::tsvector)</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  lexeme | positions | weights
 --------+-----------+---------
  cat    | {3}       | {D}
@@ -15819,7 +15819,7 @@ table2-mapping
        <para>
         <literal>select * from json_array_elements('[1,true, [2,false]]')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
    value
 -----------
  1
@@ -15850,7 +15850,7 @@ table2-mapping
        <para>
         <literal>select * from json_array_elements_text('["foo", "bar"]')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
    value
 -----------
  foo
@@ -15912,7 +15912,7 @@ table2-mapping
        <para>
         <literal>select * from json_each('{"a":"foo", "b":"bar"}')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  key | value
 -----+-------
  a   | "foo"
@@ -15948,7 +15948,7 @@ table2-mapping
        <para>
         <literal>select * from json_each_text('{"a":"foo", "b":"bar"}')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  key | value
 -----+-------
  a   | foo
@@ -16031,7 +16031,7 @@ table2-mapping
        <para>
         <literal>select * from json_object_keys('{"f1":"abc","f2":{"f3":"a", "f4":"b"}}')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  json_object_keys
 ------------------
  f1
@@ -16129,7 +16129,7 @@ table2-mapping
         <literal>select * from json_populate_record(null::myrowtype,
          '{"a": 1, "b": ["2", "a b"], "c": {"d": 4, "e": "a  b c"}, "x": "foo"}')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  a |   b       |      c
 ---+-----------+-------------
  1 | {2,"a b"} | (4,"a b c")
@@ -16164,7 +16164,7 @@ table2-mapping
        <para>
         <literal>select * from json_populate_recordset(null::twoints, '[{"a":1,"b":2}, {"a":3,"b":4}]')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  a | b
 ---+---
  1 | 2
@@ -16204,7 +16204,7 @@ table2-mapping
        <para>
         <literal>select * from json_to_record('{"a":1,"b":[1,2,3],"c":[1,2,3],"e":"bar","r": {"a": 123, "b": "a b c"}}') as x(a int, b text, c int[], d text, r myrowtype)</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  a |    b    |    c    | d |       r
 ---+---------+---------+---+---------------
  1 | [1,2,3] | {1,2,3} |   | (123,"a b c")
@@ -16239,7 +16239,7 @@ table2-mapping
        <para>
         <literal>select * from json_to_recordset('[{"a":1,"b":"foo"}, {"a":"2","c":"bar"}]') as x(a int, b text)</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  a |  b
 ---+-----
  1 | foo
@@ -16440,7 +16440,7 @@ table2-mapping
        <para>
         <literal>select * from jsonb_path_query('{"a":[1,2,3,4,5]}', '$.a[*] ? (@ >= $min &amp;&amp; @ &lt;= $max)', '{"min":2, "max":4}')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  jsonb_path_query
 ------------------
  2
@@ -16562,7 +16562,7 @@ table2-mapping
        <para>
         <literal>jsonb_pretty('[{"f1":1,"f2":null}, 2]')</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="json">
 [
     {
         "f1": 1,
@@ -16664,7 +16664,7 @@ table2-mapping
   <para>
    For example, suppose you have some JSON data from a GPS tracker that you
    would like to parse, such as:
-<programlisting>
+<programlisting language="json">
 {
   "track": {
     "segments": [
@@ -17660,7 +17660,7 @@ $.* ? (@ like_regex "^\\d+$")
         commences with the following <function>nextval</function>.
         Furthermore, the value reported by <function>currval</function> is not
         changed in this case.  For example,
-<programlisting>
+<programlisting language="postgres">
 SELECT setval('myseq', 42);           <lineannotation>Next <function>nextval</function> will return 43</lineannotation>
 SELECT setval('myseq', 42, true);     <lineannotation>Same as above</lineannotation>
 SELECT setval('myseq', 42, false);    <lineannotation>Next <function>nextval</function> will return 42</lineannotation>
@@ -17836,7 +17836,7 @@ END
 
    <para>
     An example:
-<screen>
+<screen language="postgres-shell">
 SELECT * FROM test;
 
  a
@@ -17911,7 +17911,7 @@ SELECT a,
     A <token>CASE</token> expression does not evaluate any subexpressions
     that are not needed to determine the result.  For example, this is a
     possible way of avoiding a division-by-zero failure:
-<programlisting>
+<programlisting language="postgres">
 SELECT ... WHERE CASE WHEN x &lt;&gt; 0 THEN y/x &gt; 1.5 ELSE false END;
 </programlisting>
    </para>
@@ -17953,7 +17953,7 @@ SELECT ... WHERE CASE WHEN x &lt;&gt; 0 THEN y/x &gt; 1.5 ELSE false END;
    arguments that is not null.  Null is returned only if all arguments
    are null.  It is often used to substitute a default value for
    null values when data is retrieved for display, for example:
-<programlisting>
+<programlisting language="postgres">
 SELECT COALESCE(description, short_description, '(none)') ...
 </programlisting>
    This returns <varname>description</varname> if it is not null, otherwise
@@ -17993,7 +17993,7 @@ SELECT COALESCE(description, short_description, '(none)') ...
    otherwise it returns <replaceable>value1</replaceable>.
    This can be used to perform the inverse operation of the
    <function>COALESCE</function> example given above:
-<programlisting>
+<programlisting language="postgres">
 SELECT NULLIF(value, '(none)') ...
 </programlisting>
    In this example, if <literal>value</literal> is <literal>(none)</literal>,
@@ -18591,7 +18591,7 @@ SELECT NULLIF(value, '(none)') ...
        <para>
         <literal>select * from unnest(ARRAY[1,2], ARRAY['foo','bar','baz']) as x(a,b)</literal>
         <returnvalue></returnvalue>
-<programlisting>
+<programlisting language="postgres-shell">
  a |  b
 ---+-----
  1 | foo
@@ -20859,7 +20859,7 @@ SELECT count(*) FROM sometable;
     are not actually evaluated, but they must exactly match expressions given
     in the <literal>GROUP BY</literal> clause of the associated query level.
     For example:
-<screen>
+<screen language="postgres-shell">
 <prompt>=&gt;</prompt> <userinput>SELECT * FROM items_sold;</userinput>
  make  | model | sales
 -------+-------+-------
@@ -21258,7 +21258,7 @@ EXISTS (<replaceable>subquery</replaceable>)
    This simple example is like an inner join on <literal>col2</literal>, but
    it produces at most one output row for each <literal>tab1</literal> row,
    even if there are several matching <literal>tab2</literal> rows:
-<screen>
+<screen language="postgres">
 SELECT col1
 FROM tab1
 WHERE EXISTS (SELECT 1 FROM tab2 WHERE col2 = tab1.col2);
@@ -21965,7 +21965,7 @@ AND
    Zero rows are also returned if any input is <literal>NULL</literal>.
    It is an error
    for <parameter>step</parameter> to be zero. Some examples follow:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT * FROM generate_series(2,4);
  generate_series
 -----------------
@@ -22073,7 +22073,7 @@ SELECT * FROM generate_series('2008-03-01 00:00'::timestamp,
    Zero rows are returned for arrays that do not have the requested dimension,
    or if any input is <literal>NULL</literal>.
    Some examples follow:
-<programlisting>
+<programlisting language="postgres-shell">
 -- basic usage:
 SELECT generate_subscripts('{NULL,1,NULL,2}'::int[], 1) AS s;
  s
@@ -22135,7 +22135,7 @@ SELECT * FROM unnest2(ARRAY[[1,2],[3,4]]);
    This is most useful in the case of set returning
    functions such as <function>unnest()</function>.
 
-<programlisting>
+<programlisting language="postgres-shell">
 -- set returning function WITH ORDINALITY:
 SELECT * FROM pg_ls_dir('.') WITH ORDINALITY AS t(ls,n);
        ls        | n
@@ -22722,7 +22722,7 @@ SELECT * FROM pg_ls_dir('.') WITH ORDINALITY AS t(ls,n);
    significant, and extra whitespace is allowed between but not within
    privilege names.)
    Some examples:
-<programlisting>
+<programlisting language="postgres">
 SELECT has_table_privilege('myschema.mytable', 'select');
 SELECT has_table_privilege('joe', 'mytable', 'INSERT, SELECT WITH GRANT OPTION');
 </programlisting>
@@ -22848,7 +22848,7 @@ SELECT has_table_privilege('joe', 'mytable', 'INSERT, SELECT WITH GRANT OPTION')
         input is the same as for the <type>regprocedure</type> data type (see
         <xref linkend="datatype-oid"/>).
         An example is:
-<programlisting>
+<programlisting language="postgres">
 SELECT has_function_privilege('joeuser', 'myfunc(int, text)', 'execute');
 </programlisting>
        </para></entry>
@@ -23235,7 +23235,7 @@ SELECT has_function_privilege('joeuser', 'myfunc(int, text)', 'execute');
    name appears earlier in the search path.  This is equivalent to the
    statement that the table can be referenced by name without explicit
    schema qualification.  Thus, to list the names of all visible tables:
-<programlisting>
+<programlisting language="postgres">
 SELECT relname FROM pg_class WHERE pg_table_is_visible(oid);
 </programlisting>
    For functions and operators, an object in the search path is said to be
@@ -23446,7 +23446,7 @@ SELECT relname FROM pg_class WHERE pg_table_is_visible(oid);
     <type>regprocedure</type>, <type>regoperator</type>, <type>regconfig</type>,
     or <type>regdictionary</type>),
     for example:
-<programlisting>
+<programlisting language="postgres">
 SELECT pg_type_is_visible('myschema.widget'::regtype);
 </programlisting>
     Note that it would not make much sense to test a non-schema-qualified
@@ -23741,7 +23741,7 @@ SELECT pg_type_is_visible('myschema.widget'::regtype);
        <para>
         A typical use is in reading the current value of the sequence for an
         identity or serial column, for example:
-<programlisting>
+<programlisting language="postgres">
 SELECT currval(pg_get_serial_sequence('sometable', 'id'));
 </programlisting>
        </para></entry>
@@ -23973,7 +23973,7 @@ SELECT currval(pg_get_serial_sequence('sometable', 'id'));
        </para>
        <para>
         For example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT pg_typeof(33);
  pg_typeof
 -----------
@@ -24004,7 +24004,7 @@ SELECT typlen FROM pg_type WHERE oid = pg_typeof(33);
        </para>
        <para>
         For example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT collation for (description) FROM pg_description LIMIT 1;
  pg_collation_for
 ------------------
@@ -25614,7 +25614,7 @@ SELECT collation for ('foo' COLLATE "de_DE");
    <para>
     <function>pg_log_backend_memory_contexts</function> can be used
     to log the memory contexts of a backend process. For example:
-<programlisting>
+<programlisting language="postgres-shell">
 postgres=# SELECT pg_log_backend_memory_contexts(pg_backend_pid());
  pg_log_backend_memory_contexts
 --------------------------------
@@ -25622,7 +25622,7 @@ postgres=# SELECT pg_log_backend_memory_contexts(pg_backend_pid());
 (1 row)
 </programlisting>
 One message for each memory context will be logged. For example:
-<screen>
+<screen language="postgres-log">
 LOG:  logging memory contexts of PID 10377
 STATEMENT:  SELECT pg_log_backend_memory_contexts(pg_backend_pid());
 LOG:  level: 0; TopMemoryContext: 80800 total in 6 blocks; 14432 free (5 chunks); 66368 used
@@ -25927,7 +25927,7 @@ LOG:  Grand total: 1651920 bytes in 201 blocks; 622360 free (88 chunks); 1029560
     You can use <function>pg_walfile_name_offset</function> to extract the
     corresponding write-ahead log file name and byte offset from
     a <type>pg_lsn</type> value.  For example:
-<programlisting>
+<programlisting language="postgres-shell">
 postgres=# SELECT * FROM pg_walfile_name_offset((pg_backup_stop()).lsn);
         file_name         | file_offset
 --------------------------+-------------
@@ -27217,7 +27217,7 @@ postgres=# SELECT * FROM pg_walfile_name_offset((pg_backup_stop()).lsn);
     For example, to check the total size of the data contained in a
     partitioned table <structname>measurement</structname>, one could use the
     following query:
-<programlisting>
+<programlisting language="postgres">
 SELECT pg_size_pretty(sum(pg_relation_size(relid))) AS total_size
   FROM pg_partition_tree('measurement');
 </programlisting>
@@ -27619,7 +27619,7 @@ SELECT pg_size_pretty(sum(pg_relation_size(relid))) AS total_size
         In combination with the <function>convert_from</function> function,
         this function can be used to read a text file in a specified encoding
         and convert to the database's encoding:
-<programlisting>
+<programlisting language="postgres">
 SELECT convert_from(pg_read_binary_file('file_in_utf8.txt'), 'UTF8');
 </programlisting>
        </para></entry>
@@ -28033,7 +28033,7 @@ SELECT convert_from(pg_read_binary_file('file_in_utf8.txt'), 'UTF8');
     <para>
       The <function>suppress_redundant_updates_trigger</function> function can be
       added to a table like this:
-<programlisting>
+<programlisting language="postgres">
 CREATE TRIGGER z_min_update
 BEFORE UPDATE ON tablename
 FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
@@ -28274,7 +28274,7 @@ FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
    <para>
     The <function>pg_event_trigger_dropped_objects</function> function can be used
     in an event trigger like this:
-<programlisting>
+<programlisting language="postgres">
 CREATE FUNCTION test_event_trigger_for_drops()
         RETURNS event_trigger LANGUAGE plpgsql AS $$
 DECLARE
@@ -28356,7 +28356,7 @@ CREATE EVENT TRIGGER test_event_trigger_for_drops
 
    <para>
     These functions can be used in an event trigger like this:
-<programlisting>
+<programlisting language="postgres">
 CREATE FUNCTION test_event_trigger_table_rewrite_oid()
  RETURNS event_trigger
  LANGUAGE plpgsql AS
@@ -28449,7 +28449,7 @@ CREATE EVENT TRIGGER test_table_rewrite_oid
    <para>
     The <function>pg_mcv_list_items</function> function can be used like this:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT m.* FROM pg_statistic_ext join pg_statistic_ext_data on (oid = stxoid),
                 pg_mcv_list_items(stxdmcv) m WHERE stxname = 'stts';
 </programlisting>

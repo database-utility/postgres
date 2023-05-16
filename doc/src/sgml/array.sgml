@@ -24,7 +24,7 @@
 
  <para>
   To illustrate the use of array types, we create this table:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE sal_emp (
     name            text,
     pay_by_quarter  integer[],
@@ -47,7 +47,7 @@ CREATE TABLE sal_emp (
   The syntax for <command>CREATE TABLE</command> allows the exact size of
   arrays to be specified, for example:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE tictactoe (
     squares   integer[3][3]
 );
@@ -72,11 +72,11 @@ CREATE TABLE tictactoe (
   the keyword <literal>ARRAY</literal>, can be used for one-dimensional arrays.
   <structfield>pay_by_quarter</structfield> could have been defined
   as:
-<programlisting>
+<programlisting language="postgres">
     pay_by_quarter  integer ARRAY[4],
 </programlisting>
   Or, if no array size is to be specified:
-<programlisting>
+<programlisting language="postgres">
     pay_by_quarter  integer ARRAY,
 </programlisting>
   As before, however, <productname>PostgreSQL</productname> does not enforce the
@@ -111,7 +111,7 @@ CREATE TABLE tictactoe (
    (<literal>;</literal>). Each <replaceable>val</replaceable> is
    either a constant of the array element type, or a subarray. An example
    of an array constant is:
-<programlisting>
+<programlisting language="postgres">
 '{{1,2,3},{4,5,6},{7,8,9}}'
 </programlisting>
    This constant is a two-dimensional, 3-by-3 array consisting of
@@ -136,7 +136,7 @@ CREATE TABLE tictactoe (
   <para>
    Now we can show some <command>INSERT</command> statements:
 
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO sal_emp
     VALUES ('Bill',
     '{10000, 10000, 10000, 10000}',
@@ -152,7 +152,7 @@ INSERT INTO sal_emp
  <para>
   The result of the previous two inserts looks like this:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT * FROM sal_emp;
  name  |      pay_by_quarter       |                 schedule
 -------+---------------------------+-------------------------------------------
@@ -166,7 +166,7 @@ SELECT * FROM sal_emp;
   Multidimensional arrays must have matching extents for each
   dimension. A mismatch causes an error, for example:
 
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO sal_emp
     VALUES ('Bill',
     '{10000, 10000, 10000, 10000}',
@@ -177,7 +177,7 @@ ERROR:  multidimensional arrays must have array expressions with matching dimens
 
  <para>
   The <literal>ARRAY</literal> constructor syntax can also be used:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO sal_emp
     VALUES ('Bill',
     ARRAY[10000, 10000, 10000, 10000],
@@ -210,7 +210,7 @@ INSERT INTO sal_emp
   This query retrieves the names of the employees whose pay changed in
   the second quarter:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT name FROM sal_emp WHERE pay_by_quarter[1] &lt;&gt; pay_by_quarter[2];
 
  name
@@ -229,7 +229,7 @@ SELECT name FROM sal_emp WHERE pay_by_quarter[1] &lt;&gt; pay_by_quarter[2];
  <para>
   This query retrieves the third quarter pay of all employees:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT pay_by_quarter[3] FROM sal_emp;
 
  pay_by_quarter
@@ -247,7 +247,7 @@ SELECT pay_by_quarter[3] FROM sal_emp;
   for one or more array dimensions.  For example, this query retrieves the first
   item on Bill's schedule for the first two days of the week:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT schedule[1:2][1:1] FROM sal_emp WHERE name = 'Bill';
 
         schedule
@@ -262,7 +262,7 @@ SELECT schedule[1:2][1:1] FROM sal_emp WHERE name = 'Bill';
   to the number specified.  For example, <literal>[2]</literal> is treated as
   <literal>[1:2]</literal>, as in this example:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT schedule[1:2][2] FROM sal_emp WHERE name = 'Bill';
 
                  schedule
@@ -281,7 +281,7 @@ SELECT schedule[1:2][2] FROM sal_emp WHERE name = 'Bill';
   bound is replaced by the lower or upper limit of the array's subscripts.
   For example:
 
-<programlisting>
+<programlisting language="psql-shel">
 SELECT schedule[:2][2:] FROM sal_emp WHERE name = 'Bill';
 
         schedule
@@ -324,7 +324,7 @@ SELECT schedule[:][1:1] FROM sal_emp WHERE name = 'Bill';
   The current dimensions of any array value can be retrieved with the
   <function>array_dims</function> function:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_dims(schedule) FROM sal_emp WHERE name = 'Carol';
 
  array_dims
@@ -340,7 +340,7 @@ SELECT array_dims(schedule) FROM sal_emp WHERE name = 'Carol';
   which return the upper and lower bound of a
   specified array dimension, respectively:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_upper(schedule, 1) FROM sal_emp WHERE name = 'Carol';
 
  array_upper
@@ -352,7 +352,7 @@ SELECT array_upper(schedule, 1) FROM sal_emp WHERE name = 'Carol';
  <function>array_length</function> will return the length of a specified
  array dimension:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_length(schedule, 1) FROM sal_emp WHERE name = 'Carol';
 
  array_length
@@ -365,7 +365,7 @@ SELECT array_length(schedule, 1) FROM sal_emp WHERE name = 'Carol';
  array across all dimensions.  It is effectively the number of rows a call to
  <function>unnest</function> would yield:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT cardinality(schedule) FROM sal_emp WHERE name = 'Carol';
 
  cardinality
@@ -387,28 +387,28 @@ SELECT cardinality(schedule) FROM sal_emp WHERE name = 'Carol';
  <para>
   An array value can be replaced completely:
 
-<programlisting>
+<programlisting language="postgres">
 UPDATE sal_emp SET pay_by_quarter = '{25000,25000,27000,27000}'
     WHERE name = 'Carol';
 </programlisting>
 
   or using the <literal>ARRAY</literal> expression syntax:
 
-<programlisting>
+<programlisting language="postgres">
 UPDATE sal_emp SET pay_by_quarter = ARRAY[25000,25000,27000,27000]
     WHERE name = 'Carol';
 </programlisting>
 
   An array can also be updated at a single element:
 
-<programlisting>
+<programlisting language="postgres">
 UPDATE sal_emp SET pay_by_quarter[4] = 15000
     WHERE name = 'Bill';
 </programlisting>
 
   or updated in a slice:
 
-<programlisting>
+<programlisting language="postgres">
 UPDATE sal_emp SET pay_by_quarter[1:2] = '{27000,27000}'
     WHERE name = 'Carol';
 </programlisting>
@@ -439,7 +439,7 @@ UPDATE sal_emp SET pay_by_quarter[1:2] = '{27000,27000}'
  <para>
   New array values can also be constructed using the concatenation operator,
   <literal>||</literal>:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT ARRAY[1,2] || ARRAY[3,4];
  ?column?
 -----------
@@ -465,7 +465,7 @@ SELECT ARRAY[5,6] || ARRAY[[1,2],[3,4]];
   When a single element is pushed onto either the beginning or end of a
   one-dimensional array, the result is an array with the same lower bound
   subscript as the array operand. For example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_dims(1 || '[0:1]={2,3}'::int[]);
  array_dims
 ------------
@@ -485,7 +485,7 @@ SELECT array_dims(ARRAY[1,2] || 3);
   result retains the lower bound subscript of the left-hand operand's outer
   dimension. The result is an array comprising every element of the left-hand
   operand followed by every element of the right-hand operand. For example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_dims(ARRAY[1,2] || ARRAY[3,4,5]);
  array_dims
 ------------
@@ -506,7 +506,7 @@ SELECT array_dims(ARRAY[[1,2],[3,4]] || ARRAY[[5,6],[7,8],[9,0]]);
   analogous to the element-array case above. Each <replaceable>N</replaceable>-dimensional
   sub-array is essentially an element of the <replaceable>N+1</replaceable>-dimensional
   array's outer dimension. For example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_dims(ARRAY[1,2] || ARRAY[[3,4],[5,6]]);
  array_dims
 ------------
@@ -522,7 +522,7 @@ SELECT array_dims(ARRAY[1,2] || ARRAY[[3,4],[5,6]]);
   arrays, but <function>array_cat</function> supports multidimensional arrays.
   Some examples:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_prepend(1, ARRAY[2,3]);
  array_prepend
 ---------------
@@ -561,7 +561,7 @@ SELECT array_cat(ARRAY[5,6], ARRAY[[1,2],[3,4]]);
   use of one of the functions is helpful to avoid ambiguity.  For example
   consider:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT ARRAY[1, 2] || '{3, 4}';  -- the untyped literal is taken as an array
  ?column?
 -----------
@@ -607,7 +607,7 @@ SELECT array_append(ARRAY[1, 2], NULL);    -- this might have been meant
   This can be done manually, if you know the size of the array.
   For example:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM sal_emp WHERE pay_by_quarter[1] = 10000 OR
                             pay_by_quarter[2] = 10000 OR
                             pay_by_quarter[3] = 10000 OR
@@ -619,14 +619,14 @@ SELECT * FROM sal_emp WHERE pay_by_quarter[1] = 10000 OR
   described in <xref linkend="functions-comparisons"/>. The above
   query could be replaced by:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM sal_emp WHERE 10000 = ANY (pay_by_quarter);
 </programlisting>
 
   In addition, you can find rows where the array has all values
   equal to 10000 with:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM sal_emp WHERE 10000 = ALL (pay_by_quarter);
 </programlisting>
 
@@ -636,7 +636,7 @@ SELECT * FROM sal_emp WHERE 10000 = ALL (pay_by_quarter);
   Alternatively, the <function>generate_subscripts</function> function can be used.
   For example:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM
    (SELECT pay_by_quarter,
            generate_subscripts(pay_by_quarter, 1) AS s
@@ -652,7 +652,7 @@ SELECT * FROM
   which checks whether the left operand overlaps with the right operand.
   For instance:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM sal_emp WHERE pay_by_quarter &amp;&amp; ARRAY[10000];
 </programlisting>
 
@@ -667,7 +667,7 @@ SELECT * FROM sal_emp WHERE pay_by_quarter &amp;&amp; ARRAY[10000];
   the first occurrence of a value in an array; the latter returns an array with the
   subscripts of all occurrences of the value in the array.  For example:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT array_position(ARRAY['sun','mon','tue','wed','thu','fri','sat'], 'mon');
  array_position
 ----------------
@@ -738,7 +738,7 @@ SELECT array_positions(ARRAY[1, 4, 3, 1, 3, 4, 2, 1], 1);
    a colon (<literal>:</literal>) delimiter character in between. The
    array dimension decoration is followed by an equal sign (<literal>=</literal>).
    For example:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT f1[1][-2][3] AS e1, f1[1][-1][5] AS e2
  FROM (SELECT '[1:1][-2:-1][3:5]={{{1,2,3},{4,5,6}}}'::int[] AS f1) AS ss;
 

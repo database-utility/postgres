@@ -50,7 +50,7 @@
 
  <para>
   The structure <structname>BackgroundWorker</structname> is defined thus:
-<programlisting>
+<programlisting language="c">
 typedef void (*bgworker_main_type)(Datum main_arg);
 typedef struct BackgroundWorker
 {

@@ -80,7 +80,7 @@
    This is an example of creating a bloom index:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE INDEX bloomidx ON tbloom USING bloom (i1,i2,i3)
        WITH (length=80, col1=2, col2=2, col3=4);
 </programlisting>
@@ -98,7 +98,7 @@ CREATE INDEX bloomidx ON tbloom USING bloom (i1,i2,i3)
    considerably smaller than the btree index, and can perform better.
   </para>
 
-<programlisting>
+<programlisting language="postgres-shell">
 =# CREATE TABLE tbloom AS
    SELECT
      (random() * 1000000)::int as i1,
@@ -114,7 +114,7 @@ SELECT 10000000
 
   <para>
    A sequential scan over this large table takes a long time:
-<programlisting>
+<programlisting language="postgres-shell">
 =# EXPLAIN ANALYZE SELECT * FROM tbloom WHERE i2 = 898732 AND i5 = 123451;
                                               QUERY PLAN
 -------------------------------------------------------------------&zwsp;-----------------------------------
@@ -130,7 +130,7 @@ SELECT 10000000
   <para>
    Even with the btree index defined the result will still be a
    sequential scan:
-<programlisting>
+<programlisting language="postgres-shell">
 =# CREATE INDEX btreeidx ON tbloom (i1, i2, i3, i4, i5, i6);
 CREATE INDEX
 =# SELECT pg_size_pretty(pg_relation_size('btreeidx'));
@@ -153,7 +153,7 @@ CREATE INDEX
   <para>
    Having the bloom index defined on the table is better than btree in
    handling this type of search:
-<programlisting>
+<programlisting language="postgres-shell">
 =# CREATE INDEX bloomidx ON tbloom USING bloom (i1, i2, i3, i4, i5, i6);
 CREATE INDEX
 =# SELECT pg_size_pretty(pg_relation_size('bloomidx'));
@@ -181,7 +181,7 @@ CREATE INDEX
    when the search conditions do not constrain the leading index column(s).
    A better strategy for btree is to create a separate index on each column.
    Then the planner will choose something like this:
-<programlisting>
+<programlisting language="postgres-shell">
 =# CREATE INDEX btreeidx1 ON tbloom (i1);
 CREATE INDEX
 =# CREATE INDEX btreeidx2 ON tbloom (i2);
@@ -224,7 +224,7 @@ CREATE INDEX
    shows the operator class definition for the <type>text</type> data type:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE OPERATOR CLASS text_ops
 DEFAULT FOR TYPE text USING bloom AS
     OPERATOR    1   =(text, text),

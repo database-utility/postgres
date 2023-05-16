@@ -44,7 +44,7 @@
     <firstterm>view</firstterm> over the query, which gives a name to
     the query that you can refer to like an ordinary table:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE VIEW myview AS
     SELECT name, temp_lo, temp_hi, prcp, date, location
         FROM weather, cities
@@ -99,7 +99,7 @@ SELECT * FROM myview;
    <para>
     The new declaration of the tables would look like this:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE cities (
         name     varchar(80) primary key,
         location point
@@ -116,11 +116,11 @@ CREATE TABLE weather (
 
     Now try inserting an invalid record:
 
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO weather VALUES ('Berkeley', 45, 53, 0.0, '1994-11-28');
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
 ERROR:  insert or update on table "weather" violates foreign key constraint "weather_city_fkey"
 DETAIL:  Key (city)=(Berkeley) is not present in table "cities".
 </screen>
@@ -160,7 +160,7 @@ DETAIL:  Key (city)=(Berkeley) is not present in table "cities".
     to Bob's account.  Simplifying outrageously, the SQL commands for this
     might look like:
 
-<programlisting>
+<programlisting language="postgres">
 UPDATE accounts SET balance = balance - 100.00
     WHERE name = 'Alice';
 UPDATE branches SET balance = balance - 100.00
@@ -221,7 +221,7 @@ UPDATE branches SET balance = balance + 100.00
     <command>BEGIN</command> and <command>COMMIT</command> commands.  So our banking
     transaction would actually look like:
 
-<programlisting>
+<programlisting language="postgres">
 BEGIN;
 UPDATE accounts SET balance = balance - 100.00
     WHERE name = 'Alice';
@@ -290,7 +290,7 @@ COMMIT;
     have credited Wally's account.  We could do it using savepoints like
     this:
 
-<programlisting>
+<programlisting language="postgres">
 BEGIN;
 UPDATE accounts SET balance = balance - 100.00
     WHERE name = 'Alice';
@@ -339,11 +339,11 @@ COMMIT;
     Here is an example that shows how to compare each employee's salary
     with the average salary in his or her department:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT depname, empno, salary, avg(salary) OVER (PARTITION BY depname) FROM empsalary;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
   depname  | empno | salary |          avg
 -----------+-------+--------+-----------------------
  develop   |    11 |   5200 | 5020.0000000000000000
@@ -387,13 +387,13 @@ SELECT depname, empno, salary, avg(salary) OVER (PARTITION BY depname) FROM emps
     (The window <literal>ORDER BY</literal> does not even have to match the
     order in which the rows are output.)  Here is an example:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT depname, empno, salary,
        rank() OVER (PARTITION BY depname ORDER BY salary DESC)
 FROM empsalary;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
   depname  | empno | salary | rank
 -----------+-------+--------+------
  develop   |     8 |   6000 |    1
@@ -453,11 +453,11 @@ FROM empsalary;
     Here is an example using <function>sum</function>:
    </para>
 
-<programlisting>
+<programlisting language="postgres">
 SELECT salary, sum(salary) OVER () FROM empsalary;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
  salary |  sum
 --------+-------
    5200 | 47100
@@ -482,11 +482,11 @@ SELECT salary, sum(salary) OVER () FROM empsalary;
     results:
    </para>
 
-<programlisting>
+<programlisting language="postgres">
 SELECT salary, sum(salary) OVER (ORDER BY salary) FROM empsalary;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
  salary |  sum
 --------+-------
    3500 |  3500
@@ -523,7 +523,7 @@ SELECT salary, sum(salary) OVER (ORDER BY salary) FROM empsalary;
     If there is a need to filter or group rows after the window calculations
     are performed, you can use a sub-select.  For example:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT depname, empno, salary, enroll_date
 FROM
   (SELECT depname, empno, salary, enroll_date,
@@ -545,7 +545,7 @@ WHERE pos &lt; 3;
     in a <literal>WINDOW</literal> clause and then referenced in <literal>OVER</literal>.
     For example:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT sum(salary) OVER w, avg(salary) OVER w
   FROM empsalary
   WINDOW w AS (PARTITION BY depname ORDER BY salary DESC);
@@ -581,7 +581,7 @@ SELECT sum(salary) OVER w, avg(salary) OVER w
     implicitly when you list all cities.  If you're really clever you
     might invent some scheme like this:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE capitals (
   name       text,
   population real,
@@ -608,7 +608,7 @@ CREATE VIEW cities AS
    <para>
     A better solution is this:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE cities (
   name       text,
   population real,
@@ -641,7 +641,7 @@ CREATE TABLE capitals (
     including  state capitals, that are located at an elevation
     over 500 feet:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT name, elevation
   FROM cities
   WHERE elevation &gt; 500;
@@ -649,7 +649,7 @@ SELECT name, elevation
 
     which returns:
 
-<screen>
+<screen language="postgres-shell">
    name    | elevation
 -----------+-----------
  Las Vegas |      2174
@@ -664,13 +664,13 @@ SELECT name, elevation
     all  the cities that are not state capitals and
     are situated at an elevation over 500 feet:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT name, elevation
     FROM ONLY cities
     WHERE elevation &gt; 500;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
    name    | elevation
 -----------+-----------
  Las Vegas |      2174

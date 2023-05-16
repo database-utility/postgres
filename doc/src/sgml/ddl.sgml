@@ -83,7 +83,7 @@
    In this command you specify at least a name for the new table, the
    names of the columns and the data type of each column.  For
    example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE my_first_table (
     first_column text,
     second_column integer
@@ -105,7 +105,7 @@ CREATE TABLE my_first_table (
    you would give names to your tables and columns that convey what
    kind of data they store.  So let's look at a more realistic
    example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -141,7 +141,7 @@ CREATE TABLE products (
    If you no longer need a table, you can remove it using the <xref
    linkend="sql-droptable"/> command.
    For example:
-<programlisting>
+<programlisting language="postgres">
 DROP TABLE my_first_table;
 DROP TABLE products;
 </programlisting>
@@ -194,7 +194,7 @@ DROP TABLE products;
   <para>
    In a table definition, default values are listed after the column
    data type.  For example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -212,7 +212,7 @@ CREATE TABLE products (
    example is generating a <quote>serial number</quote> for each row.
    In <productname>PostgreSQL</productname> this is typically done by
    something like:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer <emphasis>DEFAULT nextval('products_product_no_seq')</emphasis>,
     ...
@@ -222,7 +222,7 @@ CREATE TABLE products (
    from a <firstterm>sequence object</firstterm> (see <xref
    linkend="functions-sequence"/>). This arrangement is sufficiently common
    that there's a special shorthand for it:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no <emphasis>SERIAL</emphasis>,
     ...
@@ -255,7 +255,7 @@ CREATE TABLE products (
   <para>
    To create a generated column, use the <literal>GENERATED ALWAYS
    AS</literal> clause in <command>CREATE TABLE</command>, for example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE people (
     ...,
     height_cm numeric,
@@ -420,7 +420,7 @@ CREATE TABLE people (
     you to specify that the value in a certain column must satisfy a
     Boolean (truth-value) expression.  For instance, to require positive
     product prices, you could use:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -448,7 +448,7 @@ CREATE TABLE products (
     You can also give the constraint a separate name.  This clarifies
     error messages and allows you to refer to the constraint when you
     need to change it.  The syntax is:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -465,7 +465,7 @@ CREATE TABLE products (
     A check constraint can also refer to several columns.  Say you
     store a regular price and a discounted price, and you want to
     ensure that the discounted price is lower than the regular price:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -494,7 +494,7 @@ CREATE TABLE products (
     enforce that rule, but you should follow it if you want your table
     definitions to work with other database systems.)  The above example could
     also be written as:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -506,7 +506,7 @@ CREATE TABLE products (
 );
 </programlisting>
     or even:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -521,7 +521,7 @@ CREATE TABLE products (
    <para>
     Names can be assigned to table constraints in the same way as
     column constraints:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -617,7 +617,7 @@ CREATE TABLE products (
    <para>
     A not-null constraint simply specifies that a column must not
     assume the null value.  A syntax example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer <emphasis>NOT NULL</emphasis>,
     name text <emphasis>NOT NULL</emphasis>,
@@ -640,7 +640,7 @@ CREATE TABLE products (
    <para>
     Of course, a column can have more than one constraint.  Just write
     the constraints one after another:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer NOT NULL,
     name text NOT NULL,
@@ -662,7 +662,7 @@ CREATE TABLE products (
     compatible with some other database systems.)  Some users, however,
     like it because it makes it easy to toggle the constraint in a
     script file.  For example, you could start with:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer NULL,
     name text NULL,
@@ -696,7 +696,7 @@ CREATE TABLE products (
     Unique constraints ensure that the data contained in a column, or a
     group of columns, is unique among all the rows in the
     table.  The syntax is:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer <emphasis>UNIQUE</emphasis>,
     name text,
@@ -704,7 +704,7 @@ CREATE TABLE products (
 );
 </programlisting>
     when written as a column constraint, and:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -718,7 +718,7 @@ CREATE TABLE products (
    <para>
     To define a unique constraint for a group of columns, write it as a
     table constraint with the column names separated by commas:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE example (
     a integer,
     b integer,
@@ -733,7 +733,7 @@ CREATE TABLE example (
 
    <para>
     You can assign your own name for a unique constraint, in the usual way:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer <emphasis>CONSTRAINT must_be_different</emphasis> UNIQUE,
     name text,
@@ -765,7 +765,7 @@ CREATE TABLE products (
     rows that contain a null value in at least one of the constrained
     columns.  This behavior can be changed by adding the clause <literal>NULLS
     NOT DISTINCT</literal>, like
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer UNIQUE <emphasis>NULLS NOT DISTINCT</emphasis>,
     name text,
@@ -773,7 +773,7 @@ CREATE TABLE products (
 );
 </programlisting>
     or
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -806,7 +806,7 @@ CREATE TABLE products (
     can be used as a unique identifier for rows in the table.  This
     requires that the values be both unique and not null.  So, the following
     two table definitions accept the same data:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer UNIQUE NOT NULL,
     name text,
@@ -814,7 +814,7 @@ CREATE TABLE products (
 );
 </programlisting>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer <emphasis>PRIMARY KEY</emphasis>,
     name text,
@@ -826,7 +826,7 @@ CREATE TABLE products (
    <para>
     Primary keys can span more than one column; the syntax
     is similar to unique constraints:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE example (
     a integer,
     b integer,
@@ -890,7 +890,7 @@ CREATE TABLE example (
 
    <para>
     Say you have the product table that we have used several times already:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer PRIMARY KEY,
     name text,
@@ -902,7 +902,7 @@ CREATE TABLE products (
     orders of products that actually exist.  So we define a foreign
     key constraint in the orders table that references the products
     table:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE orders (
     order_id integer PRIMARY KEY,
     product_no integer <emphasis>REFERENCES products (product_no)</emphasis>,
@@ -923,7 +923,7 @@ CREATE TABLE orders (
 
    <para>
     You can also shorten the above command to:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE orders (
     order_id integer PRIMARY KEY,
     product_no integer <emphasis>REFERENCES products</emphasis>,
@@ -943,7 +943,7 @@ CREATE TABLE orders (
     A foreign key can also constrain and reference a group of columns.
     As usual, it then needs to be written in table constraint form.
     Here is a contrived syntax example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE t1 (
   a integer PRIMARY KEY,
   b integer,
@@ -966,7 +966,7 @@ CREATE TABLE t1 (
     a <firstterm>self-referential</firstterm> foreign key.  For
     example, if you want rows of a table to represent nodes of a tree
     structure, you could write
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE tree (
     node_id integer PRIMARY KEY,
     parent_id integer REFERENCES tree,
@@ -985,7 +985,7 @@ CREATE TABLE tree (
     you have tables about products and orders, but now you want to
     allow one order to contain possibly many products (which the
     structure above did not allow).  You could use this table structure:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer PRIMARY KEY,
     name text,
@@ -1037,7 +1037,7 @@ CREATE TABLE order_items (
     remove a product that is still referenced by an order (via
     <literal>order_items</literal>), we disallow it.  If someone
     removes an order, the order items are removed as well:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer PRIMARY KEY,
     name text,
@@ -1107,7 +1107,7 @@ CREATE TABLE order_items (
     can take a column list to specify which columns to set.  Normally, all
     columns of the foreign-key constraint are set; setting only a subset is
     useful in some special cases.  Consider the following example:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE tenants (
     tenant_id integer PRIMARY KEY
 );
@@ -1191,7 +1191,7 @@ CREATE TABLE posts (
     the specified columns or expressions using the specified operators,
     at least one of these operator comparisons will return false or null.
     The syntax is:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE circles (
     c circle,
     EXCLUDE USING gist (c WITH &amp;&amp;)
@@ -1416,7 +1416,7 @@ CREATE TABLE circles (
 
    <para>
     To add a column, use a command like:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ADD COLUMN description text;
 </programlisting>
     The new column is initially filled with whatever default
@@ -1449,7 +1449,7 @@ ALTER TABLE products ADD COLUMN description text;
    <para>
     You can also define constraints on the column at the same time,
     using the usual syntax:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ADD COLUMN description text CHECK (description &lt;&gt; '');
 </programlisting>
     In fact all the options that can be applied to a column description
@@ -1472,7 +1472,7 @@ ALTER TABLE products ADD COLUMN description text CHECK (description &lt;&gt; '')
 
    <para>
     To remove a column, use a command like:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products DROP COLUMN description;
 </programlisting>
     Whatever data was in the column disappears.  Table constraints involving
@@ -1481,7 +1481,7 @@ ALTER TABLE products DROP COLUMN description;
     <productname>PostgreSQL</productname> will not silently drop that
     constraint.  You can authorize dropping everything that depends on
     the column by adding <literal>CASCADE</literal>:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products DROP COLUMN description CASCADE;
 </programlisting>
     See <xref linkend="ddl-depend"/> for a description of the general
@@ -1499,14 +1499,14 @@ ALTER TABLE products DROP COLUMN description CASCADE;
 
    <para>
     To add a constraint, the table constraint syntax is used.  For example:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ADD CHECK (name &lt;&gt; '');
 ALTER TABLE products ADD CONSTRAINT some_name UNIQUE (product_no);
 ALTER TABLE products ADD FOREIGN KEY (product_group_id) REFERENCES product_groups;
 </programlisting>
     To add a not-null constraint, which cannot be written as a table
     constraint, use this syntax:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ALTER COLUMN product_no SET NOT NULL;
 </programlisting>
    </para>
@@ -1533,7 +1533,7 @@ ALTER TABLE products ALTER COLUMN product_no SET NOT NULL;
     <replaceable>tablename</replaceable></literal> can be helpful
     here; other interfaces might also provide a way to inspect table
     details.  Then the command is:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products DROP CONSTRAINT some_name;
 </programlisting>
     (If you are dealing with a generated constraint name like <literal>$2</literal>,
@@ -1551,7 +1551,7 @@ ALTER TABLE products DROP CONSTRAINT some_name;
    <para>
     This works the same for all constraint types except not-null
     constraints. To drop a not null constraint use:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ALTER COLUMN product_no DROP NOT NULL;
 </programlisting>
     (Recall that not-null constraints do not have names.)
@@ -1568,7 +1568,7 @@ ALTER TABLE products ALTER COLUMN product_no DROP NOT NULL;
 
    <para>
     To set a new default for a column, use a command like:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ALTER COLUMN price SET DEFAULT 7.77;
 </programlisting>
     Note that this doesn't affect any existing rows in the table, it
@@ -1577,7 +1577,7 @@ ALTER TABLE products ALTER COLUMN price SET DEFAULT 7.77;
 
    <para>
     To remove any default value, use:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ALTER COLUMN price DROP DEFAULT;
 </programlisting>
     This is effectively the same as setting the default to null.
@@ -1597,7 +1597,7 @@ ALTER TABLE products ALTER COLUMN price DROP DEFAULT;
 
    <para>
     To convert a column to a different data type, use a command like:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products ALTER COLUMN price TYPE numeric(10,2);
 </programlisting>
     This will succeed only if each existing entry in the column can be
@@ -1626,7 +1626,7 @@ ALTER TABLE products ALTER COLUMN price TYPE numeric(10,2);
 
    <para>
     To rename a column:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products RENAME COLUMN product_no TO product_number;
 </programlisting>
    </para>
@@ -1642,7 +1642,7 @@ ALTER TABLE products RENAME COLUMN product_no TO product_number;
 
    <para>
     To rename a table:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE products RENAME TO items;
 </programlisting>
    </para>
@@ -1710,7 +1710,7 @@ ALTER TABLE products RENAME TO items;
   <para>
    An object can be assigned to a new owner with an <command>ALTER</command>
    command of the appropriate kind for the object, for example
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE <replaceable>table_name</replaceable> OWNER TO <replaceable>new_owner</replaceable>;
 </programlisting>
    Superusers can always do this; ordinary roles can only do it if they are
@@ -1723,7 +1723,7 @@ ALTER TABLE <replaceable>table_name</replaceable> OWNER TO <replaceable>new_owne
    used. For example, if <literal>joe</literal> is an existing role, and
    <literal>accounts</literal> is an existing table, the privilege to
    update the table can be granted with:
-<programlisting>
+<programlisting language="postgres">
 GRANT UPDATE ON accounts TO joe;
 </programlisting>
    Writing <literal>ALL</literal> in place of a specific privilege grants all
@@ -1741,7 +1741,7 @@ GRANT UPDATE ON accounts TO joe;
   <para>
    To revoke a previously-granted privilege, use the fittingly named
    <xref linkend="sql-revoke"/> command:
-<programlisting>
+<programlisting language="postgres">
 REVOKE ALL ON accounts FROM PUBLIC;
 </programlisting>
   </para>
@@ -2270,14 +2270,14 @@ REVOKE ALL ON accounts FROM PUBLIC;
   <para>
    As an example, suppose that user <literal>miriam</literal> creates
    table <literal>mytable</literal> and does:
-<programlisting>
+<programlisting language="postgres">
 GRANT SELECT ON mytable TO PUBLIC;
 GRANT SELECT, UPDATE, INSERT ON mytable TO admin;
 GRANT SELECT (col1), UPDATE (col1) ON mytable TO miriam_rw;
 </programlisting>
    Then <application>psql</application>'s <literal>\dp</literal> command
    would show:
-<programlisting>
+<programlisting language="postgres-shell">
 =&gt; \dp mytable
                                   Access privileges
  Schema |  Name   | Type  |   Access privileges   |   Column privileges   | Policies
@@ -2419,7 +2419,7 @@ GRANT SELECT (col1), UPDATE (col1) ON mytable TO miriam_rw;
    accounts:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE accounts (manager text, company text, contact_email text);
 
 ALTER TABLE accounts ENABLE ROW LEVEL SECURITY;
@@ -2446,7 +2446,7 @@ CREATE POLICY account_managers ON accounts TO managers
    a <literal>users</literal> table, a simple policy can be used:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE POLICY user_policy ON users
     USING (user_name = current_user);
 </programlisting>
@@ -2462,7 +2462,7 @@ CREATE POLICY user_policy ON users
    in the <literal>users</literal> table, but only modify their own:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE POLICY user_sel_policy ON users
     FOR SELECT
     USING (true);
@@ -2491,7 +2491,7 @@ CREATE POLICY user_mod_policy ON users
    file:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 -- Simple passwd-file based example
 CREATE TABLE passwd (
   user_name             text UNIQUE NOT NULL,
@@ -2552,7 +2552,7 @@ GRANT UPDATE
    demonstrates that the permission system is working properly.
   </para>
 
-<programlisting>
+<programlisting language="postgres-shell">
 -- admin can view all rows and fields
 postgres=&gt; set role admin;
 SET
@@ -2607,7 +2607,7 @@ UPDATE 1
    records of the <literal>passwd</literal> table:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE POLICY admin_local_only ON passwd AS RESTRICTIVE TO admin
     USING (pg_catalog.inet_client_addr() IS NULL);
 </programlisting>
@@ -2617,7 +2617,7 @@ CREATE POLICY admin_local_only ON passwd AS RESTRICTIVE TO admin
    see any records, due to the restrictive policy:
   </para>
 
-<programlisting>
+<programlisting language="postgres-shell">
 =&gt; SELECT current_user;
  current_user
 --------------
@@ -2671,7 +2671,7 @@ UPDATE 0
    not taken.  As an example, consider the following table design:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 -- definition of privilege groups
 CREATE TABLE groups (group_id int PRIMARY KEY,
                      group_name text NOT NULL);
@@ -2724,7 +2724,7 @@ GRANT ALL ON information TO public;
    be trusted with the new content of that row, so she does:
   </para>
 
-<programlisting>
+<programlisting language="postgres">
 BEGIN;
 UPDATE users SET group_id = 1 WHERE user_name = 'mallory';
 UPDATE information SET info = 'secret from mallory' WHERE group_id = 2;
@@ -2736,7 +2736,7 @@ COMMIT;
    able to see the <quote>secret from mallory</quote> string.  However, there is
    a race condition here.  If <literal>mallory</literal> is concurrently doing,
    say,
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM information WHERE group_id = 2 FOR UPDATE;
 </programlisting>
    and her transaction is in <literal>READ COMMITTED</literal> mode, it is possible
@@ -2860,7 +2860,7 @@ SELECT * FROM information WHERE group_id = 2 FOR UPDATE;
     To create a schema, use the <xref linkend="sql-createschema"/>
     command.  Give the schema a name
     of your choice.  For example:
-<programlisting>
+<programlisting language="postgres">
 CREATE SCHEMA myschema;
 </programlisting>
    </para>
@@ -2900,7 +2900,7 @@ CREATE SCHEMA myschema;
 
    <para>
     So to create a table in the new schema, use:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE myschema.mytable (
  ...
 );
@@ -2915,11 +2915,11 @@ CREATE TABLE myschema.mytable (
    <para>
     To drop a schema if it's empty (all objects in it have been
     dropped), use:
-<programlisting>
+<programlisting language="postgres">
 DROP SCHEMA myschema;
 </programlisting>
     To drop a schema including all contained objects, use:
-<programlisting>
+<programlisting language="postgres">
 DROP SCHEMA myschema CASCADE;
 </programlisting>
     See <xref linkend="ddl-depend"/> for a description of the general
@@ -2930,7 +2930,7 @@ DROP SCHEMA myschema CASCADE;
     Often you will want to create a schema owned by someone else
     (since this is one of the ways to restrict the activities of your
     users to well-defined namespaces).  The syntax for that is:
-<programlisting>
+<programlisting language="postgres">
 CREATE SCHEMA <replaceable>schema_name</replaceable> AUTHORIZATION <replaceable>user_name</replaceable>;
 </programlisting>
     You can even omit the schema name, in which case the schema name
@@ -2957,11 +2957,11 @@ CREATE SCHEMA <replaceable>schema_name</replaceable> AUTHORIZATION <replaceable>
     schema names.  By default such tables (and other objects) are
     automatically put into a schema named <quote>public</quote>.  Every new
     database contains such a schema.  Thus, the following are equivalent:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products ( ... );
 </programlisting>
     and:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE public.products ( ... );
 </programlisting>
    </para>
@@ -3027,11 +3027,11 @@ CREATE TABLE public.products ( ... );
 
    <para>
     To show the current search path, use the following command:
-<programlisting>
+<programlisting language="postgres">
 SHOW search_path;
 </programlisting>
     In the default setup this returns:
-<screen>
+<screen language="postgres-shell">
  search_path
 --------------
  "$user", public
@@ -3055,13 +3055,13 @@ SHOW search_path;
 
    <para>
     To put our new schema in the path, we use:
-<programlisting>
+<programlisting language="postgres">
 SET search_path TO myschema,public;
 </programlisting>
     (We omit the <literal>$user</literal> here because we have no
     immediate need for it.)  And then we can access the table without
     schema qualification:
-<programlisting>
+<programlisting language="postgres">
 DROP TABLE mytable;
 </programlisting>
     Also, since <literal>myschema</literal> is the first element in
@@ -3070,7 +3070,7 @@ DROP TABLE mytable;
 
    <para>
     We could also have written:
-<programlisting>
+<programlisting language="postgres">
 SET search_path TO myschema;
 </programlisting>
     Then we no longer have access to the public schema without
@@ -3093,7 +3093,7 @@ SET search_path TO myschema;
 <literal>OPERATOR(</literal><replaceable>schema</replaceable><literal>.</literal><replaceable>operator</replaceable><literal>)</literal>
 </synopsis>
     This is needed to avoid syntactic ambiguity.  An example is:
-<programlisting>
+<programlisting language="postgres">
 SELECT 3 OPERATOR(pg_catalog.+) 4;
 </programlisting>
     In practice one usually relies on the search path for operators,
@@ -3126,7 +3126,7 @@ SELECT 3 OPERATOR(pg_catalog.+) 4;
     privilege on the schema <literal>public</literal>.
     Some <link linkend="ddl-schemas-patterns">usage patterns</link> call for
     revoking that privilege:
-<programlisting>
+<programlisting language="postgres">
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 </programlisting>
     (The first <quote>public</quote> is the schema, the second
@@ -3326,7 +3326,7 @@ REVOKE CREATE ON SCHEMA public FROM PUBLIC;
    <structname>capitals</structname> table so that it inherits from
    <structname>cities</structname>:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE cities (
     name            text,
     population      float,
@@ -3353,7 +3353,7 @@ CREATE TABLE capitals (
    including state capitals, that are located at an elevation over
    500 feet:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT name, elevation
     FROM cities
     WHERE elevation &gt; 500;
@@ -3362,7 +3362,7 @@ SELECT name, elevation
    Given the sample data from the <productname>PostgreSQL</productname>
    tutorial (see <xref linkend="tutorial-sql-intro"/>), this returns:
 
-<programlisting>
+<programlisting language="postgres-shell">
    name    | elevation
 -----------+-----------
  Las Vegas |      2174
@@ -3375,7 +3375,7 @@ SELECT name, elevation
    On the other hand, the following query finds all the cities that
    are not state capitals and are situated at an elevation over 500 feet:
 
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT name, elevation
     FROM ONLY cities
     WHERE elevation &gt; 500;
@@ -3401,7 +3401,7 @@ SELECT name, elevation
    You can also write the table name with a trailing <literal>*</literal>
    to explicitly specify that descendant tables are included:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT name, elevation
     FROM cities*
     WHERE elevation &gt; 500;
@@ -3418,7 +3418,7 @@ SELECT name, elevation
    <structfield>tableoid</structfield> in each table which can tell you the
    originating table:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT c.tableoid, c.name, c.elevation
 FROM cities c
 WHERE c.elevation &gt; 500;
@@ -3426,7 +3426,7 @@ WHERE c.elevation &gt; 500;
 
    which returns:
 
-<programlisting>
+<programlisting language="postgres-shell">
  tableoid |   name    | elevation
 ----------+-----------+-----------
    139793 | Las Vegas |      2174
@@ -3438,7 +3438,7 @@ WHERE c.elevation &gt; 500;
    different numeric OIDs.)  By doing a join with
    <structname>pg_class</structname> you can see the actual table names:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT p.relname, c.name, c.elevation
 FROM cities c, pg_class p
 WHERE c.elevation &gt; 500 AND c.tableoid = p.oid;
@@ -3446,7 +3446,7 @@ WHERE c.elevation &gt; 500 AND c.tableoid = p.oid;
 
    which returns:
 
-<programlisting>
+<programlisting language="postgres-shell">
  relname  |   name    | elevation
 ----------+-----------+-----------
  cities   | Las Vegas |      2174
@@ -3459,7 +3459,7 @@ WHERE c.elevation &gt; 500 AND c.tableoid = p.oid;
    Another way to get the same effect is to use the <type>regclass</type>
    alias type, which will print the table OID symbolically:
 
-<programlisting>
+<programlisting language="postgres">
 SELECT c.tableoid::regclass, c.name, c.elevation
 FROM cities c
 WHERE c.elevation &gt; 500;
@@ -3471,7 +3471,7 @@ WHERE c.elevation &gt; 500;
    <command>INSERT</command> or <command>COPY</command> commands to
    other tables in the inheritance hierarchy. In our example, the
    following <command>INSERT</command> statement will fail:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO cities (name, population, elevation, state)
 VALUES ('Albany', NULL, NULL, 'NY');
 </programlisting>
@@ -3850,7 +3850,7 @@ VALUES ('Albany', NULL, NULL, 'NY');
     The company measures peak temperatures every day as well as ice cream
     sales in each region. Conceptually, we want a table like:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement (
     city_id         int not null,
     logdate         date not null,
@@ -3879,7 +3879,7 @@ CREATE TABLE measurement (
        includes the partitioning method (<literal>RANGE</literal> in this
        case) and the list of column(s) to use as the partition key.
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement (
     city_id         int not null,
     logdate         date not null,
@@ -3911,7 +3911,7 @@ CREATE TABLE measurement (
        data, to match the requirement of deleting one month's data at a
        time.  So the commands might look like:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2006m02 PARTITION OF measurement
     FOR VALUES FROM ('2006-02-01') TO ('2006-03-01');
 
@@ -3941,7 +3941,7 @@ CREATE TABLE measurement_y2008m01 PARTITION OF measurement
        <literal>PARTITION BY</literal> clause in the commands used to create
        individual partitions, for example:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2006m02 PARTITION OF measurement
     FOR VALUES FROM ('2006-02-01') TO ('2006-03-01')
     PARTITION BY RANGE (peaktemp);
@@ -3987,7 +3987,7 @@ CREATE TABLE measurement_y2006m02 PARTITION OF measurement
        is: the actual data is in child indexes on the individual partition
        tables.
 
-<programlisting>
+<programlisting language="postgres">
 CREATE INDEX ON measurement (logdate);
 </programlisting>
       </para>
@@ -4026,7 +4026,7 @@ CREATE INDEX ON measurement (logdate);
     <para>
      The simplest option for removing old data is to drop the partition that
      is no longer necessary:
-<programlisting>
+<programlisting language="postgres">
 DROP TABLE measurement_y2006m02;
 </programlisting>
      This can very quickly delete millions of records because it doesn't have
@@ -4040,7 +4040,7 @@ DROP TABLE measurement_y2006m02;
      the partitioned table but retain access to it as a table in its own
      right.  This has two forms:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE measurement DETACH PARTITION measurement_y2006m02;
 ALTER TABLE measurement DETACH PARTITION measurement_y2006m02 CONCURRENTLY;
 </programlisting>
@@ -4064,7 +4064,7 @@ ALTER TABLE measurement DETACH PARTITION measurement_y2006m02 CONCURRENTLY;
      empty partition in the partitioned table just as the original partitions
      were created above:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2008m02 PARTITION OF measurement
     FOR VALUES FROM ('2008-02-01') TO ('2008-03-01')
     TABLESPACE fasttablespace;
@@ -4077,7 +4077,7 @@ CREATE TABLE measurement_y2008m02 PARTITION OF measurement
      The <literal>CREATE TABLE ... LIKE</literal> option is helpful
      to avoid tediously repeating the parent table's definition:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2008m02
   (LIKE measurement INCLUDING DEFAULTS INCLUDING CONSTRAINTS)
   TABLESPACE fasttablespace;
@@ -4145,7 +4145,7 @@ ALTER TABLE measurement ATTACH PARTITION measurement_y2008m02
      <command>ALTER INDEX .. ATTACH PARTITION</command>.  Once indexes for all
      partitions are attached to the parent index, the parent index is marked
      valid automatically.  Example:
-<programlisting>
+<programlisting language="postgres">
 CREATE INDEX measurement_usls_idx ON ONLY measurement (unitsales);
 
 CREATE INDEX measurement_usls_200602_idx
@@ -4158,7 +4158,7 @@ ALTER INDEX measurement_usls_idx
      This technique can be used with <literal>UNIQUE</literal> and
      <literal>PRIMARY KEY</literal> constraints too; the indexes are created
      implicitly when the constraint is created.  Example:
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE ONLY measurement ADD UNIQUE (city_id, logdate);
 
 ALTER TABLE measurement_y2006m02 ADD UNIQUE (city_id, logdate);
@@ -4339,7 +4339,7 @@ ALTER INDEX measurement_city_id_logdate_key
          example, the root table is the <structname>measurement</structname>
          table as originally defined:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement (
     city_id         int not null,
     logdate         date not null,
@@ -4360,7 +4360,7 @@ CREATE TABLE measurement (
         </para>
 
         <para>
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2006m02 () INHERITS (measurement);
 CREATE TABLE measurement_y2006m03 () INHERITS (measurement);
 ...
@@ -4379,7 +4379,7 @@ CREATE TABLE measurement_y2008m01 () INHERITS (measurement);
 
         <para>
          Typical examples would be:
-<programlisting>
+<programlisting language="postgres">
 CHECK ( x = 1 )
 CHECK ( county IN ( 'Oxfordshire', 'Buckinghamshire', 'Warwickshire' ))
 CHECK ( outletID &gt;= 100 AND outletID &lt; 200 )
@@ -4387,7 +4387,7 @@ CHECK ( outletID &gt;= 100 AND outletID &lt; 200 )
          Ensure that the constraints guarantee that there is no overlap
          between the key values permitted in different child tables.  A common
          mistake is to set up range constraints like:
-<programlisting>
+<programlisting language="postgres">
 CHECK ( outletID BETWEEN 100 AND 200 )
 CHECK ( outletID BETWEEN 200 AND 300 )
 </programlisting>
@@ -4395,7 +4395,7 @@ CHECK ( outletID BETWEEN 200 AND 300 )
          value 200 belongs in.
          Instead, ranges should be defined in this style:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2006m02 (
     CHECK ( logdate &gt;= DATE '2006-02-01' AND logdate &lt; DATE '2006-03-01' )
 ) INHERITS (measurement);
@@ -4424,7 +4424,7 @@ CREATE TABLE measurement_y2008m01 (
         <para>
          For each child table, create an index on the key column(s),
          as well as any other indexes you might want.
-<programlisting>
+<programlisting language="postgres">
 CREATE INDEX measurement_y2006m02_logdate ON measurement_y2006m02 (logdate);
 CREATE INDEX measurement_y2006m03_logdate ON measurement_y2006m03 (logdate);
 CREATE INDEX measurement_y2007m11_logdate ON measurement_y2007m11 (logdate);
@@ -4443,7 +4443,7 @@ CREATE INDEX measurement_y2008m01_logdate ON measurement_y2008m01 (logdate);
          If data will be added only to the latest child, we can
          use a very simple trigger function:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE OR REPLACE FUNCTION measurement_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -4459,7 +4459,7 @@ LANGUAGE plpgsql;
          After creating the function, we create a trigger which
          calls the trigger function:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TRIGGER insert_measurement_trigger
     BEFORE INSERT ON measurement
     FOR EACH ROW EXECUTE FUNCTION measurement_insert_trigger();
@@ -4475,7 +4475,7 @@ CREATE TRIGGER insert_measurement_trigger
          locate the child table into which the row should be added. We
          could do this with a more complex trigger function, for example:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE OR REPLACE FUNCTION measurement_insert_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -4523,7 +4523,7 @@ LANGUAGE plpgsql;
          child table is to set up rules, instead of a trigger, on the
          root table.  For example:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE RULE measurement_insert_y2006m02 AS
 ON INSERT TO measurement WHERE
     ( logdate &gt;= DATE '2006-02-01' AND logdate &lt; DATE '2006-03-01' )
@@ -4582,7 +4582,7 @@ DO INSTEAD
      <para>
       To remove old data quickly, simply drop the child table that is no longer
       necessary:
-<programlisting>
+<programlisting language="postgres">
 DROP TABLE measurement_y2006m02;
 </programlisting>
      </para>
@@ -4591,7 +4591,7 @@ DROP TABLE measurement_y2006m02;
      To remove the child table from the inheritance hierarchy table but retain access to
      it as a table in its own right:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER TABLE measurement_y2006m02 NO INHERIT measurement;
 </programlisting>
     </para>
@@ -4600,7 +4600,7 @@ ALTER TABLE measurement_y2006m02 NO INHERIT measurement;
      To add a new child table to handle new data, create an empty child table
      just as the original children were created above:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2008m02 (
     CHECK ( logdate &gt;= DATE '2008-02-01' AND logdate &lt; DATE '2008-03-01' )
 ) INHERITS (measurement);
@@ -4611,7 +4611,7 @@ CREATE TABLE measurement_y2008m02 (
      loaded, checked, and transformed before being made visible to queries on
      the parent table.
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE measurement_y2008m02
   (LIKE measurement INCLUDING DEFAULTS INCLUDING CONSTRAINTS);
 ALTER TABLE measurement_y2008m02 ADD CONSTRAINT y2008m02
@@ -4665,7 +4665,7 @@ ALTER TABLE measurement_y2008m02 INHERIT measurement;
         If you are using manual <command>VACUUM</command> or
         <command>ANALYZE</command> commands, don't forget that
         you need to run them on each child table individually. A command like:
-<programlisting>
+<programlisting language="postgres">
 ANALYZE measurement;
 </programlisting>
         will only process the root table.
@@ -4707,7 +4707,7 @@ ANALYZE measurement;
     that improves performance for declaratively partitioned tables.
     As an example:
 
-<programlisting>
+<programlisting language="postgres">
 SET enable_partition_pruning = on;                 -- the default
 SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
 </programlisting>
@@ -4728,7 +4728,7 @@ SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
     possible to show the difference between a plan for which partitions have
     been pruned and one for which they have not.  A typical unoptimized
     plan for this type of table setup is:
-<programlisting>
+<programlisting language="postgres-shell">
 SET enable_partition_pruning = off;
 EXPLAIN SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
                                     QUERY PLAN
@@ -4753,7 +4753,7 @@ EXPLAIN SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
     is no need to scan the older partitions at all to answer this query.
     When we enable partition pruning, we get a significantly
     cheaper plan that will deliver the same answer:
-<programlisting>
+<programlisting language="postgres-shell">
 SET enable_partition_pruning = on;
 EXPLAIN SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
                                     QUERY PLAN
@@ -5140,7 +5140,7 @@ EXPLAIN SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
    attempting to drop the products table we considered in <xref
    linkend="ddl-constraints-fk"/>, with the orders table depending on
    it, would result in an error message like this:
-<screen>
+<screen language="postgres-shell">
 DROP TABLE products;
 
 ERROR:  cannot drop table products because other objects depend on it
@@ -5149,7 +5149,7 @@ HINT:  Use DROP ... CASCADE to drop the dependent objects too.
 </screen>
    The error message contains a useful hint: if you do not want to
    bother deleting all the dependent objects individually, you can run:
-<screen>
+<screen language="postgres">
 DROP TABLE products CASCADE;
 </screen>
    and all the dependent objects will be removed, as will any objects
@@ -5197,7 +5197,7 @@ DROP TABLE products CASCADE;
    that could only be known by examining the function body.  As an example,
    consider this situation:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow',
                              'green', 'blue', 'purple');
 

@@ -49,7 +49,7 @@
    Typical usage might be:
   </para>
 
-<programlisting>
+<programlisting language="ini">
 # postgresql.conf
 archive_mode = 'on'
 archive_library = 'basic_archive'

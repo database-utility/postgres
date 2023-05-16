@@ -131,7 +131,7 @@ dblink_connect(text connname, text connstr) returns text
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_connect('dbname=postgres options=-csearch_path=');
  dblink_connect
 ----------------
@@ -308,7 +308,7 @@ dblink_disconnect(text connname) returns text
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_disconnect();
  dblink_disconnect
 -------------------
@@ -472,7 +472,7 @@ SELECT * FROM myremote_pg_proc WHERE proname LIKE 'bytea%';
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT * FROM dblink('dbname=postgres options=-csearch_path=',
                      'select proname, prosrc from pg_proc')
   AS t1(proname name, prosrc text) WHERE proname LIKE 'bytea%';
@@ -645,7 +645,7 @@ dblink_exec(text sql [, bool fail_on_error]) returns text
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_connect('dbname=dblink_test_standby');
  dblink_connect
 ----------------
@@ -790,7 +790,7 @@ dblink_open(text connname, text cursorname, text sql [, bool fail_on_error]) ret
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_connect('dbname=postgres options=-csearch_path=');
  dblink_connect
 ----------------
@@ -911,7 +911,7 @@ dblink_fetch(text connname, text cursorname, int howmany [, bool fail_on_error])
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_connect('dbname=postgres options=-csearch_path=');
  dblink_connect
 ----------------
@@ -1048,7 +1048,7 @@ dblink_close(text connname, text cursorname [, bool fail_on_error]) returns text
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_connect('dbname=postgres options=-csearch_path=');
  dblink_connect
 ----------------
@@ -1395,7 +1395,7 @@ dblink_get_notify(text connname) returns setof (notify_name text, be_pid int, ex
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_exec('LISTEN virtual');
  dblink_exec
 -------------
@@ -1524,7 +1524,7 @@ dblink_get_result(text connname [, bool fail_on_error]) returns setof record
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 contrib_regression=# SELECT dblink_connect('dtest1', 'dbname=contrib_regression');
  dblink_connect
 ----------------
@@ -1723,7 +1723,7 @@ CREATE TYPE dblink_pkey_results AS (position int, colname text);
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 CREATE TABLE foobar (
     f1 int,
     f2 int,
@@ -1868,7 +1868,7 @@ dblink_build_sql_insert(text relname,
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_build_sql_insert('foo', '1 2', 2, '{"1", "a"}', '{"1", "b''a"}');
              dblink_build_sql_insert
 --------------------------------------------------
@@ -1986,7 +1986,7 @@ dblink_build_sql_delete(text relname,
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_build_sql_delete('"MyFoo"', '1 2', 2, '{"1", "b"}');
            dblink_build_sql_delete
 ---------------------------------------------
@@ -2123,7 +2123,7 @@ dblink_build_sql_update(text relname,
   <refsect1>
    <title>Examples</title>
 
-<screen>
+<screen language="postgres-shell">
 SELECT dblink_build_sql_update('foo', '1 2', 2, '{"1", "a"}', '{"1", "b"}');
                    dblink_build_sql_update
 -------------------------------------------------------------

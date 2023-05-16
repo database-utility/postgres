@@ -1071,11 +1071,11 @@
     pointing to a <structname>EventTriggerData</structname> structure. C functions can
     check whether they were called from the event trigger manager or not by
     executing the macro:
-<programlisting>
+<programlisting language="c">
 CALLED_AS_EVENT_TRIGGER(fcinfo)
 </programlisting>
     which expands to:
-<programlisting>
+<programlisting language="c">
 ((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, EventTriggerData))
 </programlisting>
     If this returns true, then it is safe to cast
@@ -1090,7 +1090,7 @@ CALLED_AS_EVENT_TRIGGER(fcinfo)
     <structname>struct EventTriggerData</structname> is defined in
     <filename>commands/event_trigger.h</filename>:
 
-<programlisting>
+<programlisting language="c">
 typedef struct EventTriggerData
 {
     NodeTag     type;
@@ -1174,7 +1174,7 @@ typedef struct EventTriggerData
 
    <para>
     This is the source code of the trigger function:
-<programlisting><![CDATA[
+<programlisting language="c"><![CDATA[
 #include "postgres.h"
 #include "commands/event_trigger.h"
 
@@ -1206,7 +1206,7 @@ noddl(PG_FUNCTION_ARGS)
    <para>
     After you have compiled the source code (see <xref linkend="dfunc"/>),
     declare the function and the triggers:
-<programlisting>
+<programlisting language="postgres">
 CREATE FUNCTION noddl() RETURNS event_trigger
     AS 'noddl' LANGUAGE C;
 
@@ -1235,7 +1235,7 @@ ERROR:  command "CREATE TABLE" denied
     need to do so, you have to either drop the event trigger or disable it.  It
     can be convenient to disable the trigger for only the duration of a
     transaction:
-<programlisting>
+<programlisting language="postgres">
 BEGIN;
 ALTER EVENT TRIGGER noddl DISABLE;
 CREATE TABLE foo (id serial);
@@ -1257,7 +1257,7 @@ COMMIT;
 
    <para>
     Here's an example implementing such a policy.
-<programlisting>
+<programlisting language="postgres">
 CREATE OR REPLACE FUNCTION no_rewrite()
  RETURNS event_trigger
  LANGUAGE plpgsql AS

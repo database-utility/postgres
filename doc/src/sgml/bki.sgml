@@ -176,7 +176,7 @@
    </para>
 
 <!-- The "slight modification" is the apostrophe in the description. -->
-<programlisting><![CDATA[
+<programlisting language="perl"><![CDATA[
 [
 
 # A comment could appear here.
@@ -679,7 +679,7 @@
        <para>
         Add the new column, with a default,
         to <filename>pg_proc.h</filename>:
-<programlisting>
+<programlisting language="diff">
 +    /* see PROKIND_ categories below */
 +    char        prokind BKI_DEFAULT(f);
 </programlisting>
@@ -690,7 +690,7 @@
        <para>
         Create a new script based on <filename>reformat_dat_file.pl</filename>
         to insert appropriate values on-the-fly:
-<programlisting>
+<programlisting language="diff">
 -           # At this point we have the full row in memory as a hash
 -           # and can do any operations we want. As written, it only
 -           # removes default values, but this script can be adapted to
@@ -713,7 +713,7 @@
       <listitem>
        <para>
         Run the new script:
-<programlisting>
+<programlisting language="shell">
 $ cd src/include/catalog
 $ perl  rewrite_dat_with_prokind.pl  pg_proc.dat
 </programlisting>
@@ -728,7 +728,7 @@ $ perl  rewrite_dat_with_prokind.pl  pg_proc.dat
       <listitem>
        <para>
         Remove the old columns from <filename>pg_proc.h</filename>:
-<programlisting>
+<programlisting language="diff">
 -    /* is it an aggregate? */
 -    bool        proisagg BKI_DEFAULT(f);
 -

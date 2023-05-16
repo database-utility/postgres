@@ -25,7 +25,7 @@
   automatically, unless you build the "world" target
   (see <xref linkend="build"/>).
   You can build and install all of them by running:
-<screen>
+<screen language="shell">
 <userinput>make</userinput>
 <userinput>make install</userinput>
 </screen>
@@ -34,11 +34,11 @@
   just one selected module, do the same in that module's subdirectory.
   Many of the modules have regression tests, which can be executed by
   running:
-<screen>
+<screen language="shell">
 <userinput>make check</userinput>
 </screen>
   before installation or
-<screen>
+<screen language="shell">
 <userinput>make installcheck</userinput>
 </screen>
   once you have a <productname>PostgreSQL</productname> server running.

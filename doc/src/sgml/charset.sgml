@@ -60,7 +60,7 @@
     which locale your system is set to), you can instruct
     <command>initdb</command> exactly which locale to use by
     specifying the <option>--locale</option> option. For example:
-<screen>
+<screen language="shell">
 initdb --locale=sv_SE
 </screen>
    </para>
@@ -358,7 +358,7 @@ initdb --locale=sv_SE
     shown earlier all use the <literal>libc</literal> provider, which is the
     default.  Here is an example to initialize a database cluster using the
     ICU provider:
-<programlisting>
+<programlisting language="shell">
 initdb --locale-provider=icu --icu-locale=en
 </programlisting>
     See the description of the respective commands and programs for
@@ -532,7 +532,7 @@ initdb --locale-provider=icu --icu-locale=en
     </orderedlist>
 
     For example, consider this table definition:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE test1 (
     a text COLLATE "de_DE",
     b text COLLATE "es_ES",
@@ -541,19 +541,19 @@ CREATE TABLE test1 (
 </programlisting>
 
     Then in
-<programlisting>
+<programlisting language="postgres">
 SELECT a &lt; 'foo' FROM test1;
 </programlisting>
     the <literal>&lt;</literal> comparison is performed according to
     <literal>de_DE</literal> rules, because the expression combines an
     implicitly derived collation with the default collation.  But in
-<programlisting>
+<programlisting language="postgres">
 SELECT a &lt; ('foo' COLLATE "fr_FR") FROM test1;
 </programlisting>
     the comparison is performed using <literal>fr_FR</literal> rules,
     because the explicit collation derivation overrides the implicit one.
     Furthermore, given
-<programlisting>
+<programlisting language="postgres">
 SELECT a &lt; b FROM test1;
 </programlisting>
     the parser cannot determine which collation to apply, since the
@@ -562,15 +562,15 @@ SELECT a &lt; b FROM test1;
     does need to know which collation to use, this will result in an
     error.  The error can be resolved by attaching an explicit collation
     specifier to either input expression, thus:
-<programlisting>
+<programlisting language="postgres">
 SELECT a &lt; b COLLATE "de_DE" FROM test1;
 </programlisting>
     or equivalently
-<programlisting>
+<programlisting language="postgres">
 SELECT a COLLATE "de_DE" &lt; b FROM test1;
 </programlisting>
     On the other hand, the structurally similar case
-<programlisting>
+<programlisting language="postgres">
 SELECT a || b FROM test1;
 </programlisting>
     does not result in an error, because the <literal>||</literal> operator
@@ -583,19 +583,19 @@ SELECT a || b FROM test1;
     expressions is also considered to apply to the function or operator's
     result, if the function or operator delivers a result of a collatable
     data type.  So, in
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM test1 ORDER BY a || 'foo';
 </programlisting>
     the ordering will be done according to <literal>de_DE</literal> rules.
     But this query:
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM test1 ORDER BY a || b;
 </programlisting>
     results in an error, because even though the <literal>||</literal> operator
     doesn't need to know a collation, the <literal>ORDER BY</literal> clause does.
     As before, the conflict can be resolved with an explicit collation
     specifier:
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM test1 ORDER BY a || b COLLATE "fr_FR";
 </programlisting>
    </para>
@@ -732,7 +732,7 @@ SELECT * FROM test1 ORDER BY a || b COLLATE "fr_FR";
     <productname>PostgreSQL</productname> considers distinct collation
     objects to be incompatible even when they have identical properties.
     Thus for example,
-<programlisting>
+<programlisting language="postgres">
 SELECT a COLLATE "C" &lt; b COLLATE "POSIX" FROM test1;
 </programlisting>
     will draw an error even though the <literal>C</literal> and <literal>POSIX</literal>
@@ -822,7 +822,7 @@ SELECT a COLLATE "C" &lt; b COLLATE "POSIX" FROM test1;
 
     <para>
      New libc collations can be created like this:
-<programlisting>
+<programlisting language="postgres">
 CREATE COLLATION german (provider = libc, locale = 'de_DE');
 </programlisting>
      The exact values that are acceptable for the <literal>locale</literal>
@@ -979,7 +979,7 @@ CREATE COLLATION german (provider = libc, locale = 'de_DE');
     be able to use operating-system-independent collation names in
     applications, create compatibility names, or use an ICU-provided collation
     under a more readable name.  For example:
-<programlisting>
+<programlisting language="postgres">
 CREATE COLLATION german FROM "de_DE";
 CREATE COLLATION french FROM "fr-x-icu";
 </programlisting>
@@ -1009,7 +1009,7 @@ CREATE COLLATION french FROM "fr-x-icu";
      To create a nondeterministic collation, specify the property
      <literal>deterministic = false</literal> to <command>CREATE
      COLLATION</command>, for example:
-<programlisting>
+<programlisting language="postgres">
 CREATE COLLATION ndcoll (provider = icu, locale = 'und', deterministic = false);
 </programlisting>
      This example would use the standard Unicode collation in a
@@ -1017,7 +1017,7 @@ CREATE COLLATION ndcoll (provider = icu, locale = 'und', deterministic = false);
      different normal forms to be compared correctly.  More interesting
      examples make use of the ICU customization facilities explained above.
      For example:
-<programlisting>
+<programlisting language="postgres">
 CREATE COLLATION case_insensitive (provider = icu, locale = 'und-u-ks-level2', deterministic = false);
 CREATE COLLATION ignore_accents (provider = icu, locale = 'und-u-ks-level1-kc-true', deterministic = false);
 </programlisting>
@@ -1529,7 +1529,7 @@ CREATE COLLATION ignore_accents (provider = icu, locale = 'und-u-ks-level1-kc-tr
      <command>initdb</command> defines the default character set (encoding)
      for a <productname>PostgreSQL</productname> cluster. For example,
 
-<screen>
+<screen language="shell">
 initdb -E EUC_JP
 </screen>
 
@@ -1546,7 +1546,7 @@ initdb -E EUC_JP
      You can specify a non-default encoding at database creation time,
      provided that the encoding is compatible with the selected locale:
 
-<screen>
+<screen language="shell">
 createdb -E EUC_KR -T template0 --lc-collate=ko_KR.euckr --lc-ctype=ko_KR.euckr korean
 </screen>
 
@@ -1554,7 +1554,7 @@ createdb -E EUC_KR -T template0 --lc-collate=ko_KR.euckr --lc-ctype=ko_KR.euckr 
      uses the character set <literal>EUC_KR</literal>, and locale <literal>ko_KR</literal>.
      Another way to accomplish this is to use this SQL command:
 
-<programlisting>
+<programlisting language="postgres">
 CREATE DATABASE korean WITH ENCODING 'EUC_KR' LC_COLLATE='ko_KR.euckr' LC_CTYPE='ko_KR.euckr' TEMPLATE=template0;
 </programlisting>
 
@@ -1571,7 +1571,7 @@ CREATE DATABASE korean WITH ENCODING 'EUC_KR' LC_COLLATE='ko_KR.euckr' LC_CTYPE=
      <command>psql</command> <option>-l</option> option or the
      <command>\l</command> command.
 
-<screen>
+<screen language="shell">
 $ <userinput>psql -l</userinput>
                                          List of databases
    Name    |  Owner   | Encoding  |  Collation  |    Ctype    |          Access Privileges
@@ -1635,7 +1635,7 @@ $ <userinput>psql -l</userinput>
         encoding on the fly. For
         example, to change the encoding to <literal>SJIS</literal>, type:
 
-<programlisting>
+<programlisting language="postgres">
 \encoding SJIS
 </programlisting>
        </para>
@@ -1653,26 +1653,26 @@ $ <userinput>psql -l</userinput>
 
         Setting the client encoding can be done with this SQL command:
 
-<programlisting>
+<programlisting language="postgres">
 SET CLIENT_ENCODING TO '<replaceable>value</replaceable>';
 </programlisting>
 
         Also you can use the standard SQL syntax <literal>SET NAMES</literal>
         for this purpose:
 
-<programlisting>
+<programlisting language="postgres">
 SET NAMES '<replaceable>value</replaceable>';
 </programlisting>
 
         To query the current client encoding:
 
-<programlisting>
+<programlisting language="postgres">
 SHOW client_encoding;
 </programlisting>
 
         To return to the default encoding:
 
-<programlisting>
+<programlisting language="postgres">
 RESET client_encoding;
 </programlisting>
        </para>

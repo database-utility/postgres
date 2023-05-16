@@ -54,7 +54,7 @@ allows specifying type names with strings, and this mechanism can be used in
 <productname>PostgreSQL</productname> to start the parser down the correct
 path. For example, the query:
 
-<screen>
+<screen language="postgres-shell">
 SELECT text 'Origin' AS "label", point '(0,0)' AS "value";
 
  label  | value
@@ -364,7 +364,7 @@ defined in the standard catalog, and it takes an argument of type
 <type>double precision</type>.
 The scanner assigns an initial type of <type>integer</type> to the argument
 in this query expression:
-<screen>
+<screen language="postgres-shell">
 SELECT |/ 40 AS "square root of 40";
  square root of 40
 -------------------
@@ -375,7 +375,7 @@ SELECT |/ 40 AS "square root of 40";
 So the parser does a type conversion on the operand and the query
 is equivalent to:
 
-<screen>
+<screen language="postgres">
 SELECT |/ CAST(40 AS double precision) AS "square root of 40";
 </screen>
 </para>
@@ -392,7 +392,7 @@ Strings with unspecified type are matched with likely operator candidates.
 
 <para>
 An example with one unspecified argument:
-<screen>
+<screen language="postgres-shell">
 SELECT text 'abc' || 'def' AS "text and unknown";
 
  text and unknown
@@ -410,7 +410,7 @@ be interpreted as type <type>text</type>.
 
 <para>
 Here is a concatenation of two values of unspecified types:
-<screen>
+<screen language="postgres-shell">
 SELECT 'abc' || 'def' AS "unspecified";
 
  unspecified
@@ -441,7 +441,7 @@ absolute-value operations for various numeric data types.  One of these
 entries is for type <type>float8</type>, which is the preferred type in
 the numeric category.  Therefore, <productname>PostgreSQL</productname>
 will use that entry when faced with an <type>unknown</type> input:
-<screen>
+<screen language="postgres-shell">
 SELECT @ '-4.5' AS "abs";
  abs
 -----
@@ -451,7 +451,7 @@ SELECT @ '-4.5' AS "abs";
 Here the system has implicitly resolved the unknown-type literal as type
 <type>float8</type> before applying the chosen operator.  We can verify that
 <type>float8</type> and not some other type was used:
-<screen>
+<screen language="postgres-shell">
 SELECT @ '-4.5e500' AS "abs";
 
 ERROR:  "-4.5e500" is out of range for type double precision
@@ -462,7 +462,7 @@ ERROR:  "-4.5e500" is out of range for type double precision
 On the other hand, the prefix operator <literal>~</literal> (bitwise negation)
 is defined only for integer data types, not for <type>float8</type>.  So, if we
 try a similar case with <literal>~</literal>, we get:
-<screen>
+<screen language="postgres-shell">
 SELECT ~ '20' AS "negation";
 
 ERROR:  operator is not unique: ~ "unknown"
@@ -472,7 +472,7 @@ explicit type casts.
 This happens because the system cannot decide which of the several
 possible <literal>~</literal> operators should be preferred.  We can help
 it out with an explicit cast:
-<screen>
+<screen language="postgres-shell">
 SELECT ~ CAST('20' AS int8) AS "negation";
 
  negation
@@ -489,7 +489,7 @@ SELECT ~ CAST('20' AS int8) AS "negation";
 <para>
 Here is another example of resolving an operator with one known and one
 unknown input:
-<screen>
+<screen language="postgres-shell">
 SELECT array[1,2] &lt;@ '{1,2,3}' as "is subset";
 
  is subset
@@ -522,7 +522,7 @@ Users sometimes try to declare operators applying just to a domain type.
 This is possible but is not nearly as useful as it might seem, because the
 operator resolution rules are designed to select operators applying to the
 domain's base type.  As an example consider
-<screen>
+<screen language="postgres">
 CREATE DOMAIN mytext AS text CHECK(...);
 CREATE FUNCTION mytext_eq_text (mytext, text) RETURNS boolean AS ...;
 CREATE OPERATOR = (procedure=mytext_eq_text, leftarg=mytext, rightarg=text);
@@ -540,7 +540,7 @@ so it resolves the <type>unknown</type>-type literal as <type>text</type> and
 uses the <type>text</type> <literal>=</literal> <type>text</type> operator.
 The only way to get the custom operator to be used is to explicitly cast
 the literal:
-<screen>
+<screen language="postgres">
 SELECT * FROM mytable WHERE val = text 'foo';
 </screen>
 so that the <type>mytext</type> <literal>=</literal> <type>text</type> operator is found
@@ -770,7 +770,7 @@ So the following query automatically converts
 the first argument of type <type>integer</type> to
 <type>numeric</type>:
 
-<screen>
+<screen language="postgres-shell">
 SELECT round(4, 4);
 
  round
@@ -780,7 +780,7 @@ SELECT round(4, 4);
 </screen>
 
 That query is actually transformed by the parser to:
-<screen>
+<screen language="postgres">
 SELECT round(CAST (4 AS numeric), 4);
 </screen>
 </para>
@@ -789,7 +789,7 @@ SELECT round(CAST (4 AS numeric), 4);
 Since numeric constants with decimal points are initially assigned the
 type <type>numeric</type>, the following query will require no type
 conversion and therefore might be slightly more efficient:
-<screen>
+<screen language="postgres">
 SELECT round(4.0, 4);
 </screen>
 </para>
@@ -799,7 +799,7 @@ SELECT round(4.0, 4);
 <title>Variadic Function Resolution</title>
 
 <para>
-<screen>
+<screen language="postgres">
 CREATE FUNCTION public.variadic_example(VARIADIC numeric[]) RETURNS int
   LANGUAGE sql AS 'SELECT 1';
 CREATE FUNCTION
@@ -808,7 +808,7 @@ CREATE FUNCTION
 This function accepts, but does not require, the VARIADIC keyword.  It
 tolerates both integer and numeric arguments:
 
-<screen>
+<screen language="postgres-shell">
 SELECT public.variadic_example(0),
        public.variadic_example(0.0),
        public.variadic_example(VARIADIC array[0.0]);
@@ -821,7 +821,7 @@ SELECT public.variadic_example(0),
 However, the first and second calls will prefer more-specific functions, if
 available:
 
-<screen>
+<screen language="postgres-shell">
 CREATE FUNCTION public.variadic_example(numeric) RETURNS int
   LANGUAGE sql AS 'SELECT 2';
 CREATE FUNCTION
@@ -856,7 +856,7 @@ with a string constant of unspecified type, the system chooses the
 candidate function that accepts an argument of the preferred category
 <literal>string</literal> (namely of type <type>text</type>).
 
-<screen>
+<screen language="postgres-shell">
 SELECT substr('1234', 3);
 
  substr
@@ -869,7 +869,7 @@ SELECT substr('1234', 3);
 <para>
 If the string is declared to be of type <type>varchar</type>, as might be the case
 if it comes from a table, then the parser will try to convert it to become <type>text</type>:
-<screen>
+<screen language="postgres-shell">
 SELECT substr(varchar '1234', 3);
 
  substr
@@ -879,7 +879,7 @@ SELECT substr(varchar '1234', 3);
 </screen>
 
 This is transformed by the parser to effectively become:
-<screen>
+<screen language="postgres">
 SELECT substr(CAST (varchar '1234' AS text), 3);
 </screen>
 </para>
@@ -898,7 +898,7 @@ type conversion call is really inserted in this case.
 <para>
 And, if the function is called with an argument of type <type>integer</type>,
 the parser will try to convert that to <type>text</type>:
-<screen>
+<screen language="postgres-shell">
 SELECT substr(1234, 3);
 ERROR:  function substr(integer, integer) does not exist
 HINT:  No function matches the given name and argument types. You might need
@@ -907,7 +907,7 @@ to add explicit type casts.
 
 This does not work because <type>integer</type> does not have an implicit cast
 to <type>text</type>.  An explicit cast will work, however:
-<screen>
+<screen language="postgres-shell">
 SELECT substr(CAST (1234 AS text), 3);
 
  substr
@@ -975,7 +975,7 @@ checking or truncation.
 For a target column declared as <type>character(20)</type> the following
 statement shows that the stored value is sized correctly:
 
-<screen>
+<screen language="postgres-shell">
 CREATE TABLE vv (v character(20));
 INSERT INTO vv SELECT 'abc' || 'def';
 SELECT v, octet_length(v) FROM vv;
@@ -1130,7 +1130,7 @@ Some examples follow.
 <title>Type Resolution with Underspecified Types in a Union</title>
 
 <para>
-<screen>
+<screen language="postgres-shell">
 SELECT text 'a' AS "text" UNION SELECT 'b';
 
  text
@@ -1147,7 +1147,7 @@ Here, the unknown-type literal <literal>'b'</literal> will be resolved to type <
 <title>Type Resolution in a Simple Union</title>
 
 <para>
-<screen>
+<screen language="postgres-shell">
 SELECT 1.2 AS "numeric" UNION SELECT 1;
 
  numeric
@@ -1166,7 +1166,7 @@ and the <type>integer</type> value <literal>1</literal> can be cast implicitly t
 <title>Type Resolution in a Transposed Union</title>
 
 <para>
-<screen>
+<screen language="postgres-shell">
 SELECT 1 AS "real" UNION SELECT CAST('2.2' AS REAL);
 
  real
@@ -1185,7 +1185,7 @@ result type is resolved as <type>real</type>.
 <title>Type Resolution in a Nested Union</title>
 
 <para>
-<screen>
+<screen language="postgres-shell">
 SELECT NULL UNION SELECT NULL UNION SELECT 1;
 
 ERROR:  UNION types text and integer cannot be matched
@@ -1193,7 +1193,7 @@ ERROR:  UNION types text and integer cannot be matched
 This failure occurs because <productname>PostgreSQL</productname> treats
 multiple <literal>UNION</literal>s as a nest of pairwise operations;
 that is, this input is the same as
-<screen>
+<screen language="postgres">
 (SELECT NULL UNION SELECT NULL) UNION SELECT 1;
 </screen>
 The inner <literal>UNION</literal> is resolved as emitting
@@ -1226,7 +1226,7 @@ of non-<type>unknown</type> data types to all expressions in an SQL query,
 except for unspecified-type literals that appear as simple output
 columns of a <command>SELECT</command> command.  For example, in
 
-<screen>
+<screen language="postgres">
 SELECT 'Hello World';
 </screen>
 

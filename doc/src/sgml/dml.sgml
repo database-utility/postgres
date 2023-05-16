@@ -37,7 +37,7 @@
    command.  The command requires the
    table name and column values.  For
    example, consider the products table from <xref linkend="ddl"/>:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE products (
     product_no integer,
     name text,
@@ -45,7 +45,7 @@ CREATE TABLE products (
 );
 </programlisting>
    An example command to insert a row would be:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO products VALUES (1, 'Cheese', 9.99);
 </programlisting>
    The data values are listed in the order in which the columns appear
@@ -58,7 +58,7 @@ INSERT INTO products VALUES (1, 'Cheese', 9.99);
    of the columns in the table.  To avoid this you can also list the
    columns explicitly.  For example, both of the following commands
    have the same effect as the one above:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO products (product_no, name, price) VALUES (1, 'Cheese', 9.99);
 INSERT INTO products (name, price, product_no) VALUES ('Cheese', 9.99, 1);
 </programlisting>
@@ -70,7 +70,7 @@ INSERT INTO products (name, price, product_no) VALUES ('Cheese', 9.99, 1);
    If you don't have values for all the columns, you can omit some of
    them.  In that case, the columns will be filled with their default
    values.  For example:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO products (product_no, name) VALUES (1, 'Cheese');
 INSERT INTO products VALUES (1, 'Cheese');
 </programlisting>
@@ -82,7 +82,7 @@ INSERT INTO products VALUES (1, 'Cheese');
   <para>
    For clarity, you can also request default values explicitly, for
    individual columns or for the entire row:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO products (product_no, name, price) VALUES (1, 'Cheese', DEFAULT);
 INSERT INTO products DEFAULT VALUES;
 </programlisting>
@@ -90,7 +90,7 @@ INSERT INTO products DEFAULT VALUES;
 
   <para>
    You can insert multiple rows in a single command:
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO products (product_no, name, price) VALUES
     (1, 'Cheese', 9.99),
     (2, 'Bread', 1.99),
@@ -101,7 +101,7 @@ INSERT INTO products (product_no, name, price) VALUES
   <para>
    It is also possible to insert the result of a query (which might be no
    rows, one row, or many rows):
-<programlisting>
+<programlisting language="postgres">
 INSERT INTO products (product_no, name, price)
   SELECT product_no, name, price FROM new_products
     WHERE release_date = 'today';
@@ -174,7 +174,7 @@ INSERT INTO products (product_no, name, price)
   <para>
    For example, this command updates all products that have a price of
    5 to have a price of 10:
-<programlisting>
+<programlisting language="postgres">
 UPDATE products SET price = 10 WHERE price = 5;
 </programlisting>
     This might cause zero, one, or many rows to be updated.  It is not
@@ -190,7 +190,7 @@ UPDATE products SET price = 10 WHERE price = 5;
    new column value can be any scalar expression, not just a constant.
    For example, if you want to raise the price of all products by 10%
    you could use:
-<programlisting>
+<programlisting language="postgres">
 UPDATE products SET price = price * 1.10;
 </programlisting>
    As you see, the expression for the new value can refer to the existing
@@ -211,7 +211,7 @@ UPDATE products SET price = price * 1.10;
    You can update more than one column in an
    <command>UPDATE</command> command by listing more than one
    assignment in the <literal>SET</literal> clause.  For example:
-<programlisting>
+<programlisting language="postgres">
 UPDATE mytable SET a = 5, b = 3, c = 1 WHERE a &gt; 0;
 </programlisting>
   </para>
@@ -247,14 +247,14 @@ UPDATE mytable SET a = 5, b = 3, c = 1 WHERE a &gt; 0;
    command to remove rows; the syntax is very similar to the
    <xref linkend="sql-update"/> command.  For instance, to remove all
    rows from the products table that have a price of 10, use:
-<programlisting>
+<programlisting language="postgres">
 DELETE FROM products WHERE price = 10;
 </programlisting>
   </para>
 
   <para>
    If you simply write:
-<programlisting>
+<programlisting language="postgres">
 DELETE FROM products;
 </programlisting>
    then all rows in the table will be deleted!  Caveat programmer.
@@ -310,7 +310,7 @@ DELETE FROM products;
    when using a <link linkend="datatype-serial"><type>serial</type></link>
    column to provide unique identifiers, <literal>RETURNING</literal> can return
    the ID assigned to a new row:
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE users (firstname text, lastname text, id serial primary key);
 
 INSERT INTO users (firstname, lastname) VALUES ('Joe', 'Cool') RETURNING id;
@@ -322,7 +322,7 @@ INSERT INTO users (firstname, lastname) VALUES ('Joe', 'Cool') RETURNING id;
   <para>
    In an <command>UPDATE</command>, the data available to <literal>RETURNING</literal> is
    the new content of the modified row.  For example:
-<programlisting>
+<programlisting language="postgres">
 UPDATE products SET price = price * 1.10
   WHERE price &lt;= 99.99
   RETURNING name, price AS new_price;
@@ -332,7 +332,7 @@ UPDATE products SET price = price * 1.10
   <para>
    In a <command>DELETE</command>, the data available to <literal>RETURNING</literal> is
    the content of the deleted row.  For example:
-<programlisting>
+<programlisting language="postgres">
 DELETE FROM products
   WHERE obsoletion_date = 'today'
   RETURNING *;

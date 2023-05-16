@@ -41,7 +41,7 @@
  <sect2>
   <title>Example Usage</title>
 
-<programlisting>
+<programlisting language="postgres">
 CREATE TABLE test (a int4);
 -- create index
 CREATE INDEX testidx ON test USING GIN (a);

@@ -31,7 +31,7 @@
     provide those files.)  To use those
     files, first change to that directory and run <application>make</application>:
 
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>cd <replaceable>...</replaceable>/src/tutorial</userinput>
 <prompt>$</prompt> <userinput>make</userinput>
 </screen>
@@ -39,7 +39,7 @@
     This creates the scripts and compiles the C files containing user-defined
     functions and types.  Then, to start the tutorial, do the following:
 
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>psql -s mydb</userinput>
 <computeroutput>
 ...
@@ -298,13 +298,13 @@ SELECT * FROM weather;
       </para>
      </footnote>
     So the same result would be had with:
-<programlisting>
+<programlisting language="postgres">
 SELECT city, temp_lo, temp_hi, prcp, date FROM weather;
 </programlisting>
 
     The output should be:
 
-<screen>
+<screen language="postgres-shell">
      city      | temp_lo | temp_hi | prcp |    date
 ---------------+---------+---------+------+------------
  San Francisco |      46 |      50 | 0.25 | 1994-11-27
@@ -317,11 +317,11 @@ SELECT city, temp_lo, temp_hi, prcp, date FROM weather;
    <para>
     You can write expressions, not just simple column references, in the
     select list.  For example, you can do:
-<programlisting>
+<programlisting language="postgres">
 SELECT city, (temp_hi+temp_lo)/2 AS temp_avg, date FROM weather;
 </programlisting>
     This should give:
-<screen>
+<screen language="postgres-shell">
      city      | temp_avg |    date
 ---------------+----------+------------
  San Francisco |       48 | 1994-11-27
@@ -348,7 +348,7 @@ SELECT * FROM weather
     WHERE city = 'San Francisco' AND prcp &gt; 0.0;
 </programlisting>
     Result:
-<screen>
+<screen language="postgres-shell">
      city      | temp_lo | temp_hi | prcp |    date
 ---------------+---------+---------+------+------------
  San Francisco |      46 |      50 | 0.25 | 1994-11-27
@@ -367,7 +367,7 @@ SELECT * FROM weather
     ORDER BY city;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | temp_lo | temp_hi | prcp |    date
 ---------------+---------+---------+------+------------
  Hayward       |      37 |      54 |      | 1994-11-29
@@ -397,7 +397,7 @@ SELECT DISTINCT city
     FROM weather;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city
 ---------------
  Hayward
@@ -462,7 +462,7 @@ SELECT DISTINCT city
 SELECT * FROM weather JOIN cities ON city = name;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | temp_lo | temp_hi | prcp |    date    |     name      | location
 ---------------+---------+---------+------+------------+---------------+-----------
  San Francisco |      46 |      50 | 0.25 | 1994-11-27 | San Francisco | (-194,53)
@@ -561,7 +561,7 @@ SELECT *
     FROM weather LEFT OUTER JOIN cities ON weather.city = cities.name;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | temp_lo | temp_hi | prcp |    date    |     name      | location
 ---------------+---------+---------+------+------------+---------------+-----------
  Hayward       |      37 |      54 |      | 1994-11-29 |               |
@@ -609,7 +609,7 @@ SELECT w1.city, w1.temp_lo AS low, w1.temp_hi AS high,
         ON w1.temp_lo &lt; w2.temp_lo AND w1.temp_hi &gt; w2.temp_hi;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | low | high |     city      | low | high
 ---------------+-----+------+---------------+-----+------
  San Francisco |  43 |   57 | San Francisco |  46 |   50
@@ -656,7 +656,7 @@ SELECT *
 SELECT max(temp_lo) FROM weather;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
  max
 -----
   46
@@ -671,7 +671,7 @@ SELECT max(temp_lo) FROM weather;
     we might try:
 
 <programlisting>
-SELECT city FROM weather WHERE temp_lo = max(temp_lo);     <lineannotation>WRONG</lineannotation>
+SELECT city FROM weather WHERE temp_lo = max(temp_lo);     <lineannotation>/* WRONG */</lineannotation>
 </programlisting>
 
     but this will not work since the aggregate
@@ -689,7 +689,7 @@ SELECT city FROM weather
     WHERE temp_lo = (SELECT max(temp_lo) FROM weather);
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city
 ---------------
  San Francisco
@@ -715,7 +715,7 @@ SELECT city, count(*), max(temp_lo)
     GROUP BY city;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | count | max
 ---------------+-------+-----
  Hayward       |     1 |  37
@@ -735,7 +735,7 @@ SELECT city, count(*), max(temp_lo)
     HAVING max(temp_lo) &lt; 40;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
   city   | count | max
 ---------+-------+-----
  Hayward |     1 |  37
@@ -754,7 +754,7 @@ SELECT city, count(*), max(temp_lo)
     GROUP BY city;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | count | max
 ---------------+-------+-----
  San Francisco |     2 |  46
@@ -808,7 +808,7 @@ SELECT city, count(*) FILTER (WHERE temp_lo &lt; 45), max(temp_lo)
     GROUP BY city;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | count | max
 ---------------+-------+-----
  Hayward       |     1 |  37
@@ -841,7 +841,7 @@ SELECT city, count(*) FILTER (WHERE temp_lo &lt; 45), max(temp_lo)
     all off by 2 degrees after November 28.  You can correct the
     data as follows:
 
-<programlisting>
+<programlisting language="postgres">
 UPDATE weather
     SET temp_hi = temp_hi - 2,  temp_lo = temp_lo - 2
     WHERE date &gt; '1994-11-28';
@@ -850,7 +850,7 @@ UPDATE weather
 
    <para>
     Look at the new state of the data:
-<programlisting>
+<programlisting language="postgres-shell">
 SELECT * FROM weather;
 
      city      | temp_lo | temp_hi | prcp |    date
@@ -885,7 +885,7 @@ DELETE FROM weather WHERE city = 'Hayward';
 SELECT * FROM weather;
 </programlisting>
 
-<screen>
+<screen language="postgres-shell">
      city      | temp_lo | temp_hi | prcp |    date
 ---------------+---------+---------+------+------------
  San Francisco |      46 |      50 | 0.25 | 1994-11-27

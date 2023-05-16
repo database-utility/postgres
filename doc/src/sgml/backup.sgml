@@ -34,7 +34,7 @@
    <productname>PostgreSQL</productname> provides the utility program
    <xref linkend="app-pgdump"/> for this purpose. The basic usage of this
    command is:
-<synopsis>
+<synopsis language="shell">
 pg_dump <replaceable class="parameter">dbname</replaceable> &gt; <replaceable class="parameter">dumpfile</replaceable>
 </synopsis>
    As you see, <application>pg_dump</application> writes its result to the
@@ -108,7 +108,7 @@ pg_dump <replaceable class="parameter">dbname</replaceable> &gt; <replaceable cl
     Text files created by <application>pg_dump</application> are intended to
     be read in by the <application>psql</application> program. The
     general command form to restore a dump is
-<synopsis>
+<synopsis language="shell">
 psql <replaceable class="parameter">dbname</replaceable> &lt; <replaceable class="parameter">dumpfile</replaceable>
 </synopsis>
     where <replaceable class="parameter">dumpfile</replaceable> is the
@@ -140,7 +140,7 @@ psql <replaceable class="parameter">dbname</replaceable> &lt; <replaceable class
     the <literal>ON_ERROR_STOP</literal> variable set to alter that
     behavior and have <application>psql</application> exit with an
     exit status of 3 if an SQL error occurs:
-<programlisting>
+<programlisting language="shell">
 psql --set ON_ERROR_STOP=on <replaceable>dbname</replaceable> &lt; <replaceable>dumpfile</replaceable>
 </programlisting>
     Either way, you will only have a partially restored database.
@@ -159,7 +159,7 @@ psql --set ON_ERROR_STOP=on <replaceable>dbname</replaceable> &lt; <replaceable>
     The ability of <application>pg_dump</application> and <application>psql</application> to
     write to or read from pipes makes it possible to dump a database
     directly from one server to another, for example:
-<programlisting>
+<programlisting language="shell">
 pg_dump -h <replaceable>host1</replaceable> <replaceable>dbname</replaceable> | psql -h <replaceable>host2</replaceable> <replaceable>dbname</replaceable>
 </programlisting>
    </para>
@@ -200,11 +200,11 @@ pg_dump -h <replaceable>host1</replaceable> <replaceable>dbname</replaceable> | 
     <application>pg_dumpall</application> backs up each database in a given
     cluster, and also preserves cluster-wide data such as role and
     tablespace definitions. The basic usage of this command is:
-<synopsis>
+<synopsis language="shell">
 pg_dumpall &gt; <replaceable>dumpfile</replaceable>
 </synopsis>
     The resulting dump can be restored with <application>psql</application>:
-<synopsis>
+<synopsis language="shell">
 psql -f <replaceable class="parameter">dumpfile</replaceable> postgres
 </synopsis>
     (Actually, you can specify any existing database name to start from,
@@ -249,19 +249,19 @@ psql -f <replaceable class="parameter">dumpfile</replaceable> postgres
      You can use your favorite compression program, for example
      <application>gzip</application>:
 
-<programlisting>
+<programlisting language="shell">
 pg_dump <replaceable class="parameter">dbname</replaceable> | gzip &gt; <replaceable class="parameter">filename</replaceable>.gz
 </programlisting>
 
      Reload with:
 
-<programlisting>
+<programlisting language="shell">
 gunzip -c <replaceable class="parameter">filename</replaceable>.gz | psql <replaceable class="parameter">dbname</replaceable>
 </programlisting>
 
      or:
 
-<programlisting>
+<programlisting language="shell">
 cat <replaceable class="parameter">filename</replaceable>.gz | gunzip | psql <replaceable class="parameter">dbname</replaceable>
 </programlisting>
     </para>
@@ -275,20 +275,20 @@ cat <replaceable class="parameter">filename</replaceable>.gz | gunzip | psql <re
      acceptable in size to the underlying file system. For example, to
      make 2 gigabyte chunks:
 
-<programlisting>
+<programlisting language="shell">
 pg_dump <replaceable class="parameter">dbname</replaceable> | split -b 2G - <replaceable class="parameter">filename</replaceable>
 </programlisting>
 
      Reload with:
 
-<programlisting>
+<programlisting language="shell">
 cat <replaceable class="parameter">filename</replaceable>* | psql <replaceable class="parameter">dbname</replaceable>
 </programlisting>
 
      If using GNU <application>split</application>, it is possible to
      use it and <application>gzip</application> together:
 
-<programlisting>
+<programlisting language="shell">
 pg_dump <replaceable class="parameter">dbname</replaceable> | split -b 2G --filter='gzip > $FILE.gz'
 </programlisting>
 
@@ -306,14 +306,14 @@ pg_dump <replaceable class="parameter">dbname</replaceable> | split -b 2G --filt
      has the added advantage that tables can be restored selectively. The
      following command dumps a database using the custom dump format:
 
-<programlisting>
+<programlisting language="shell">
 pg_dump -Fc <replaceable class="parameter">dbname</replaceable> &gt; <replaceable class="parameter">filename</replaceable>
 </programlisting>
 
      A custom-format dump is not a script for <application>psql</application>, but
      instead must be restored with <application>pg_restore</application>, for example:
 
-<programlisting>
+<programlisting language="shell">
 pg_restore -d <replaceable class="parameter">dbname</replaceable> <replaceable class="parameter">filename</replaceable>
 </programlisting>
 
@@ -336,7 +336,7 @@ pg_restore -d <replaceable class="parameter">dbname</replaceable> <replaceable c
      parallelism with the <command>-j</command> parameter. Parallel dumps
      are only supported for the "directory" archive format.
 
-<programlisting>
+<programlisting language="shell">
 pg_dump -j <replaceable class="parameter">num</replaceable> -F d -f <replaceable class="parameter">out.dir</replaceable> <replaceable class="parameter">dbname</replaceable>
 </programlisting>
 
@@ -358,7 +358,7 @@ pg_dump -j <replaceable class="parameter">num</replaceable> -F d -f <replaceable
    are located.  You can use whatever method you prefer
    for doing file system backups; for example:
 
-<programlisting>
+<programlisting language="shell">
 tar -cf backup.tar /usr/local/pgsql/data
 </programlisting>
   </para>
@@ -620,7 +620,7 @@ tar -cf backup.tar /usr/local/pgsql/data
     Use <literal>%%</literal> if you need to embed an actual <literal>%</literal>
     character in the command.  The simplest useful command is something
     like:
-<programlisting>
+<programlisting language="ini">
 archive_command = 'test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f'  # Unix
 archive_command = 'copy "%p" "C:\\server\\archivedir\\%f"'  # Windows
 </programlisting>
@@ -629,7 +629,7 @@ archive_command = 'copy "%p" "C:\\server\\archivedir\\%f"'  # Windows
     recommendation, and might not work on all platforms.)  After the
     <literal>%p</literal> and <literal>%f</literal> parameters have been replaced,
     the actual command executed might look like this:
-<programlisting>
+<programlisting language="shell">
 test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/00000001000000A900000065 /mnt/server/archivedir/00000001000000A900000065
 </programlisting>
     A similar command will be generated for each new file to be archived.
@@ -872,7 +872,7 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
      rights to run <function>pg_backup_start</function> (superuser,
      or a user who has been granted <literal>EXECUTE</literal> on the
      function) and issue the command:
-<programlisting>
+<programlisting language="postgres">
 SELECT pg_backup_start(label => 'label', fast => false);
 </programlisting>
      where <literal>label</literal> is any string you want to use to uniquely
@@ -910,7 +910,7 @@ SELECT pg_backup_start(label => 'label', fast => false);
    <listitem>
     <para>
      In the same connection as before, issue the command:
-<programlisting>
+<programlisting language="postgres">
 SELECT * FROM pg_backup_stop(wait_for_archive => true);
 </programlisting>
      This terminates backup mode. On a primary, it also performs an automatic
@@ -1178,7 +1178,7 @@ SELECT * FROM pg_backup_stop(wait_for_archive => true);
     Write <literal>%%</literal> if you need to embed an actual <literal>%</literal>
     character in the command.  The simplest useful command is
     something like:
-<programlisting>
+<programlisting language="ini">
 restore_command = 'cp /mnt/server/archivedir/%f %p'
 </programlisting>
     which will copy previously archived WAL segments from the directory
@@ -1368,11 +1368,11 @@ restore_command = 'cp /mnt/server/archivedir/%f %p'
      <para>
       If archive storage size is a concern, you can use
       <application>gzip</application> to compress the archive files:
-<programlisting>
+<programlisting language="ini">
 archive_command = 'gzip &lt; %p &gt; /mnt/server/archivedir/%f.gz'
 </programlisting>
       You will then need to use <application>gunzip</application> during recovery:
-<programlisting>
+<programlisting language="ini">
 restore_command = 'gunzip &lt; /mnt/server/archivedir/%f.gz &gt; %p'
 </programlisting>
      </para>
@@ -1385,7 +1385,7 @@ restore_command = 'gunzip &lt; /mnt/server/archivedir/%f.gz &gt; %p'
       Many people choose to use scripts to define their
       <varname>archive_command</varname>, so that their
       <filename>postgresql.conf</filename> entry looks very simple:
-<programlisting>
+<programlisting language="ini">
 archive_command = 'local_backup_script.sh "%p" "%f"'
 </programlisting>
       Using a separate script file is advisable any time you want to use

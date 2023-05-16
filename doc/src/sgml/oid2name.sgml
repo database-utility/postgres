@@ -245,7 +245,7 @@
  <refsect1>
   <title>Examples</title>
 
-<screen>
+<screen language="shell">
 $ # what's in this database server, anyway?
 $ oid2name
 All databases:

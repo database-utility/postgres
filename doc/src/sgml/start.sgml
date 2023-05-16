@@ -150,7 +150,7 @@
    <para>
     To create a new database, in this example named
     <literal>mydb</literal>, you use the following command:
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>createdb mydb</userinput>
 </screen>
     If this produces no response then this step was successful and you can skip over the
@@ -159,13 +159,13 @@
 
    <para>
     If you see a message similar to:
-<screen>
+<screen language="shell">
 createdb: command not found
 </screen>
     then <productname>PostgreSQL</productname> was not installed properly.  Either it was not
     installed at all or your shell's search path was not set to include it.
     Try calling the command with an absolute path instead:
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>/usr/local/pgsql/bin/createdb mydb</userinput>
 </screen>
     The path at your site might be different.  Contact your site
@@ -175,7 +175,7 @@ createdb: command not found
 
    <para>
     Another response could be this:
-<screen>
+<screen language="shell">
 createdb: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directory
         Is the server running locally and accepting connections on that socket?
 </screen>
@@ -186,7 +186,7 @@ createdb: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No 
 
    <para>
     Another response could be this:
-<screen>
+<screen language="shell">
 createdb: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  role "joe" does not exist
 </screen>
     where your own login name is mentioned.  This will happen if the
@@ -206,7 +206,7 @@ createdb: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FAT
    <para>
     If you have a user account but it does not have the privileges required to
     create a database, you will see the following:
-<screen>
+<screen language="shell">
 createdb: error: database creation failed: ERROR:  permission denied to create database
 </screen>
     Not every user has authorization to create new databases.  If
@@ -245,7 +245,7 @@ createdb: error: database creation failed: ERROR:  permission denied to create d
     name as your current user name.  Many tools assume that database
     name as the default, so it can save you some typing.  To create
     that database, simply type:
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>createdb</userinput>
 </screen>
    </para>
@@ -255,7 +255,7 @@ createdb: error: database creation failed: ERROR:  permission denied to create d
     For example, if you are the owner (creator) of the database
     <literal>mydb</literal>, you can destroy it using the following
     command:
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>dropdb mydb</userinput>
 </screen>
     (For this command, the database name does not default to the user
@@ -315,7 +315,7 @@ createdb: error: database creation failed: ERROR:  permission denied to create d
     You probably want to start up <command>psql</command> to try
     the examples in this tutorial.  It can be activated for the
     <literal>mydb</literal> database by typing the command:
-<screen>
+<screen language="shell">
 <prompt>$</prompt> <userinput>psql mydb</userinput>
 </screen>
     If you do not supply the database name then it will default to your
@@ -326,7 +326,7 @@ createdb: error: database creation failed: ERROR:  permission denied to create d
    <para>
     In <command>psql</command>, you will be greeted with the following
     message:
-<screen>
+<screen language="postgres-shell">
 psql (&version;)
 Type "help" for help.
 
@@ -334,7 +334,7 @@ mydb=&gt;
 </screen>
     <indexterm><primary>superuser</primary></indexterm>
     The last line could also be:
-<screen>
+<screen language="postgres-shell">
 mydb=#
 </screen>
     That would mean you are a database superuser, which is most likely
@@ -358,7 +358,7 @@ mydb=#
     work space maintained by <command>psql</command>.  Try out these
     commands:
     <indexterm><primary>version</primary></indexterm>
-<screen>
+<screen language="postgres-shell">
 <prompt>mydb=&gt;</prompt> <userinput>SELECT version();</userinput>
                                          version
 -------------------------------------------------------------------&zwsp;-----------------------
@@ -387,14 +387,14 @@ mydb=#
     you can get help on the syntax of various
     <productname>PostgreSQL</productname> <acronym>SQL</acronym>
     commands by typing:
-<screen>
+<screen language="postgres-shell">
 <prompt>mydb=&gt;</prompt> <userinput>\h</userinput>
 </screen>
    </para>
 
    <para>
     To get out of <command>psql</command>, type:
-<screen>
+<screen language="postgres-shell">
 <prompt>mydb=&gt;</prompt> <userinput>\q</userinput>
 </screen>
     and <command>psql</command> will quit and return you to your

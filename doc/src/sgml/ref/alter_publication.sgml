@@ -177,20 +177,20 @@ ALTER PUBLICATION <replaceable class="parameter">name</replaceable> RENAME TO <r
 
   <para>
    Change the publication to publish only deletes and updates:
-<programlisting>
+<programlisting language="postgres">
 ALTER PUBLICATION noinsert SET (publish = 'update, delete');
 </programlisting>
   </para>
 
   <para>
    Add some tables to the publication:
-<programlisting>
+<programlisting language="postgres">
 ALTER PUBLICATION mypublication ADD TABLE users (user_id, firstname), departments;
 </programlisting></para>
 
   <para>
    Change the set of columns published for a table:
-<programlisting>
+<programlisting language="postgres">
 ALTER PUBLICATION mypublication SET TABLE users (user_id, firstname, lastname), TABLE departments;
 </programlisting></para>
 
@@ -198,7 +198,7 @@ ALTER PUBLICATION mypublication SET TABLE users (user_id, firstname, lastname), 
    Add schemas <structname>marketing</structname> and
    <structname>sales</structname> to the publication
    <structname>sales_publication</structname>:
-<programlisting>
+<programlisting language="postgres">
 ALTER PUBLICATION sales_publication ADD TABLES IN SCHEMA marketing, sales;
 </programlisting>
   </para>
@@ -208,7 +208,7 @@ ALTER PUBLICATION sales_publication ADD TABLES IN SCHEMA marketing, sales;
    <structname>departments</structname> and schema
    <structname>production</structname> to the publication
    <structname>production_publication</structname>:
-<programlisting>
+<programlisting language="postgres">
 ALTER PUBLICATION production_publication ADD TABLE users, departments, TABLES IN SCHEMA production;
 </programlisting></para>
  </refsect1>

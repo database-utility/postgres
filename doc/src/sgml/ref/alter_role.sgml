@@ -277,7 +277,7 @@ ALTER ROLE { <replaceable class="parameter">role_specification</replaceable> | A
   <para>
    Change a role's password:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE davide WITH PASSWORD 'hu8jmn3';
 </programlisting>
   </para>
@@ -285,7 +285,7 @@ ALTER ROLE davide WITH PASSWORD 'hu8jmn3';
   <para>
    Remove a role's password:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE davide WITH PASSWORD NULL;
 </programlisting>
   </para>
@@ -294,14 +294,14 @@ ALTER ROLE davide WITH PASSWORD NULL;
    Change a password expiration date, specifying that the password
    should expire at midday on 4th May 2015 using
    the time zone which is one hour ahead of <acronym>UTC</acronym>:
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE chris VALID UNTIL 'May 4 12:00:00 2015 +1';
 </programlisting>
   </para>
 
   <para>
    Make a password valid forever:
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE fred VALID UNTIL 'infinity';
 </programlisting>
   </para>
@@ -309,7 +309,7 @@ ALTER ROLE fred VALID UNTIL 'infinity';
   <para>
    Give a role the ability to manage other roles and create new databases:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE miriam CREATEROLE CREATEDB;
 </programlisting>
   </para>
@@ -318,7 +318,7 @@ ALTER ROLE miriam CREATEROLE CREATEDB;
    Give a role a non-default setting of the
    <xref linkend="guc-maintenance-work-mem"/> parameter:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE worker_bee SET maintenance_work_mem = 100000;
 </programlisting>
   </para>
@@ -327,7 +327,7 @@ ALTER ROLE worker_bee SET maintenance_work_mem = 100000;
    Give a role a non-default, database-specific setting of the
    <xref linkend="guc-client-min-messages"/> parameter:
 
-<programlisting>
+<programlisting language="postgres">
 ALTER ROLE fred IN DATABASE devel SET client_min_messages = DEBUG;
 </programlisting></para>
  </refsect1>
