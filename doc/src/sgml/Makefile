@@ -156,6 +156,14 @@ postgres.html: stylesheet-html-nochunk.xsl postgres.sgml $(ALLSGML) $(ALL_IMAGES
 postgres.txt: postgres.html
 	$(PANDOC) -t plain -o $@ $<
 
+# Database Utility HTML
+dbu-html: stylesheet-dbu-html.xsl postgres.sgml $(ALLSGML) $(ALL_IMAGES)
+	$(XMLLINT) $(XMLINCLUDE) --noout --valid $(word 2,$^)
+	$(XSLTPROC) $(XMLINCLUDE) $(XSLTPROCFLAGS) $(XSLTPROC_HTML_FLAGS) $(wordlist 1,2,$^)
+	cp $(ALL_IMAGES) dbu-html/
+	cp $(srcdir)/stylesheet.css dbu-html/
+	touch $@
+
 
 ##
 ## Print

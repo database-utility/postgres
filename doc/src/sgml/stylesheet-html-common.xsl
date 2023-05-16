@@ -17,7 +17,13 @@
 <xsl:param name="generate.id.attributes" select="1"></xsl:param>
 <xsl:param name="make.graphic.viewport" select="0"/>
 <xsl:param name="link.mailto.url">pgsql-docs@lists.postgresql.org</xsl:param>
-<xsl:param name="toc.max.depth">2</xsl:param>
+<xsl:param name="toc.max.depth">9</xsl:param>
+
+<xsl:param name="appendix.autolabel" select="0"/>
+<xsl:param name="chapter.autolabel" select="0"/>
+<xsl:param name="part.autolabel" select="0"/>
+<xsl:param name="reference.autolabel" select="0"/>
+<xsl:param name="section.autolabel" select="0"/>
 
 <!--
   The below allows the stylesheets provided by the website to be applied fully

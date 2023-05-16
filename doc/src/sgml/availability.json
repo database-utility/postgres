@@ -1,0 +1,8 @@
+{
+  "vacuumlo" : {
+    "availableFrom" : "8.3"
+  },
+  "oid2name" : {
+    "availableFrom" : "8.3"
+  }
+}

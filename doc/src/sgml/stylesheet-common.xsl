@@ -30,7 +30,7 @@
 <xsl:param name="callout.graphics" select="'0'"></xsl:param>
 <xsl:param name="toc.section.depth">2</xsl:param>
 <xsl:param name="linenumbering.extension" select="'0'"></xsl:param>
-<xsl:param name="section.autolabel" select="1"></xsl:param>
+<!-- <xsl:param name="section.autolabel" select="1"></xsl:param> -->
 <xsl:param name="section.label.includes.component.label" select="1"></xsl:param>
 <xsl:param name="refentry.generate.name" select="0"></xsl:param>
 <xsl:param name="refentry.generate.title" select="1"></xsl:param>
